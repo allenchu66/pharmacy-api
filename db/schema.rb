@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_10_130922) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_10_163137) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -28,11 +28,31 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_10_130922) do
     t.string "name"
     t.string "phone"
     t.string "address"
-    t.string "open_time"
-    t.string "close_time"
-    t.integer "cash_balance"
+    t.decimal "cash_balance", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "pharmacy_business_hours", force: :cascade do |t|
+    t.bigint "pharmacy_id", null: false
+    t.integer "day_of_week"
+    t.string "open_time"
+    t.string "close_time"
+    t.boolean "overnight"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pharmacy_id"], name: "index_pharmacy_business_hours_on_pharmacy_id"
+  end
+
+  create_table "pharmacy_opening_hours", force: :cascade do |t|
+    t.bigint "pharmacy_id", null: false
+    t.integer "day_of_week"
+    t.string "open_time"
+    t.string "close_time"
+    t.boolean "overnight"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pharmacy_id"], name: "index_pharmacy_opening_hours_on_pharmacy_id"
   end
 
   create_table "purchase_records", force: :cascade do |t|
@@ -51,12 +71,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_10_130922) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.integer "cash_balance"
+    t.decimal "cash_balance", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   add_foreign_key "masks", "pharmacies"
+  add_foreign_key "pharmacy_business_hours", "pharmacies"
+  add_foreign_key "pharmacy_opening_hours", "pharmacies"
   add_foreign_key "purchase_records", "masks"
   add_foreign_key "purchase_records", "pharmacies"
   add_foreign_key "purchase_records", "users"

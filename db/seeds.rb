@@ -1,9 +1,35 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+require 'json'
+require_relative '../lib/time_parser'
+
+# Clean up data
+PharmacyOpeningHour.destroy_all
+Pharmacy.destroy_all
+User.destroy_all
+
+# Load pharmacies data
+pharmacies = JSON.parse(File.read(Rails.root.join('db', 'pharmacies.json')))
+
+pharmacies.each do |p|
+  pharmacy = Pharmacy.create!(
+    name: p['name'],
+    phone: p['phone'],
+    address: p['address'],
+    cash_balance: p['cashBalance']
+  )
+
+  next unless p['openingHours']
+
+  TimeParser.parse_time_string(p['openingHours']).each do |hour|
+    pharmacy.pharmacy_opening_hours.create!(hour)
+  end
+end
+
+# Load users data
+users = JSON.parse(File.read(Rails.root.join('db', 'users.json')))
+
+users.each do |u|
+  User.create!(
+    name: u['name'],
+    cash_balance: u['cashBalance']
+  )
+end

@@ -1,2 +1,3 @@
 class Pharmacy < ApplicationRecord
-end
+    has_many :pharmacy_opening_hours
+  end
