@@ -12,5 +12,9 @@ module Response
         message: message
       }, status: status
     end
+
+    def render_not_found(message)
+        render json: { status: "error", message: message }, status: :not_found
+      end
   end
   

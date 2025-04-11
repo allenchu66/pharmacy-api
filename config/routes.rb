@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
-  get "up" => "rails/health#show", as: :rails_health_check
   namespace :api do
     resources :pharmacies, only: [:index, :show] do
-      resources :masks, only: [:index]
-    end  
+      resources :masks, only: [:index] do
+        collection do
+          get :filter  # 對應 filter action
+        end
+      end
+    end
   end
 end
-
-
