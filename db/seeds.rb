@@ -31,7 +31,7 @@ pharmacies.each do |p|
       pharmacy.masks.create!(
         name: m['name'],
         price: m['price'],
-        stock: rand(10..100) # 這邊可以自訂數量範圍
+        stock: rand(10..100) # Random 
       )
     end
   end
