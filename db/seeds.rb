@@ -3,6 +3,7 @@ require_relative '../lib/time_parser'
 
 # Clean up data
 PharmacyOpeningHour.destroy_all
+Mask.destroy_all
 Pharmacy.destroy_all
 User.destroy_all
 
@@ -17,10 +18,22 @@ pharmacies.each do |p|
     cash_balance: p['cashBalance']
   )
 
-  next unless p['openingHours']
+  # Opening Hours
+  if p['openingHours']
+    TimeParser.parse_time_string(p['openingHours']).each do |hour|
+      pharmacy.pharmacy_opening_hours.create!(hour)
+    end
+  end
 
-  TimeParser.parse_time_string(p['openingHours']).each do |hour|
-    pharmacy.pharmacy_opening_hours.create!(hour)
+  # Masks with random stock
+  if p['masks']
+    p['masks'].each do |m|
+      pharmacy.masks.create!(
+        name: m['name'],
+        price: m['price'],
+        stock: rand(10..100) # 這邊可以自訂數量範圍
+      )
+    end
   end
 end
 
