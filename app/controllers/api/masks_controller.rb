@@ -14,6 +14,15 @@ class Api::MasksController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       render_not_found("Pharmacy not found")
     end
+
+    def show
+        pharmacy = Pharmacy.find(params[:pharmacy_id])
+        mask = pharmacy.masks.find(params[:id])
+      
+        render_success(mask)
+      rescue ActiveRecord::RecordNotFound
+        render_error("Pharmacy or Mask not found", :not_found)
+      end
   
     def filter
       pharmacy = Pharmacy.find(params[:pharmacy_id])
@@ -28,5 +37,17 @@ class Api::MasksController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       render_not_found("Pharmacy not found")
     end
+
+    def search
+        masks = Mask.includes(:pharmacy).where("name ILIKE ?", "%#{params[:keyword]}%")
+      
+        result = masks.map do |mask|
+          mask.as_json.merge(pharmacy: { id: mask.pharmacy.id, name: mask.pharmacy.name })
+        end
+      
+        render_success(result)
+      end
+      
+      
   end
   

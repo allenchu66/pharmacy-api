@@ -1,10 +1,16 @@
 Rails.application.routes.draw do
   namespace :api do
     resources :pharmacies, only: [:index, :show] do
-      resources :masks, only: [:index] do
+      resources :masks, only: [:index, :show] do
         collection do
-          get :filter  # 對應 filter action
+          get :filter
         end
+      end
+    end
+  
+    resources :masks, only: [] do
+      collection do
+        get :search
       end
     end
   end
