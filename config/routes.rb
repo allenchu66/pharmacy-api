@@ -6,8 +6,13 @@ Rails.application.routes.draw do
           get :filter
         end
       end
+
+      collection do
+        get :search
+        get :open
+      end
     end
-  
+
     resources :masks, only: [] do
       collection do
         get :search
