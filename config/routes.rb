@@ -16,7 +16,16 @@ Rails.application.routes.draw do
     resources :masks, only: [] do
       collection do
         get :search
+        get :all
+      end
+    
+      member do
+        get :detail
       end
     end
+
+    resources :orders, only: [:create]
+
+    resources :users, only: [:index, :show]
   end
 end
