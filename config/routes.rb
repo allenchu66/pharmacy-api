@@ -24,7 +24,12 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :orders, only: [:create, :index]
+    resources :orders, only: [:create, :index, :show] do
+      collection do
+        get :top_users
+        get :statistics
+      end
+    end
 
     resources :users, only: [:index, :show]
   end
