@@ -2,6 +2,8 @@ require 'json'
 require_relative '../lib/time_parser'
 
 # Clean up data
+OrderItem.destroy_all
+Order.destroy_all
 PharmacyOpeningHour.destroy_all
 Mask.destroy_all
 Pharmacy.destroy_all
@@ -41,8 +43,34 @@ end
 users = JSON.parse(File.read(Rails.root.join('db', 'users.json')))
 
 users.each do |u|
-  User.create!(
+  user = User.create!(
     name: u['name'],
     cash_balance: u['cashBalance']
   )
+
+  # Handle purchase histories
+  next unless u['purchaseHistories']
+
+  u['purchaseHistories'].each do |history|
+    pharmacy = Pharmacy.find_by(name: history['pharmacyName'])
+    mask = Mask.find_by(name: history['maskName'], pharmacy_id: pharmacy.id)
+
+    # Skip if not found
+    next unless pharmacy && mask
+
+    order = Order.create!(
+      user: user,
+      pharmacy: pharmacy,
+      total_price: history['transactionAmount'],
+      created_at: history['transactionDate'],
+      updated_at: history['transactionDate']
+    )
+
+    OrderItem.create!(
+      order: order,
+      mask: mask,
+      quantity: 1, # json 裡沒數量，先當1
+      price: history['transactionAmount']
+    )
+  end
 end

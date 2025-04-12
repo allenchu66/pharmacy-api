@@ -1,6 +1,7 @@
 class Pharmacy < ApplicationRecord
   has_many :pharmacy_opening_hours, dependent: :destroy
   has_many :masks, dependent: :destroy
+  has_many :orders
 
   def opening_hours_text
     hours = pharmacy_opening_hours.order(:day_of_week).to_a

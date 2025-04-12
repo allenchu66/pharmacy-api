@@ -1,5 +1,5 @@
 class Order < ApplicationRecord
   belongs_to :user
   belongs_to :pharmacy
-  belongs_to :mask
+  has_many :order_items, dependent: :destroy
 end
