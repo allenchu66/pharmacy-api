@@ -7,13 +7,18 @@ class Api::PharmaciesController < ApplicationController
     render_success(pharmacies.as_json(methods: :opening_hours_text))
   end
 
-  # GET /api/pharmacies/:id
+  
   def show
     pharmacy = Pharmacy.find(params[:id])
-    render_success(pharmacy.as_json(methods: :opening_hours_text))
+    render_success(
+      pharmacy.as_json(methods: :opening_hours_text).merge(
+        cash_balance: pharmacy.cash_balance.to_f
+      )
+    )
   rescue ActiveRecord::RecordNotFound
     render_error("Pharmacy not found", :not_found)
   end
+  
 
   # GET /api/pharmacies/search?keyword=Care
   def search

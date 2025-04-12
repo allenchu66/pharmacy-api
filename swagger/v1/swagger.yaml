@@ -1,0 +1,182 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/masks":
+    get:
+      summary: 取得所有口罩 (支援搜尋與篩選)
+      tags:
+      - Masks
+      parameters:
+      - name: keyword
+        in: query
+        description: 口罩名稱關鍵字
+        schema:
+          type: string
+      - name: stock_gt
+        in: query
+        description: 庫存大於
+        schema:
+          type: integer
+      - name: stock_lt
+        in: query
+        description: 庫存小於
+        schema:
+          type: integer
+      - name: price_min
+        in: query
+        description: 價格大於等於
+        schema:
+          type: number
+      - name: price_max
+        in: query
+        description: 價格小於等於
+        schema:
+          type: number
+      - name: sort
+        in: query
+        description: 排序方式(price_asc 或 price_desc)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        price:
+                          type: number
+                        stock:
+                          type: integer
+                        pharmacy:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+  "/api/orders":
+    post:
+      summary: 建立訂單
+      tags:
+      - Orders
+      parameters: []
+      responses:
+        '200':
+          description: 成功
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                pharmacy_id:
+                  type: integer
+                mask_id:
+                  type: integer
+                quantity:
+                  type: integer
+              required:
+              - user_id
+              - pharmacy_id
+              - mask_id
+              - quantity
+  "/api/pharmacies/{id}":
+    get:
+      summary: 取得單一藥局
+      tags:
+      - Pharmacies
+      parameters:
+      - name: id
+        in: path
+        description: Pharmacy ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      cash_balance:
+                        type: number
+                      opening_hours:
+                        type: string
+                      masks:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            price:
+                              type: number
+                            stock:
+                              type: integer
+  "/api/users/{id}":
+    get:
+      summary: 取得單一使用者
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      cash_balance:
+                        type: number
+servers:
+- url: https://35.229.247.36:3000
+  variables:
+    defaultHost:
+      default: www.example.com

@@ -47,4 +47,5 @@ class Pharmacy < ApplicationRecord
   def continuous_days?(days)
     days.each_cons(2).all? { |a, b| a + 1 == b }
   end
+  
 end
