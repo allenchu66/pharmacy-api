@@ -98,9 +98,54 @@ paths:
               - pharmacy_id
               - mask_id
               - quantity
+  "/api/pharmacies":
+    get:
+      summary: 取得所有藥局（支援 keyword / day_of_week / time 篩選）
+      tags:
+      - Pharmacies
+      parameters:
+      - name: keyword
+        in: query
+        required: false
+        description: 模糊搜尋藥局名稱
+        schema:
+          type: string
+      - name: day_of_week
+        in: query
+        required: false
+        description: 篩選營業日（0=週日）
+        schema:
+          type: integer
+      - name: time
+        in: query
+        required: false
+        description: 篩選時間（HH:mm）
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        opening_hours_text:
+                          type: string
   "/api/pharmacies/{id}":
     get:
-      summary: 取得單一藥局
+      summary: 取得藥局詳細資料
       tags:
       - Pharmacies
       parameters:
@@ -129,21 +174,53 @@ paths:
                         type: string
                       cash_balance:
                         type: number
-                      opening_hours:
+                      opening_hours_text:
                         type: string
-                      masks:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                            name:
-                              type: string
-                            price:
-                              type: number
-                            stock:
-                              type: integer
+        '404':
+          description: 找不到資料
+  "/api/pharmacies/{pharmacy_id}/masks":
+    get:
+      summary: 取得某藥局的所有口罩
+      tags:
+      - Pharmacies
+      parameters:
+      - name: pharmacy_id
+        in: path
+        required: true
+        description: Pharmacy ID
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        price:
+                          type: string
+                        stock:
+                          type: integer
+                        pharmacy_id:
+                          type: integer
+                        created_at:
+                          type: string
+                          format: date_time
+                        updated_at:
+                          type: string
+                          format: date_time
   "/api/users/{id}":
     get:
       summary: 取得單一使用者

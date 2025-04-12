@@ -3,15 +3,10 @@ Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   namespace :api do
     resources :pharmacies, only: [:index, :show] do
-      resources :masks, only: [:index, :show] do
+      resources :masks, only: [:index, :show], controller: 'masks' do
         collection do
-          get :filter
+          get '/', action: :pharmacy_index
         end
-      end
-
-      collection do
-        get :search
-        get :open
       end
     end
 

@@ -1,6 +1,12 @@
 class Api::MasksController < ApplicationController
   include Response
 
+   # GET /api/pharmacies/:pharmacy_id/masks
+  def pharmacy_index
+    masks = Mask.where(pharmacy_id: params[:pharmacy_id])
+    render_success(masks.as_json(only: [:id, :name, :price, :stock, :pharmacy_id, :created_at, :updated_at]))
+  end
+
   # GET /api/masks
   def index
     masks = Mask.includes(:pharmacy).all
@@ -14,7 +20,7 @@ class Api::MasksController < ApplicationController
     # search
     masks = masks.where("name ILIKE ?", "%#{params[:keyword]}%") if params[:keyword]
 
-    # sort
+    # sortㄇ
     case params[:sort]
     when "price_asc"
       masks = masks.order(price: :asc)
