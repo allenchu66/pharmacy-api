@@ -70,7 +70,187 @@ paths:
                               type: integer
                             name:
                               type: string
+  "/api/orders/analytics/top_users":
+    get:
+      summary: Top Users 排行榜
+      tags:
+      - Orders Analytics
+      parameters:
+      - name: start_date
+        in: query
+        required: true
+        description: 起始日期 yyyy-mm-dd
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        required: true
+        description: 結束日期 yyyy-mm-dd
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        description: 前幾名（預設5）
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                            user_name:
+                              type: string
+                            total_amount:
+                              type: number
+                            total_quantity:
+                              type: integer
+                            orders:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  pharmacy_name:
+                                    type: string
+                                  total_price:
+                                    type: number
+                                  created_at:
+                                    type: string
+                                    format: date_time
+                                  items:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        mask_id:
+                                          type: integer
+                                        mask_name:
+                                          type: string
+                                        price:
+                                          type: number
+                                        quantity:
+                                          type: integer
+  "/api/orders/analytics/statistics":
+    get:
+      summary: 訂單統計
+      tags:
+      - Orders Analytics
+      parameters:
+      - name: start_date
+        in: query
+        required: true
+        description: 起始日期 yyyy-mm-dd
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        required: true
+        description: 結束日期 yyyy-mm-dd
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      total_quantity:
+                        type: integer
+                      total_amount:
+                        type: number
+                      mask_summary:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            mask_id:
+                              type: integer
+                            mask_name:
+                              type: string
+                            total_quantity:
+                              type: integer
+                            total_amount:
+                              type: number
+                      pharmacy_summary:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            pharmacy_id:
+                              type: integer
+                            pharmacy_name:
+                              type: string
+                            total_quantity:
+                              type: integer
+                            total_amount:
+                              type: number
   "/api/orders":
+    get:
+      summary: 取得所有訂單
+      tags:
+      - Orders
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            user_name:
+                              type: string
+                            pharmacy_name:
+                              type: string
+                            total_price:
+                              type: number
+                            created_at:
+                              type: string
+                              format: date_time
+                            items:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  mask_name:
+                                    type: string
+                                  price:
+                                    type: number
+                                  quantity:
+                                    type: integer
     post:
       summary: 建立訂單
       tags:
@@ -78,7 +258,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: 成功
+          description: 建立成功
       requestBody:
         content:
           application/json:
@@ -87,17 +267,61 @@ paths:
               properties:
                 user_id:
                   type: integer
-                pharmacy_id:
-                  type: integer
                 mask_id:
                   type: integer
                 quantity:
                   type: integer
               required:
               - user_id
-              - pharmacy_id
               - mask_id
               - quantity
+  "/api/orders/{id}":
+    get:
+      summary: 取得指定訂單
+      tags:
+      - Orders
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Order ID
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      user_name:
+                        type: string
+                      pharmacy_name:
+                        type: string
+                      total_price:
+                        type: number
+                      created_at:
+                        type: string
+                        format: date_time
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            mask_name:
+                              type: string
+                            price:
+                              type: number
+                            quantity:
+                              type: integer
   "/api/pharmacies":
     get:
       summary: 取得所有藥局（支援 keyword / day_of_week / time 篩選）

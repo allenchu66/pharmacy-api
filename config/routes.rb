@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resources :pharmacies, only: [:index, :show] do
       resources :masks, only: [:index, :show], controller: 'masks' do
         collection do
-          get '/', action: :pharmacy_index
+          get '/', action: :pharmacy_indexa
         end
       end
     end
@@ -26,12 +26,13 @@ Rails.application.routes.draw do
       end
   end
 
-    resources :orders, only: [:create, :index, :show] do
-      collection do
-        get :top_users
-        get :statistics
-      end
+  resources :orders, only: [:create, :index, :show]
+  namespace :orders do
+    namespace :analytics do
+      get :top_users
+      get :statistics
     end
+  end
 
     resources :users, only: [:index, :show]
   end
