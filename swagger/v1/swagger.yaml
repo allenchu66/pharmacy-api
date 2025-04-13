@@ -208,9 +208,52 @@ paths:
                               type: number
   "/api/orders":
     get:
-      summary: 取得所有訂單
+      summary: 取得所有訂單（支援多條件搜尋）
       tags:
       - Orders
+      parameters:
+      - name: keyword
+        in: query
+        required: false
+        description: 模糊搜尋 User 名稱 或 Pharmacy 名稱
+        schema:
+          type: string
+      - name: user_id
+        in: query
+        required: false
+        description: 指定 User ID
+        schema:
+          type: integer
+      - name: pharmacy_id
+        in: query
+        required: false
+        description: 指定 Pharmacy ID
+        schema:
+          type: integer
+      - name: price_min
+        in: query
+        required: false
+        description: 訂單金額大於等於
+        schema:
+          type: number
+      - name: price_max
+        in: query
+        required: false
+        description: 訂單金額小於等於
+        schema:
+          type: number
+      - name: start_date
+        in: query
+        required: false
+        description: 起始日期 YYYY-MM-DD
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        required: false
+        description: 結束日期 YYYY-MM-DD
+        schema:
+          type: string
       responses:
         '200':
           description: 成功
@@ -222,35 +265,36 @@ paths:
                   status:
                     type: string
                   data:
-                    type: object
-                    properties:
-                      data:
-                        type: array
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        user_id:
+                          type: integer
+                        user_name:
+                          type: string
+                        pharmacy_id:
+                          type: integer
+                        pharmacy_name:
+                          type: string
+                        total_price:
+                          type: number
+                        created_at:
+                          type: string
+                          format: date_time
                         items:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                            user_name:
-                              type: string
-                            pharmacy_name:
-                              type: string
-                            total_price:
-                              type: number
-                            created_at:
-                              type: string
-                              format: date_time
-                            items:
-                              type: array
-                              items:
-                                type: object
-                                properties:
-                                  mask_name:
-                                    type: string
-                                  price:
-                                    type: number
-                                  quantity:
-                                    type: integer
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              mask_name:
+                                type: string
+                              price:
+                                type: number
+                              quantity:
+                                type: integer
     post:
       summary: 建立訂單
       tags:

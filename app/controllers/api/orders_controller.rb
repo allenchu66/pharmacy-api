@@ -5,10 +5,41 @@ class Api::OrdersController < ApplicationController
   def index
     orders = Order.includes(:user, :pharmacy, order_items: :mask).order(created_at: :desc)
 
+    # keyword 搜尋 (user_name or pharmacy_name)
+    if params[:keyword].present?
+      keyword = "%#{params[:keyword]}%"
+      orders = orders.where("users.name ILIKE :keyword OR pharmacies.name ILIKE :keyword", keyword: keyword)
+                    .references(:user, :pharmacy)
+    end
+
+    # user_id 篩選
+    orders = orders.where(user_id: params[:user_id]) if params[:user_id].present?
+
+    # pharmacy_id 篩選
+    orders = orders.where(pharmacy_id: params[:pharmacy_id]) if params[:pharmacy_id].present?
+
+    # 價格 >= min
+    orders = orders.where("total_price >= ?", params[:price_min].to_f) if params[:price_min].present?
+
+    # 價格 <= max
+    orders = orders.where("total_price <= ?", params[:price_max].to_f) if params[:price_max].present?
+
+
+    # 起始時間
+    if params[:start_date].present?
+      orders = orders.where("orders.created_at >= ?", params[:start_date].to_date.beginning_of_day)
+    end
+
+    # 結束時間
+    if params[:end_date].present?
+      orders = orders.where("orders.created_at <= ?", params[:end_date].to_date.end_of_day)
+    end
     data = orders.map do |order|
       {
         id: order.id,
+        user_id: order.user_id,
         user_name: order.user.name,
+        pharmacy_id: order.pharmacy_id,
         pharmacy_name: order.pharmacy.name,
         total_price: order.total_price.to_f,
         created_at: order.created_at,
@@ -22,7 +53,7 @@ class Api::OrdersController < ApplicationController
       }
     end
 
-    render_success(data: data)
+    render_success(data)
   end
 
   # GET /api/orders/:id
@@ -43,7 +74,7 @@ class Api::OrdersController < ApplicationController
       end
     }
 
-    render_success(data: data)
+    render_success(data)
   rescue ActiveRecord::RecordNotFound => e
     render_error(e.message, :not_found)
   end
