@@ -20,13 +20,17 @@ class Api::MasksController < ApplicationController
     # search
     masks = masks.where("name ILIKE ?", "%#{params[:keyword]}%") if params[:keyword]
 
-    # sortㄇ
-    case params[:sort]
-    when "price_asc"
+    # sort
+    if params[:sort] == 'name_asc'
+      masks = masks.order(name: :asc)
+    elsif params[:sort] == 'name_desc'
+      masks = masks.order(name: :desc)
+    elsif params[:sort] == 'price_asc'
       masks = masks.order(price: :asc)
-    when "price_desc"
+    elsif params[:sort] == 'price_desc'
       masks = masks.order(price: :desc)
     end
+    
 
     result = masks.map do |mask|
       mask.as_json.merge(pharmacy: { id: mask.pharmacy.id, name: mask.pharmacy.name })

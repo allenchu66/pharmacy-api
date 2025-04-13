@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resources :pharmacies, only: [:index, :show] do
       resources :masks, only: [:index, :show], controller: 'masks' do
         collection do
-          get '/', action: :pharmacy_indexa
+          get '/', action: :pharmacy_index
         end
       end
     end

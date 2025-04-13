@@ -37,7 +37,7 @@ paths:
           type: number
       - name: sort
         in: query
-        description: 排序方式(price_asc 或 price_desc)
+        description: 排序方式(price_asc、price_desc、name_asc、name_desc)
         schema:
           type: string
       responses:
@@ -477,7 +477,4 @@ paths:
                       cash_balance:
                         type: number
 servers:
-- url: https://35.229.247.36:3000
-  variables:
-    defaultHost:
-      default: www.example.com
+- url: http://35.229.247.36:3000
