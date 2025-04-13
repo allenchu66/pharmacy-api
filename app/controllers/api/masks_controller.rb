@@ -3,7 +3,10 @@ class Api::MasksController < ApplicationController
 
    # GET /api/pharmacies/:pharmacy_id/masks
   def pharmacy_index
-    masks = Mask.where(pharmacy_id: params[:pharmacy_id])
+    pharmacy = Pharmacy.find_by(id: params[:pharmacy_id])
+    return render_error("Pharmacy not found", :not_found) if pharmacy.nil?
+
+    masks = pharmacy.masks
     render_success(masks.as_json(only: [:id, :name, :price, :stock, :pharmacy_id, :created_at, :updated_at]))
   end
 
@@ -44,6 +47,7 @@ class Api::MasksController < ApplicationController
     mask = Mask.includes(:pharmacy).find(params[:id])
     render_success(mask.as_json.merge(pharmacy: { id: mask.pharmacy.id, name: mask.pharmacy.name }))
   rescue ActiveRecord::RecordNotFound
-    render_not_found("Mask not found")
+    render_error("Mask not found")
   end
+
 end

@@ -331,19 +331,19 @@ paths:
       - name: keyword
         in: query
         required: false
-        description: 模糊搜尋藥局名稱
+        description: 模糊搜尋藥局名稱 (不區分大小寫)
         schema:
           type: string
       - name: day_of_week
         in: query
         required: false
-        description: 篩選營業日（0=週日）
+        description: 篩選營業日 (0=週日, 1=週一, ... 6=週六)
         schema:
           type: integer
       - name: time
         in: query
         required: false
-        description: 篩選時間（HH:mm）
+        description: '篩選時間 (格式: HH:mm，例如 14:30)'
         schema:
           type: string
       responses:
@@ -402,6 +402,15 @@ paths:
                         type: string
         '404':
           description: 找不到資料
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: 'null'
   "/api/pharmacies/{pharmacy_id}/masks":
     get:
       summary: 取得某藥局的所有口罩
@@ -410,8 +419,8 @@ paths:
       parameters:
       - name: pharmacy_id
         in: path
-        required: true
         description: Pharmacy ID
+        required: true
         schema:
           type: integer
       responses:
@@ -434,7 +443,7 @@ paths:
                         name:
                           type: string
                         price:
-                          type: string
+                          type: number
                         stock:
                           type: integer
                         pharmacy_id:
@@ -445,6 +454,17 @@ paths:
                         updated_at:
                           type: string
                           format: date_time
+        '404':
+          description: 找不到資料
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: 'null'
   "/api/users/{id}":
     get:
       summary: 取得單一使用者
