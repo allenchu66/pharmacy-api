@@ -509,6 +509,45 @@ paths:
                     type: string
                   data:
                     type: 'null'
+  "/api/users":
+    get:
+      summary: 取得所有使用者 (支援搜尋 name / phone_number)
+      tags:
+      - Users
+      parameters:
+      - name: name
+        in: query
+        description: 使用者名稱關鍵字
+        schema:
+          type: string
+      - name: phone_number
+        in: query
+        description: 使用者電話號碼
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 成功 - 同時搜尋 name + phone_number
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        phone_number:
+                          type: string
+                        cash_balance:
+                          type: number
   "/api/users/{id}":
     get:
       summary: 取得單一使用者
@@ -538,6 +577,9 @@ paths:
                         type: integer
                       name:
                         type: string
+                      phone_number:
+                        type: string
+                        nullable: true
                       cash_balance:
                         type: number
 servers:

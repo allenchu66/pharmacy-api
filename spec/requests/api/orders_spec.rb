@@ -45,8 +45,8 @@ RSpec.describe 'api/orders', type: :request do
           }
         }
 
-        let!(:user) { create(:user, name: 'Allen') }
-        let!(:pharmacy) { create(:pharmacy, name: 'Nice Pharmacy') }
+        let(:user) { create(:user) }
+        let(:pharmacy) { create(:pharmacy) }
         let!(:order) { create(:order, user: user, pharmacy: pharmacy, total_price: 300, created_at: '2025-04-12') }
 
         context '無參數' do
@@ -88,10 +88,10 @@ RSpec.describe 'api/orders', type: :request do
       produces 'application/json'
       parameter name: :id, in: :path, type: :integer, required: true, description: 'Order ID'
 
-      let(:user) { User.create!(name: 'Allen', cash_balance: 1000) }
-      let(:pharmacy) { Pharmacy.create!(name: 'Test Pharmacy', cash_balance: 1000) }
-      let(:mask) { Mask.create!(name: 'Test Mask', price: 100, stock: 10, pharmacy: pharmacy) }
-      let(:order) { Order.create!(user: user, pharmacy: pharmacy, total_price: 200) }
+      let(:user) { create(:user) }
+      let(:pharmacy) { create(:pharmacy) }
+      let(:mask) { create(:mask, pharmacy: pharmacy) }
+      let(:order) { create(:order, user: user, pharmacy: pharmacy, total_price: 200) }
       let(:id) { order.id }
 
       response '200', '成功' do
@@ -130,7 +130,7 @@ RSpec.describe 'api/orders', type: :request do
     post '建立訂單' do
       tags 'Orders'
       consumes 'application/json'
-      parameter name: :order, in: :body, schema: {
+      parameter name: :body, in: :body, schema: {
         type: :object,
         properties: {
           user_id: { type: :integer },
@@ -152,11 +152,10 @@ RSpec.describe 'api/orders', type: :request do
                  }
                }
 
-        let(:user) { User.create!(name: 'Allen', cash_balance: 1000) }
-        let(:pharmacy) { Pharmacy.create!(name: 'Test Pharmacy', cash_balance: 1000) }
-        let(:mask) { Mask.create!(name: 'Test Mask', price: 100, stock: 10, pharmacy: pharmacy) }
-        let(:order) { { user_id: user.id, mask_id: mask.id, quantity: 2 } }
-
+        let(:user) { create(:user) }
+        let(:pharmacy) { create(:pharmacy) }
+        let(:mask) { create(:mask, pharmacy: pharmacy) }       
+        let(:body) { { user_id: user.id, mask_id: mask.id, quantity: 2 } }
         run_test!
       end
     end

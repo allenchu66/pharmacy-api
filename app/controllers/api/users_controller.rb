@@ -4,6 +4,10 @@ class Api::UsersController < ApplicationController
     # GET /api/users
     def index
       users = User.all
+      # 支援 name 模糊搜尋
+      users = users.where("name ILIKE ?", "%#{params[:name]}%") if params[:name].present?
+      # 支援 phone 搜尋
+      users = users.where(phone_number: params[:phone_number]) if params[:phone_number].present?
       render_success(users)
     end
   

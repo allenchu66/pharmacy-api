@@ -9,6 +9,11 @@ Mask.destroy_all
 Pharmacy.destroy_all
 User.destroy_all
 
+ActiveRecord::Base.connection.execute("ALTER SEQUENCE users_id_seq RESTART WITH 1")
+ActiveRecord::Base.connection.execute("ALTER SEQUENCE pharmacies_id_seq RESTART WITH 1")
+ActiveRecord::Base.connection.execute("ALTER SEQUENCE masks_id_seq RESTART WITH 1")
+ActiveRecord::Base.connection.execute("ALTER SEQUENCE orders_id_seq RESTART WITH 1")
+ActiveRecord::Base.connection.execute("ALTER SEQUENCE order_items_id_seq RESTART WITH 1")
 # Load pharmacies data
 pharmacies = JSON.parse(File.read(Rails.root.join('db', 'pharmacies.json')))
 
@@ -45,6 +50,7 @@ users = JSON.parse(File.read(Rails.root.join('db', 'users.json')))
 users.each do |u|
   user = User.create!(
     name: u['name'],
+    phone_number: "09#{rand(10**8).to_s.rjust(8, '0')}",  # 隨機產生09開頭的手機號碼
     cash_balance: u['cashBalance']
   )
 
