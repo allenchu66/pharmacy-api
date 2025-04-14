@@ -24,7 +24,7 @@ class Api::MaskTypesController < ApplicationController
         if mask_type.save
             render_success(mask_type)
         else
-            render_error(mask_type.errors.full_messages.join(', '))
+            render_error(mask_type.errors.full_messages.join(', '), :unprocessable_entity)
         end
     end
 
