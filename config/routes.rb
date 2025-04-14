@@ -12,6 +12,8 @@ Rails.application.routes.draw do
           get :filter  # 保留原本的 filter
         end
       end
+      # 進貨 API
+      resources :mask_purchases, only: [:create]
     end
 
     # 全部 Mask（支援條件搜尋）
