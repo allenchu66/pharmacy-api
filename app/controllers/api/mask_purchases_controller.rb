@@ -51,14 +51,14 @@ class Api::MaskPurchasesController < ApplicationController
   
           if mask
             # If mask exists, increase stock
-            mask.update!(stock: mask.stock + quantity)
+            mask.update!(stock: mask.stock + quantity,unit_price: unit_price)
           else
             # If not, create a new mask for this pharmacy
             mask = Mask.create!(
               pharmacy: pharmacy,
               mask_type: mask_type,
               name: mask_type.name,
-              price: unit_price,
+              unit_price: unit_price,
               stock: quantity
             )
           end

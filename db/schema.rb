@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_14_143609) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_14_154554) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,6 +43,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_14_143609) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "mask_type_id"
+    t.decimal "unit_price", precision: 10, scale: 2
     t.index ["mask_type_id"], name: "index_masks_on_mask_type_id"
     t.index ["pharmacy_id"], name: "index_masks_on_pharmacy_id"
   end
