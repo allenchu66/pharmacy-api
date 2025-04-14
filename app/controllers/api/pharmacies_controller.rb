@@ -1,6 +1,14 @@
 class Api::PharmaciesController < ApplicationController
   include Response
 
+   # POST /api/pharmacies
+   def create
+    pharmacy = Pharmacy.create!(pharmacy_params)
+    render_success(pharmacy)
+    rescue ActiveRecord::RecordInvalid => e
+      render_error(e.record.errors.full_messages.join(", "), :unprocessable_entity)
+    end
+
   # GET /api/pharmacies
   # 支援 keyword / day_of_week / time
   def index
@@ -43,5 +51,11 @@ class Api::PharmaciesController < ApplicationController
     )
   rescue ActiveRecord::RecordNotFound
     render_error("Pharmacy not found", :not_found)
+  end
+
+  private
+
+  def pharmacy_params
+    params.require(:pharmacy).permit(:name, :cash_balance)
   end
 end

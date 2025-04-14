@@ -570,31 +570,31 @@ paths:
                     type: string
   "/api/pharmacies":
     get:
-      summary: 取得所有藥局（支援 keyword / day_of_week / time 篩選）
+      summary: Get all pharmacies (supports keyword / day_of_week / time filter)
       tags:
       - Pharmacies
       parameters:
       - name: keyword
         in: query
         required: false
-        description: 模糊搜尋藥局名稱 (不區分大小寫)
+        description: Fuzzy search pharmacy name (case-insensitive)
         schema:
           type: string
       - name: day_of_week
         in: query
         required: false
-        description: 篩選營業日 (0=週日, 1=週一, ... 6=週六)
+        description: Filter by opening day (0=Sun, 1=Mon, ..., 6=Sat)
         schema:
           type: integer
       - name: time
         in: query
         required: false
-        description: '篩選時間 (格式: HH:mm，例如 14:30)'
+        description: 'Filter by time (format: HH:mm, e.g. 14:30)'
         schema:
           type: string
       responses:
         '200':
-          description: 成功
+          description: Success
           content:
             application/json:
               schema:
@@ -613,9 +613,57 @@ paths:
                           type: string
                         opening_hours_text:
                           type: string
+    post:
+      summary: Create a new pharmacy
+      tags:
+      - Pharmacies
+      parameters: []
+      responses:
+        '201':
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      cash_balance:
+                        type: number
+        '422':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                cash_balance:
+                  type: number
+              required:
+              - name
+              - cash_balance
   "/api/pharmacies/{id}":
     get:
-      summary: 取得藥局詳細資料
+      summary: Get pharmacy details
       tags:
       - Pharmacies
       parameters:
@@ -627,7 +675,7 @@ paths:
           type: integer
       responses:
         '200':
-          description: 成功
+          description: Success
           content:
             application/json:
               schema:
@@ -647,7 +695,7 @@ paths:
                       opening_hours_text:
                         type: string
         '404':
-          description: 找不到資料
+          description: Not found
           content:
             application/json:
               schema:
@@ -659,7 +707,7 @@ paths:
                     type: 'null'
   "/api/pharmacies/{pharmacy_id}/masks":
     get:
-      summary: 取得某藥局的所有口罩
+      summary: Get all masks of a pharmacy
       tags:
       - Pharmacies
       parameters:
@@ -671,7 +719,7 @@ paths:
           type: integer
       responses:
         '200':
-          description: 成功
+          description: Success
           content:
             application/json:
               schema:
@@ -701,7 +749,7 @@ paths:
                           type: string
                           format: date_time
         '404':
-          description: 找不到資料
+          description: Not found
           content:
             application/json:
               schema:

@@ -3,15 +3,15 @@ require 'swagger_helper'
 RSpec.describe 'api/pharmacies', type: :request do
   # GET /api/pharmacies
   path '/api/pharmacies' do
-    get '取得所有藥局（支援 keyword / day_of_week / time 篩選）' do
+    get 'Get all pharmacies (supports keyword / day_of_week / time filter)' do
       tags 'Pharmacies'
       produces 'application/json'
 
-      parameter name: :keyword, in: :query, type: :string, required: false, description: '模糊搜尋藥局名稱 (不區分大小寫)'
-      parameter name: :day_of_week, in: :query, type: :integer, required: false, description: '篩選營業日 (0=週日, 1=週一, ... 6=週六)'
-      parameter name: :time, in: :query, type: :string, required: false, description: '篩選時間 (格式: HH:mm，例如 14:30)'
+      parameter name: :keyword, in: :query, type: :string, required: false, description: 'Fuzzy search pharmacy name (case-insensitive)'
+      parameter name: :day_of_week, in: :query, type: :integer, required: false, description: 'Filter by opening day (0=Sun, 1=Mon, ..., 6=Sat)'
+      parameter name: :time, in: :query, type: :string, required: false, description: 'Filter by time (format: HH:mm, e.g. 14:30)'
 
-      response '200', '成功' do
+      response '200', 'Success' do
         schema type: :object, properties: {
           status: { type: :string },
           data: {
@@ -32,26 +32,26 @@ RSpec.describe 'api/pharmacies', type: :request do
           Pharmacy.create(name: 'Carepoint')
         end
 
-        context '無參數' do
+        context 'without parameters' do
           run_test!
         end
 
-        context '有 keyword' do
+        context 'with keyword' do
           let(:keyword) { 'DFW' }
           run_test!
         end
 
-        context '有 day_of_week' do
+        context 'with day_of_week' do
           let(:day_of_week) { 1 }
           run_test!
         end
 
-        context '有 time' do
+        context 'with time' do
           let(:time) { '14:30' }
           run_test!
         end
 
-        context '有 keyword + day_of_week + time' do
+        context 'with keyword + day_of_week + time' do
           let(:keyword) { 'Care' }
           let(:day_of_week) { 2 }
           let(:time) { '09:00' }
@@ -63,13 +63,13 @@ RSpec.describe 'api/pharmacies', type: :request do
 
   # GET /api/pharmacies/{id}
   path '/api/pharmacies/{id}' do
-    get '取得藥局詳細資料' do
+    get 'Get pharmacy details' do
       tags 'Pharmacies'
       produces 'application/json'
 
       parameter name: :id, in: :path, type: :integer, description: 'Pharmacy ID'
 
-      response '200', '成功' do
+      response '200', 'Success' do
         schema type: :object, properties: {
           status: { type: :string },
           data: {
@@ -87,7 +87,7 @@ RSpec.describe 'api/pharmacies', type: :request do
         run_test!
       end
 
-      response '404', '找不到資料' do
+      response '404', 'Not found' do
         schema type: :object, properties: {
           status: { type: :string },
           data: { type: :null }
@@ -101,13 +101,13 @@ RSpec.describe 'api/pharmacies', type: :request do
 
   # GET /api/pharmacies/{pharmacy_id}/masks
   path '/api/pharmacies/{pharmacy_id}/masks' do
-    get '取得某藥局的所有口罩' do
+    get 'Get all masks of a pharmacy' do
       tags 'Pharmacies'
       produces 'application/json'
 
       parameter name: :pharmacy_id, in: :path, type: :integer, description: 'Pharmacy ID'
 
-      response '200', '成功' do
+      response '200', 'Success' do
         schema type: :object, properties: {
           status: { type: :string },
           data: {
@@ -137,13 +137,58 @@ RSpec.describe 'api/pharmacies', type: :request do
         run_test!
       end
 
-      response '404', '找不到資料' do
+      response '404', 'Not found' do
         schema type: :object, properties: {
           status: { type: :string },
           data: { type: :null }
         }
 
         let(:pharmacy_id) { -1 }
+        run_test!
+      end
+    end
+  end
+
+  # POST /api/pharmacies
+  path '/api/pharmacies' do
+    post 'Create a new pharmacy' do
+      tags 'Pharmacies'
+      consumes 'application/json'
+      produces 'application/json'
+
+      parameter name: :pharmacy, in: :body, schema: {
+        type: :object,
+        properties: {
+          name: { type: :string },
+          cash_balance: { type: :number }
+        },
+        required: %w[name cash_balance]
+      }
+
+      response '201', 'Created successfully' do
+        schema type: :object, properties: {
+          status: { type: :string },
+          data: {
+            type: :object,
+            properties: {
+              id: { type: :integer },
+              name: { type: :string },
+              cash_balance: { type: :number }
+            }
+          }
+        }
+
+        let(:pharmacy) { { name: 'Tainan Pharmacy', cash_balance: 10000.0 } }
+        run_test!
+      end
+
+      response '422', 'Validation failed' do
+        schema type: :object, properties: {
+          status: { type: :string },
+          message: { type: :string }
+        }
+
+        let(:pharmacy) { { name: '', cash_balance: -100 } }
         run_test!
       end
     end

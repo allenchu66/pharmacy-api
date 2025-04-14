@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     # Pharmacies
-    resources :pharmacies, only: [:index, :show] do
+    resources :pharmacies, only: [:index, :show, :create] do
       # 單一 pharmacy 的 masks
       resources :masks, only: [:index, :show], controller: 'masks' do
         collection do
