@@ -2,78 +2,93 @@ require 'swagger_helper'
 
 RSpec.describe 'api/orders', type: :request do
   path '/api/orders' do
-    get '取得所有訂單（支援多條件搜尋）' do
+    get 'Get all orders (support filters & keyword search)' do
       tags 'Orders'
       produces 'application/json'
 
-      parameter name: :keyword, in: :query, type: :string, required: false, description: '模糊搜尋 User 名稱 或 Pharmacy 名稱'
-      parameter name: :user_id, in: :query, type: :integer, required: false, description: '指定 User ID'
-      parameter name: :pharmacy_id, in: :query, type: :integer, required: false, description: '指定 Pharmacy ID'
-      parameter name: :price_min, in: :query, type: :number, required: false, description: '訂單金額大於等於'
-      parameter name: :price_max, in: :query, type: :number, required: false, description: '訂單金額小於等於'
-      parameter name: :start_date, in: :query, type: :string, required: false, description: '起始日期 YYYY-MM-DD'
-      parameter name: :end_date, in: :query, type: :string, required: false, description: '結束日期 YYYY-MM-DD'
+      parameter name: :keyword, in: :query, type: :string, description: 'Keyword search by user or pharmacy name'
+      parameter name: :user_id, in: :query, type: :integer, description: 'Filter by user ID'
+      parameter name: :pharmacy_id, in: :query, type: :integer, description: 'Filter by pharmacy ID'
+      parameter name: :price_min, in: :query, type: :number, description: 'Total price >= (min)'
+      parameter name: :price_max, in: :query, type: :number, description: 'Total price <= (max)'
+      parameter name: :start_date, in: :query, type: :string, description: 'Start date (yyyy-mm-dd)'
+      parameter name: :end_date, in: :query, type: :string, description: 'End date (yyyy-mm-dd)'
 
-      response '200', '成功' do
-        schema type: :object, properties: {
-          status: { type: :string },
-          data: {
-            type: :array,
-            items: {
-              type: :object,
-              properties: {
-                id: { type: :integer },
-                user_id: { type: :integer },
-                user_name: { type: :string },
-                pharmacy_id: { type: :integer },
-                pharmacy_name: { type: :string },
-                total_price: { type: :number },
-                created_at: { type: :string, format: :date_time },
-                items: {
-                  type: :array,
+      response '200', 'Success' do
+        schema type: :object,
+          properties: {
+            status: { type: :string },
+            data: {
+              type: :array,
+              items: {
+                type: :object,
+                properties: {
+                  id: { type: :integer },
+                  user_id: { type: :integer },
+                  user_name: { type: :string },
+                  pharmacy_id: { type: :integer },
+                  pharmacy_name: { type: :string },
+                  total_price: { type: :number },
+                  created_at: { type: :string, format: :date_time },
                   items: {
-                    type: :object,
-                    properties: {
-                      mask_name: { type: :string },
-                      price: { type: :number },
-                      quantity: { type: :integer }
+                    type: :array,
+                    items: {
+                      type: :object,
+                      properties: {
+                        mask_type: {
+                          type: :object,
+                          properties: {
+                            id: { type: :integer },
+                            name: { type: :string }
+                          }
+                        },
+                        price: { type: :number },
+                        quantity: { type: :integer }
+                      }
                     }
                   }
                 }
               }
             }
           }
-        }
 
         let(:user) { create(:user) }
         let(:pharmacy) { create(:pharmacy) }
         let!(:order) { create(:order, user: user, pharmacy: pharmacy, total_price: 300, created_at: '2025-04-12') }
 
-        context '無參數' do
+        let(:keyword) { nil }
+        let(:user_id) { nil }
+        let(:pharmacy_id) { nil }
+        let(:price_min) { nil }
+        let(:price_max) { nil }
+        let(:start_date) { nil }
+        let(:end_date) { nil }
+
+        context 'when no filter' do
           run_test!
         end
 
-        context '有 keyword' do
+        context 'when keyword is present' do
           let(:keyword) { 'Allen' }
           run_test!
         end
 
-        context '有 user_id' do
+        context 'when user_id is present' do
           let(:user_id) { user.id }
           run_test!
         end
 
-        context '有 pharmacy_id' do
+        context 'when pharmacy_id is present' do
           let(:pharmacy_id) { pharmacy.id }
           run_test!
         end
 
-        context '有 price_min' do
+        context 'when price_min is present' do
           let(:price_min) { 100 }
           run_test!
         end
 
-        context '有 start_date & end_date' do
+        context 'when start_date and end_date are present' do
           let(:start_date) { '2025-04-12' }
           let(:end_date) { '2025-04-12' }
           run_test!
@@ -90,13 +105,13 @@ RSpec.describe 'api/orders', type: :request do
 
       let(:user) { create(:user) }
       let(:pharmacy) { create(:pharmacy) }
-      let(:mask_type) { create(:mask_type, name: "醫療口罩(藍)") }
+      let(:mask_type) { create(:mask_type) }
       let(:mask) { create(:mask, pharmacy: pharmacy, mask_type: mask_type) }
-      let(:mask) { create(:mask, pharmacy: pharmacy) }
       let(:order) { create(:order, user: user, pharmacy: pharmacy, total_price: 200) }
+      let!(:order_item) { create(:order_item, order: order, mask: mask) }
       let(:id) { order.id }
 
-      response '200', '成功' do
+      response '200', 'Success' do
         schema type: :object,
                properties: {
                  status: { type: :string },
@@ -113,7 +128,14 @@ RSpec.describe 'api/orders', type: :request do
                        items: {
                          type: :object,
                          properties: {
-                           mask_name: { type: :string },
+                          mask_name: { type: :string },
+                          mask_type: {
+                            type: :object,
+                            properties: {
+                              id: { type: :integer },
+                              name: { type: :string }
+                            }
+                          },
                            price: { type: :number },
                            quantity: { type: :integer }
                          }
@@ -125,41 +147,121 @@ RSpec.describe 'api/orders', type: :request do
 
         run_test!
       end
+      response '404', 'Order not found' do
+        let(:id) { -1 }
+  
+        schema type: :object,
+               properties: {
+                 status: { type: :string },
+                 message: { type: :string }
+               }
+  
+        run_test!
+      end
     end
   end
 
   path '/api/orders' do
-    post '建立訂單' do
+    post 'Create a new order (support multiple masks)' do
       tags 'Orders'
       consumes 'application/json'
       parameter name: :body, in: :body, schema: {
         type: :object,
         properties: {
           user_id: { type: :integer },
-          mask_id: { type: :integer },
-          quantity: { type: :integer }
+          items: {
+            type: :array,
+            items: {
+              type: :object,
+              properties: {
+                mask_id: { type: :integer },
+                quantity: { type: :integer }
+              },
+              required: %w[mask_id quantity]
+            }
+          }
         },
-        required: %w[user_id mask_id quantity]
+        required: %w[user_id items]
       }
-
-      response '200', '建立成功' do
+  
+      let(:user) { create(:user) }
+      let(:pharmacy) { create(:pharmacy) }
+      let(:mask_type) { create(:mask_type) }
+      let(:mask) { create(:mask, pharmacy: pharmacy, mask_type: mask_type) }
+  
+      response '200', 'Success' do
         schema type: :object,
                properties: {
                  status: { type: :string },
                  data: {
                    type: :object,
                    properties: {
-                     id: { type: :integer }
+                     message: { type: :string }
                    }
                  }
                }
-
-        let(:user) { create(:user) }
-        let(:pharmacy) { create(:pharmacy) }
-        let(:mask) { create(:mask, pharmacy: pharmacy) }       
-        let(:body) { { user_id: user.id, mask_id: mask.id, quantity: 2 } }
-        run_test!
+  
+        context 'when request is valid' do
+          let(:body) do
+            {
+              user_id: user.id,
+              items: [
+                { mask_id: mask.id, quantity: 2 }
+              ]
+            }
+          end
+  
+          run_test!
+        end
+      end
+  
+      response '400', 'Validation error' do
+        schema type: :object,
+               properties: {
+                 status: { type: :string },
+                 message: { type: :string }
+               }
+  
+        context 'when items is blank' do
+          let(:body) do
+            {
+              user_id: user.id,
+              items: []
+            }
+          end
+  
+          run_test!
+        end
+  
+        context 'when quantity exceeds stock' do
+          let(:body) do
+            {
+              user_id: user.id,
+              items: [
+                { mask_id: mask.id, quantity: 100 }
+              ]
+            }
+          end
+  
+          run_test!
+        end
+  
+        context 'when user cash is not enough' do
+          before { user.update!(cash_balance: 1) }
+  
+          let(:body) do
+            {
+              user_id: user.id,
+              items: [
+                { mask_id: mask.id, quantity: 2 }
+              ]
+            }
+          end
+  
+          run_test!
+        end
       end
     end
   end
+  
 end

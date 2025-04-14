@@ -1,6 +1,6 @@
 FactoryBot.define do
     factory :pharmacy do
-      name { "好藥局" }
+      name { "Tainan Pharmacy" }
       cash_balance { 5000 }
     end
   end

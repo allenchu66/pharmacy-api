@@ -45,7 +45,10 @@ class Api::OrdersController < ApplicationController
         created_at: order.created_at,
         items: order.order_items.map do |item|
           {
-            mask_name: item.mask.name,
+            mask_type: {
+              id: item.mask.mask_type.id,
+              name: item.mask.mask_type.name
+            },
             price: item.price.to_f,
             quantity: item.quantity
           }
@@ -67,13 +70,15 @@ class Api::OrdersController < ApplicationController
       created_at: order.created_at,
       items: order.order_items.map do |item|
         {
-          mask_name: item.mask.name,
+          mask_type: {
+            id: item.mask.mask_type.id,
+            name: item.mask.mask_type.name
+          },
           price: item.price.to_f,
           quantity: item.quantity
         }
       end
     }
-
     render_success(data)
   rescue ActiveRecord::RecordNotFound => e
     render_error(e.message, :not_found)
@@ -83,37 +88,53 @@ class Api::OrdersController < ApplicationController
   def create
     ActiveRecord::Base.transaction do
       user = User.find(params[:user_id])
-      mask = Mask.find(params[:mask_id])
-      pharmacy = mask.pharmacy
+      items = params[:items]
+  
+      return render_error("Items can't be blank", :bad_request) if items.blank?
+      return render_error("Invalid item format", :bad_request) unless items.all? { |item| item[:mask_id] && item[:quantity] }
+  
+      total_price = 0
+      order_items = []
 
-      quantity = params[:quantity].to_i
-      total_price = mask.price * quantity
+      items.each do |item|
+        mask = Mask.find(item[:mask_id])
+        quantity = item[:quantity].to_i
+  
+        return render_error("Quantity must greater than 0", :bad_request) if quantity <= 0
+        return render_error("Mask stock not enough", :bad_request) if mask.stock < quantity
+  
+        total_price += mask.price * quantity
+        order_items << { mask: mask, quantity: quantity, price: mask.price }
+      end
 
-      raise StandardError, "Mask stock not enough" if mask.stock < quantity
-      raise StandardError, "User cash not enough" if user.cash_balance < total_price
-
-      order = Order.create!(
-        user: user,
-        pharmacy: pharmacy,
-        total_price: total_price
-      )
-
-      OrderItem.create!(
-        order: order,
-        mask: mask,
-        quantity: quantity,
-        price: mask.price
-      )
-
+      pharmacy_ids = order_items.map { |item| item[:mask].pharmacy_id }.uniq
+      return render_error("Masks must belong to the same pharmacy", :bad_request) if pharmacy_ids.size > 1
+  
+      return render_error("User cash not enough", :bad_request) if user.cash_balance < total_price
+  
+      # 建立訂單
+      order = Order.create!(user: user, pharmacy: order_items.first[:mask].pharmacy, total_price: total_price)
+  
+      # 建立訂單明細
+      order_items.each do |item|
+        OrderItem.create!(order: order, mask: item[:mask], quantity: item[:quantity], price: item[:price])
+        item[:mask].update!(stock: item[:mask].stock - item[:quantity])
+      end
+  
+      # 更新 User 與 Pharmacy 餘額
+      pharmacy = order_items.first[:mask].pharmacy
       user.update!(cash_balance: user.cash_balance - total_price)
       pharmacy.update!(cash_balance: pharmacy.cash_balance + total_price)
-      mask.update!(stock: mask.stock - quantity)
     end
-
+  
     render_success(message: "Order success")
+  
   rescue ActiveRecord::RecordNotFound => e
     render_error(e.message, :not_found)
-  rescue StandardError => e
-    render_error(e.message, :unprocessable_entity)
+  rescue => e
+    ogger.error "🔥 ERROR: #{e.message}"
+    logger.error e.backtrace.join("\n")
+    render_error("Unexpected error", :internal_server_error)
   end
+  
 end
