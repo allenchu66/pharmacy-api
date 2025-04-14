@@ -29,6 +29,19 @@ class Api::UsersController < ApplicationController
       render_error("User not found", :not_found)
     end
 
+    # POST /api/users/:id/add_balance
+    def add_balance
+      user = User.find_by(id: params[:id])
+      return render_error("User not found", :not_found) if user.nil?
+
+      amount = params[:amount].to_f
+      return render_error("Invalid amount", :bad_request) if amount <= 0
+
+      user.update!(cash_balance: user.cash_balance + amount)
+
+      render_success(user)
+    end
+
     private
     def user_params
       params.permit(:name, :phone_number, :cash_balance)

@@ -155,4 +155,54 @@ RSpec.describe 'api/users', type: :request do
     end
   end
 
+  path '/api/users/{id}/add_balance' do
+    post('使用者儲值 add_balance') do
+      tags 'Users'
+      consumes 'application/json'
+      produces 'application/json'
+
+      parameter name: :id, in: :path, type: :integer, description: 'User ID'
+      parameter name: :body, in: :body, schema: {
+        type: :object,
+        properties: {
+          amount: { type: :number }
+        },
+        required: ['amount']
+      }
+
+      response(200, '成功') do
+        let!(:user) { create(:user, cash_balance: 100) }
+        let(:id) { user.id }
+        let(:body) { { amount: 200.0 } }
+
+        run_test! do |response|
+          json = JSON.parse(response.body)
+          expect(json['status']).to eq('success')
+          expect(json['data']['cash_balance']).to eq(300.0)
+        end
+      end
+
+      response(404, '找不到 User') do
+        let(:id) { -1 }
+        let(:body) { { amount: 200.0 } }
+
+        run_test! do |response|
+          json = JSON.parse(response.body)
+          expect(json['status']).to eq('fail')
+        end
+      end
+
+      response(400, '儲值金額錯誤') do
+        let!(:user) { create(:user, cash_balance: 100) }
+        let(:id) { user.id }
+        let(:body) { { amount: -100.0 } }
+
+        run_test! do |response|
+          json = JSON.parse(response.body)
+          expect(json['status']).to eq('fail')
+        end
+      end
+    end
+  end
+
 end

@@ -613,5 +613,34 @@ paths:
                         nullable: true
                       cash_balance:
                         type: number
+  "/api/users/{id}/add_balance":
+    post:
+      summary: 使用者儲值 add_balance
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: 成功
+        '404':
+          description: 找不到 User
+        '400':
+          description: 儲值金額錯誤
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+              required:
+              - amount
 servers:
 - url: http://35.229.247.36:3000
