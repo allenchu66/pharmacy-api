@@ -115,7 +115,6 @@ RSpec.describe 'api/pharmacies', type: :request do
             items: {
               type: :object,
               properties: {
-                id: { type: :integer },
                 name: { type: :string },
                 price: { type: :number },
                 stock: { type: :integer },
@@ -127,13 +126,14 @@ RSpec.describe 'api/pharmacies', type: :request do
           }
         }
 
-        let(:pharmacy_id) { Pharmacy.create(name: 'Carepoint').id }
-
+   
         before do
-          Mask.create(name: 'Mask A', price: 10, stock: 100, pharmacy_id: pharmacy_id)
-          Mask.create(name: 'Mask B', price: 15, stock: 50, pharmacy_id: pharmacy_id)
+          pharmacy = Pharmacy.create!(name: 'Carepoint',cash_balance: 1000)
+          Mask.create(name: 'Mask A', price: 10, stock: 100, pharmacy_id: pharmacy.id)
+          Mask.create(name: 'Mask B', price: 15, stock: 50, pharmacy_id: pharmacy.id)
+          @pharmacy_id = pharmacy.id
         end
-
+        let(:pharmacy_id) { @pharmacy_id }
         run_test!
       end
 

@@ -4,7 +4,7 @@ class Api::PharmaciesController < ApplicationController
    # POST /api/pharmacies
    def create
     pharmacy = Pharmacy.create!(pharmacy_params)
-    render_success(pharmacy)
+    render_success(pharmacy,:created)
     rescue ActiveRecord::RecordInvalid => e
       render_error(e.record.errors.full_messages.join(", "), :unprocessable_entity)
     end

@@ -14,6 +14,8 @@ Rails.application.routes.draw do
       end
       # 進貨 API
       resources :mask_purchases, only: [:create]
+      #藥局儲值資金
+      resource :add_funds, only: [:create], controller: 'pharmacies/add_funds'
     end
 
     # 全部 Mask（支援條件搜尋）

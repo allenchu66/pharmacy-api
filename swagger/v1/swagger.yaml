@@ -568,6 +568,49 @@ paths:
                     type: string
                   message:
                     type: string
+  "/api/pharmacies/{pharmacy_id}/add_funds":
+    post:
+      summary: Add funds to pharmacy
+      tags:
+      - Pharmacies
+      parameters:
+      - name: pharmacy_id
+        in: path
+        description: Pharmacy ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                      cash_balance:
+                        type: number
+        '422':
+          description: Invalid amount
+        '404':
+          description: Pharmacy not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: integer
+              required:
+              - amount
   "/api/pharmacies":
     get:
       summary: Get all pharmacies (supports keyword / day_of_week / time filter)
@@ -732,8 +775,6 @@ paths:
                     items:
                       type: object
                       properties:
-                        id:
-                          type: integer
                         name:
                           type: string
                         price:

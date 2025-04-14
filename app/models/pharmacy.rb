@@ -3,6 +3,11 @@ class Pharmacy < ApplicationRecord
   has_many :masks, dependent: :destroy
   has_many :orders
 
+  attribute :cash_balance, :float
+
+  validates :name, presence: true
+  validates :cash_balance, numericality: { greater_than_or_equal_to: 0 }
+
   def opening_hours_text
     hours = pharmacy_opening_hours.order(:day_of_week).to_a
     return "" if hours.empty?
