@@ -75,6 +75,7 @@ RSpec.describe 'api/users', type: :request do
       end
     end
   end
+
   path '/api/users/{id}' do
     get('取得單一使用者') do
       tags 'Users'
@@ -99,7 +100,59 @@ RSpec.describe 'api/users', type: :request do
         }
 
         run_test!
+
+        response '404', '使用者不存在' do
+          let(:id) { -1 }
+          run_test!
+        end
       end
     end
   end
+
+  path '/api/users' do
+    post '新增用戶' do
+      tags 'Users'
+      consumes 'application/json'
+
+      parameter name: :user, in: :body, schema: {
+        type: :object,
+        properties: {
+          name: { type: :string },
+          phone_number: { type: :string },
+          cash_balance: { type: :number }
+        },
+        required: ['name', 'phone_number']
+      }
+
+      response '200', '新增成功' do
+        let(:user) { { name: 'Allen', phone_number: '0912345678', cash_balance: 1000 } }
+        run_test!
+      end
+
+      response '422', '手機沒填' do
+       
+      end
+
+      response '422', "發生錯誤，可能包含：\n- 手機未填\n- 手機長度不正確\n- 手機已存在" do
+        context '手機沒填' do
+          let(:user) { { name: 'Allen', phone_number: '', cash_balance: 1000 } }
+          run_test!
+        end
+  
+        context '手機重複' do
+          before do
+            User.create!(name: 'Allen', phone_number: '0912345678', cash_balance: 1000)
+          end
+          let(:user) { { name: 'Other', phone_number: '0912345678', cash_balance: 500 } }
+          run_test!
+        end
+  
+        context '手機長度不正確' do
+          let(:user) { { name: 'Allen', phone_number: '0912', cash_balance: 1000 } }
+          run_test!
+        end
+      end
+    end
+  end
+
 end

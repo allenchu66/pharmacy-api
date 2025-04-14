@@ -548,6 +548,35 @@ paths:
                           type: string
                         cash_balance:
                           type: number
+    post:
+      summary: 新增用戶
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '200':
+          description: 新增成功
+        '422':
+          description: |-
+            發生錯誤，可能包含：
+            - 手機未填
+            - 手機長度不正確
+            - 手機已存在
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                phone_number:
+                  type: string
+                cash_balance:
+                  type: number
+              required:
+              - name
+              - phone_number
   "/api/users/{id}":
     get:
       summary: 取得單一使用者
@@ -561,6 +590,8 @@ paths:
         schema:
           type: integer
       responses:
+        '404':
+          description: 使用者不存在
         '200':
           description: 成功
           content:
