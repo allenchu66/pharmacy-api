@@ -33,5 +33,7 @@ Rails.application.routes.draw do
         post :add_balance
       end
     end
+
+    resources :mask_types, only: [:index, :show, :create]
   end
 end

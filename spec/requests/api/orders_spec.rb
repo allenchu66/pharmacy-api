@@ -90,6 +90,8 @@ RSpec.describe 'api/orders', type: :request do
 
       let(:user) { create(:user) }
       let(:pharmacy) { create(:pharmacy) }
+      let(:mask_type) { create(:mask_type, name: "醫療口罩(藍)") }
+      let(:mask) { create(:mask, pharmacy: pharmacy, mask_type: mask_type) }
       let(:mask) { create(:mask, pharmacy: pharmacy) }
       let(:order) { create(:order, user: user, pharmacy: pharmacy, total_price: 200) }
       let(:id) { order.id }

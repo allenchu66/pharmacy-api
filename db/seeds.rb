@@ -14,8 +14,15 @@ ActiveRecord::Base.connection.execute("ALTER SEQUENCE pharmacies_id_seq RESTART 
 ActiveRecord::Base.connection.execute("ALTER SEQUENCE masks_id_seq RESTART WITH 1")
 ActiveRecord::Base.connection.execute("ALTER SEQUENCE orders_id_seq RESTART WITH 1")
 ActiveRecord::Base.connection.execute("ALTER SEQUENCE order_items_id_seq RESTART WITH 1")
+
 # Load pharmacies data
 pharmacies = JSON.parse(File.read(Rails.root.join('db', 'pharmacies.json')))
+
+mask_type_names = pharmacies.flat_map { |p| (p['masks'] || []).map { |m| m['name'] } }
+
+mask_type_names.uniq.each do |name|
+  MaskType.find_or_create_by!(name: name)
+end
 
 pharmacies.each do |p|
   pharmacy = Pharmacy.create!(
@@ -32,16 +39,20 @@ pharmacies.each do |p|
     end
   end
 
-  # Masks with random stock
-  if p['masks']
-    p['masks'].each do |m|
-      pharmacy.masks.create!(
-        name: m['name'],
-        price: m['price'],
-        stock: rand(10..100) # Random 
-      )
+  # 建立 masks (with mask_type_id)
+  p['masks'].each do |m|
+    mask_type = MaskType.find_by!(name: m['name'])
+
+    pharmacy.masks.create!(
+      mask_type: mask_type,
+      price: m['price'],
+      stock: rand(10..100)
+    )
     end
   end
+
+mask_type_names.uniq.each do |name|
+  MaskType.find_or_create_by!(name: name)
 end
 
 # Load users data
@@ -59,7 +70,9 @@ users.each do |u|
 
   u['purchaseHistories'].each do |history|
     pharmacy = Pharmacy.find_by(name: history['pharmacyName'])
-    mask = Mask.find_by(name: history['maskName'], pharmacy_id: pharmacy.id)
+
+    mask_type = MaskType.find_by(name: history['maskName'])
+    mask = Mask.find_by(mask_type: mask_type, pharmacy_id: pharmacy.id)
 
     # Skip if not found
     next unless pharmacy && mask

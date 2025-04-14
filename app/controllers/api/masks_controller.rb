@@ -49,5 +49,4 @@ class Api::MasksController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     render_error("Mask not found")
   end
-
 end

@@ -4,6 +4,112 @@ info:
   title: API V1
   version: v1
 paths:
+  "/api/mask_types":
+    get:
+      summary: 取得所有 MaskTypes (支援 id / keyword 搜尋)
+      tags:
+      - MaskTypes
+      parameters:
+      - name: id
+        in: query
+        required: false
+        description: 指定 MaskType ID
+        schema:
+          type: integer
+      - name: keyword
+        in: query
+        required: false
+        description: 模糊搜尋 name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        created_at:
+                          type: string
+                          format: date_time
+                        updated_at:
+                          type: string
+                          format: date_time
+    post:
+      summary: 新增 MaskType
+      tags:
+      - MaskTypes
+      parameters: []
+      responses:
+        '200':
+          description: 成功
+        '422':
+          description: 失敗
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                color:
+                  type: string
+                size:
+                  type: string
+              required:
+              - name
+  "/api/mask_types/{id}":
+    get:
+      summary: 取得指定 MaskType
+      tags:
+      - MaskTypes
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: MaskType ID
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date_time
+                      updated_at:
+                        type: string
+                        format: date_time
+        '404':
+          description: 找不到
   "/api/masks":
     get:
       summary: 取得所有口罩 (支援搜尋與篩選)
