@@ -23,7 +23,11 @@ class Api::PharmaciesController < ApplicationController
     pharmacies = Pharmacy.all
 
     if params[:keyword].present?
-      pharmacies = pharmacies.where("name ILIKE ?", "%#{params[:keyword]}%")
+      keyword = params[:keyword]
+      pharmacies = pharmacies
+        .select("pharmacies.*, POSITION(#{ActiveRecord::Base.connection.quote(keyword)} IN name) AS position_order")
+        .where("name ILIKE ?", "%#{keyword}%")
+        .order(Arel.sql("CASE WHEN POSITION(#{ActiveRecord::Base.connection.quote(keyword)} IN name) = 0 THEN 1 ELSE 0 END, POSITION(#{ActiveRecord::Base.connection.quote(keyword)} IN name) ASC"))
     end
 
     if params[:day_of_week].present?
@@ -41,9 +45,8 @@ class Api::PharmaciesController < ApplicationController
       else
         pharmacies = pharmacies.where(pharmacy_opening_hours: { day_of_week: params[:day_of_week] })
       end
+      pharmacies = pharmacies.distinct
     end
-
-    pharmacies = pharmacies.distinct
 
     render_success(pharmacies.as_json(methods: :opening_hours_text))
   end

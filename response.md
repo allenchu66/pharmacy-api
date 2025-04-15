@@ -22,8 +22,10 @@
   - Implemented at `/api/orders/analytics/statistics?start_date=YYYY-MM-DD&end_date=YYYY-MM-DD`
   - Test : [http://35.229.247.36:3000/api/orders/analytics/statistics?start_date=2021-01-01&end_date=2021-01-31](http://35.229.247.36:3000/api/orders/analytics/statistics?start_date=2021-01-01&end_date=2021-01-31)
 - [x] Search for pharmacies or masks by name, ranked by relevance to the search term.
-  - Implemented at `/api/search?keyword=xxx`
-  - Test : []()
+  - Implemented at `/api/pharmacies?keyword=xxx`
+  - Test : [http://35.229.247.36:3000/api/pharmacies?keyword=M](http://35.229.247.36:3000/api/pharmacies?keyword=M)
+  - Implemented at `/api/mask_types?keyword=xxx`
+  - Test : [http://35.229.247.36:3000/api/mask_types?keyword=green](http://35.229.247.36:3000/api/mask_types?keyword=green)
 - [x] Process a user purchases a mask from a pharmacy, and handle all relevant data changes in an atomic transaction.
   - Implemented at `/api/orders`
   - Test : []()

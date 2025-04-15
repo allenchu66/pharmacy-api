@@ -59,8 +59,20 @@ class Api::MasksController < ApplicationController
     masks = masks.where("price <= ?", params[:price_max].to_f) if params[:price_max].present?
 
     # search
-    masks = masks.where("masks.name ILIKE ?", "%#{params[:keyword]}%") if params[:keyword].present?
-
+    if params[:keyword].present?
+      keyword = params[:keyword]
+      masks = masks
+      .joins(:mask_type)
+        .select("masks.*, POSITION(#{ActiveRecord::Base.connection.quote(keyword)} IN mask_types.name) AS position_order")
+        .where("mask_types.name ILIKE ?", "%#{keyword}%")
+        .order(Arel.sql("
+          CASE 
+            WHEN POSITION(#{ActiveRecord::Base.connection.quote(keyword)} IN mask_types.name) = 0 THEN 1 
+            ELSE 0 
+          END, 
+          position_order ASC
+        "))
+    end    
     # sort
     if params[:sort] == 'price_asc'
       masks = masks.order(price: :asc)
