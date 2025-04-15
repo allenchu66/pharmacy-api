@@ -97,7 +97,7 @@ class Api::OrdersController < ApplicationController
       order_items = []
 
       items.each do |item|
-        mask = Mask.find(item[:mask_id])
+        mask = Mask.lock.find(item[:mask_id])
         quantity = item[:quantity].to_i
   
         return render_error("Quantity must greater than 0", :bad_request) if quantity <= 0
@@ -132,7 +132,7 @@ class Api::OrdersController < ApplicationController
   rescue ActiveRecord::RecordNotFound => e
     render_error(e.message, :not_found)
   rescue => e
-    ogger.error "🔥 ERROR: #{e.message}"
+    logger.error "ERROR: #{e.message}"
     logger.error e.backtrace.join("\n")
     render_error("Unexpected error", :internal_server_error)
   end

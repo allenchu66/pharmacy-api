@@ -25,9 +25,11 @@ class Api::PharmaciesController < ApplicationController
     if params[:keyword].present?
       keyword = params[:keyword]
       pharmacies = pharmacies
-        .select("pharmacies.*, POSITION(#{ActiveRecord::Base.connection.quote(keyword)} IN name) AS position_order")
+        .select("pharmacies.*, 
+          POSITION(#{ActiveRecord::Base.connection.quote(keyword)} IN name) AS position_order, 
+         CASE WHEN POSITION(#{ActiveRecord::Base.connection.quote(keyword)} IN name) = 0 THEN 1 ELSE 0 END AS case_order")
         .where("name ILIKE ?", "%#{keyword}%")
-        .order(Arel.sql("CASE WHEN POSITION(#{ActiveRecord::Base.connection.quote(keyword)} IN name) = 0 THEN 1 ELSE 0 END, POSITION(#{ActiveRecord::Base.connection.quote(keyword)} IN name) ASC"))
+        .order("case_order ASC, position_order ASC")
     end
 
     if params[:day_of_week].present?
@@ -45,8 +47,9 @@ class Api::PharmaciesController < ApplicationController
       else
         pharmacies = pharmacies.where(pharmacy_opening_hours: { day_of_week: params[:day_of_week] })
       end
-      pharmacies = pharmacies.distinct
     end
+
+    pharmacies = pharmacies.distinct
 
     render_success(pharmacies.as_json(methods: :opening_hours_text))
   end
@@ -84,6 +87,10 @@ class Api::PharmaciesController < ApplicationController
   end
 
   def filter_by_mask_conditions
+    if params[:stock_gt].blank? && params[:stock_lt].blank? &&
+      params[:mask_price_min].blank? && params[:mask_price_max].blank?
+     return render_error("At least one filter parameter is required", :bad_request)
+    end
     price_min = params[:mask_price_min].to_f
     price_max = params[:mask_price_max].to_f
     mask_count_gt = params[:stock_gt].to_i
@@ -94,8 +101,20 @@ class Api::PharmaciesController < ApplicationController
     .where("masks.price <= ?", price_max)
     .group("pharmacies.id")
 
-    pharmacies = pharmacies.having("COUNT(masks.id) > ?", mask_count_gt) if params[:stock_gt].present?
-    pharmacies = pharmacies.having("COUNT(masks.id) < ?", mask_count_lt) if params[:stock_lt].present?
+    having_conditions = []  
+    having_values = []
+
+    if params[:stock_gt].present?
+      having_conditions << "COUNT(masks.id) > ?"
+      having_values << mask_count_gt
+    end
+
+    if params[:stock_lt].present?
+      having_conditions << "COUNT(masks.id) < ?"
+      having_values << mask_count_lt
+    end
+
+    pharmacies = pharmacies.having(having_conditions.join(" AND "), *having_values) if having_conditions.any?
     pharmacies = pharmacies.select("pharmacies.*, COUNT(masks.id) as mask_count")
   
     result = pharmacies.map do |pharmacy|

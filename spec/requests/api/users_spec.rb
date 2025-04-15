@@ -2,14 +2,14 @@ require 'swagger_helper'
 
 RSpec.describe 'api/users', type: :request do
   path '/api/users' do
-    get '取得所有使用者 (支援搜尋 name / phone_number)' do
+    get 'Get all users (support search by name / phone_number)' do
       tags 'Users'
       produces 'application/json'
 
-      parameter name: :name, in: :query, type: :string, description: '使用者名稱關鍵字'
-      parameter name: :phone_number, in: :query, type: :string, description: '使用者電話號碼'
+      parameter name: :name, in: :query, type: :string, description: 'Keyword to search user name'
+      parameter name: :phone_number, in: :query, type: :string, description: 'User phone number'
 
-      response '200', '成功 - 無條件' do
+      response '200', 'Success - No Condition' do
         schema type: :object,
                properties: {
                  status: { type: :string },
@@ -38,7 +38,7 @@ RSpec.describe 'api/users', type: :request do
         run_test!
       end
 
-      response '200', '成功 - 搜尋名稱 name' do
+      response '200', 'Success - Search by name' do
         before do
           User.create(name: 'Allen', phone_number: '0912345678', cash_balance: 100)
           User.create(name: 'Bob', phone_number: '0987654321', cash_balance: 200)
@@ -50,7 +50,7 @@ RSpec.describe 'api/users', type: :request do
         run_test!
       end
 
-      response '200', '成功 - 搜尋電話 phone_number' do
+      response '200', 'Success - Search by phone_number' do
         before do
           User.create(name: 'Allen', phone_number: '0912345678', cash_balance: 100)
           User.create(name: 'Bob', phone_number: '0987654321', cash_balance: 200)
@@ -62,7 +62,7 @@ RSpec.describe 'api/users', type: :request do
         run_test!
       end
 
-      response '200', '成功 - 同時搜尋 name + phone_number' do
+      response '200', 'Success - Search by name and phone_number' do
         before do
           User.create(name: 'Allen', phone_number: '0912345678', cash_balance: 100)
           User.create(name: 'Allen', phone_number: '0999999999', cash_balance: 300)
@@ -77,7 +77,7 @@ RSpec.describe 'api/users', type: :request do
   end
 
   path '/api/users/{id}' do
-    get('取得單一使用者') do
+    get('Get user by id') do
       tags 'Users'
       produces 'application/json'
       parameter name: :id, in: :path, type: :integer, description: 'User ID'
@@ -85,7 +85,7 @@ RSpec.describe 'api/users', type: :request do
       let!(:user) { create(:user) } 
       let(:id) { user.id }
 
-      response(200, '成功') do
+      response(200, 'Success') do
         schema type: :object, properties: {
           status: { type: :string },
           data: {
@@ -100,17 +100,17 @@ RSpec.describe 'api/users', type: :request do
         }
 
         run_test!
+      end
 
-        response '404', '使用者不存在' do
-          let(:id) { -1 }
-          run_test!
-        end
+      response '404', 'User not found' do
+        let(:id) { -1 }
+        run_test!
       end
     end
   end
 
   path '/api/users' do
-    post '新增用戶' do
+    post 'Create user' do
       tags 'Users'
       consumes 'application/json'
 
@@ -124,22 +124,23 @@ RSpec.describe 'api/users', type: :request do
         required: ['name', 'phone_number']
       }
 
-      response '200', '新增成功' do
+      response '200', 'Create success' do
         let(:user) { { name: 'Allen', phone_number: '0912345678', cash_balance: 1000 } }
         run_test!
       end
 
-      response '422', '手機沒填' do
-       
+      response '422', 'Missing phone number' do
+        let(:user) { { name: 'Allen', phone_number: '', cash_balance: 1000 } }
+        run_test!
       end
 
-      response '422', "發生錯誤，可能包含：\n- 手機未填\n- 手機長度不正確\n- 手機已存在" do
-        context '手機沒填' do
+      response '422', "Validation failed, possible reasons:\n- Missing phone number\n- Invalid phone number length\n- Phone number already exists" do
+        context 'Phone number is missing' do
           let(:user) { { name: 'Allen', phone_number: '', cash_balance: 1000 } }
           run_test!
         end
   
-        context '手機重複' do
+        context 'Phone number already exists' do
           before do
             User.create!(name: 'Allen', phone_number: '0912345678', cash_balance: 1000)
           end
@@ -147,7 +148,7 @@ RSpec.describe 'api/users', type: :request do
           run_test!
         end
   
-        context '手機長度不正確' do
+        context 'Invalid phone number length' do
           let(:user) { { name: 'Allen', phone_number: '0912', cash_balance: 1000 } }
           run_test!
         end
@@ -156,7 +157,7 @@ RSpec.describe 'api/users', type: :request do
   end
 
   path '/api/users/{id}/add_balance' do
-    post('使用者儲值 add_balance') do
+    post('Add balance to user') do
       tags 'Users'
       consumes 'application/json'
       produces 'application/json'
@@ -170,7 +171,7 @@ RSpec.describe 'api/users', type: :request do
         required: ['amount']
       }
 
-      response(200, '成功') do
+      response(200, 'Success') do
         let!(:user) { create(:user, cash_balance: 100) }
         let(:id) { user.id }
         let(:body) { { amount: 200.0 } }
@@ -182,7 +183,7 @@ RSpec.describe 'api/users', type: :request do
         end
       end
 
-      response(404, '找不到 User') do
+      response(404, 'User not found') do
         let(:id) { -1 }
         let(:body) { { amount: 200.0 } }
 
@@ -192,7 +193,7 @@ RSpec.describe 'api/users', type: :request do
         end
       end
 
-      response(400, '儲值金額錯誤') do
+      response(400, 'Invalid amount') do
         let!(:user) { create(:user, cash_balance: 100) }
         let(:id) { user.id }
         let(:body) { { amount: -100.0 } }
@@ -204,5 +205,4 @@ RSpec.describe 'api/users', type: :request do
       end
     end
   end
-
 end

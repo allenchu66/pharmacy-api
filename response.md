@@ -28,8 +28,8 @@
   - Test : [http://35.229.247.36:3000/api/mask_types?keyword=green](http://35.229.247.36:3000/api/mask_types?keyword=green)
 - [x] Process a user purchases a mask from a pharmacy, and handle all relevant data changes in an atomic transaction.
   - Implemented at `/api/orders`
-  - Test : []()
 ### A.2. API Document
+[API Document](http://35.229.247.36:3000/api-docs/index.html)
 > Please describe how to use the API in the API documentation. You can edit by any format (e.g., Markdown or OpenAPI) or free tools (e.g., [hackMD](https://hackmd.io/), [postman](https://www.postman.com/), [google docs](https://docs.google.com/document/u/0/), or  [swagger](https://swagger.io/specification/)).
 
 Import [this](#api-document) json file to Postman.
@@ -71,16 +71,17 @@ $ rake import_data:user[PATH_TO_FILE]
 
 ### B.3. Demo Site Url
 
-The demo site is ready on [my AWS demo site](#demo-site-url); you can try any APIs on this demo site.
+The demo site is ready on [my GCP demo sitehttp://35.229.247.36:3000/api-docs/index.html](http://35.229.247.36:3000/api-docs/index.html); you can try any APIs on this demo site.
 
 ## C. Other Information
 
 ### C.1. ERD
 
-My ERD [erd-link](#erd-link).
+My ERD:
+![ERD Image](./public/erd.png)
 
 ### C.2. Technical Document
 
-For frontend programmer reading, please check this [technical document](technical-document) to know how to operate those APIs.
+For frontend programmer reading, please check this [Swagger API Documentation](http://35.229.247.36:3000/api-docs) to know how to operate those APIs.
 
 - --

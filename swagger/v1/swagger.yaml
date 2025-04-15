@@ -6,25 +6,25 @@ info:
 paths:
   "/api/mask_types":
     get:
-      summary: 取得所有 MaskTypes (支援 id / keyword 搜尋)
+      summary: Get all MaskTypes (support search by id / keyword)
       tags:
       - MaskTypes
       parameters:
       - name: id
         in: query
         required: false
-        description: 指定 MaskType ID
+        description: Filter by MaskType ID
         schema:
           type: integer
       - name: keyword
         in: query
         required: false
-        description: 模糊搜尋 name
+        description: Fuzzy search by name
         schema:
           type: string
       responses:
         '200':
-          description: 成功
+          description: Success
           content:
             application/json:
               schema:
@@ -48,15 +48,15 @@ paths:
                           type: string
                           format: date_time
     post:
-      summary: 新增 MaskType
+      summary: Create MaskType
       tags:
       - MaskTypes
       parameters: []
       responses:
         '200':
-          description: 成功
+          description: Success
         '422':
-          description: 失敗
+          description: Validation failed
       requestBody:
         content:
           application/json:
@@ -75,7 +75,7 @@ paths:
               - name
   "/api/mask_types/{id}":
     get:
-      summary: 取得指定 MaskType
+      summary: Get specific MaskType
       tags:
       - MaskTypes
       parameters:
@@ -87,7 +87,7 @@ paths:
           type: integer
       responses:
         '200':
-          description: 成功
+          description: Success
           content:
             application/json:
               schema:
@@ -109,46 +109,46 @@ paths:
                         type: string
                         format: date_time
         '404':
-          description: 找不到
+          description: MaskType not found
   "/api/masks":
     get:
-      summary: 取得所有口罩 (支援搜尋與篩選)
+      summary: Get all masks (support search & filters)
       tags:
       - Masks
       parameters:
       - name: keyword
         in: query
-        description: 口罩名稱關鍵字
+        description: Keyword search by mask name
         schema:
           type: string
       - name: stock_gt
         in: query
-        description: 庫存大於
+        description: Stock greater than
         schema:
           type: integer
       - name: stock_lt
         in: query
-        description: 庫存小於
+        description: Stock less than
         schema:
           type: integer
       - name: price_min
         in: query
-        description: 價格大於等於
+        description: Minimum price
         schema:
           type: number
       - name: price_max
         in: query
-        description: 價格小於等於
+        description: Maximum price
         schema:
           type: number
       - name: sort
         in: query
-        description: 排序方式(price_asc、price_desc、name_asc、name_desc)
+        description: Sort by price_asc, price_desc, name_asc, or name_desc
         schema:
           type: string
       responses:
         '200':
-          description: 成功
+          description: Success
           content:
             application/json:
               schema:
@@ -178,31 +178,31 @@ paths:
                               type: string
   "/api/orders/analytics/top_users":
     get:
-      summary: Top Users 排行榜
+      summary: Top Users Ranking
       tags:
       - Orders Analytics
       parameters:
       - name: start_date
         in: query
         required: true
-        description: 起始日期 yyyy-mm-dd
+        description: Start date (yyyy-mm-dd)
         schema:
           type: string
       - name: end_date
         in: query
         required: true
-        description: 結束日期 yyyy-mm-dd
+        description: End date (yyyy-mm-dd)
         schema:
           type: string
       - name: limit
         in: query
         required: false
-        description: 前幾名（預設5）
+        description: Top N users (default is 5)
         schema:
           type: integer
       responses:
         '200':
-          description: 成功
+          description: Success
           content:
             application/json:
               schema:
@@ -253,25 +253,25 @@ paths:
                                           type: integer
   "/api/orders/analytics/statistics":
     get:
-      summary: 訂單統計
+      summary: Order Statistics Summary
       tags:
       - Orders Analytics
       parameters:
       - name: start_date
         in: query
         required: true
-        description: 起始日期 yyyy-mm-dd
+        description: Start date (yyyy-mm-dd)
         schema:
           type: string
       - name: end_date
         in: query
         required: true
-        description: 結束日期 yyyy-mm-dd
+        description: End date (yyyy-mm-dd)
         schema:
           type: string
       responses:
         '200':
-          description: 成功
+          description: Success
           content:
             application/json:
               schema:
@@ -335,12 +335,12 @@ paths:
           type: integer
       - name: price_min
         in: query
-        description: Total price >= (min)
+        description: Minimum total price
         schema:
           type: number
       - name: price_max
         in: query
-        description: Total price <= (max)
+        description: Maximum total price
         schema:
           type: number
       - name: start_date
@@ -408,7 +408,7 @@ paths:
         '200':
           description: Success
         '400':
-          description: Validation error
+          description: Validation failed
       requestBody:
         content:
           application/json:
@@ -434,7 +434,7 @@ paths:
               - items
   "/api/orders/{id}":
     get:
-      summary: 取得指定訂單
+      summary: Get a specific order
       tags:
       - Orders
       parameters:
@@ -829,25 +829,127 @@ paths:
                   type: integer
               required:
               - amount
+  "/api/pharmacies/{id}/opening_hours":
+    put:
+      summary: Update pharmacy opening hours
+      tags:
+      - Pharmacies
+      parameters:
+      - name: id
+        in: path
+        description: Pharmacy ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Opening hours updated
+        '404':
+          description: Pharmacy not found
+        '422':
+          description: Invalid input
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                opening_hours:
+                  type: object
+                  example:
+                    Mon:
+                    - open: '09:00'
+                      close: '18:00'
+                    Tue:
+                    - open: '09:00'
+                      close: '18:00'
+                    Wed:
+                    - open: '09:00'
+                      close: '18:00'
+                    Thu:
+                    - open: '09:00'
+                      close: '18:00'
+                    Fri:
+                    - open: '09:00'
+                      close: '18:00'
+                    Sat:
+                    - open: '10:00'
+                      close: '14:00'
+                    Sun: []
+              required:
+              - opening_hours
+  "/api/pharmacies/filter_by_mask_conditions":
+    get:
+      summary: Filter pharmacies by mask conditions
+      tags:
+      - Pharmacies
+      parameters:
+      - name: stock_gt
+        in: query
+        required: false
+        description: Required if no other filters are provided
+        schema:
+          type: integer
+      - name: stock_lt
+        in: query
+        required: false
+        description: Required if no other filters are provided
+        schema:
+          type: integer
+      - name: mask_price_min
+        in: query
+        required: false
+        description: Required if no other filters are provided
+        schema:
+          type: number
+      - name: mask_price_max
+        in: query
+        required: false
+        description: Required if no other filters are provided
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Success with condition
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        mask_count:
+                          type: integer
+        '400':
+          description: Missing filter parameters
   "/api/users":
     get:
-      summary: 取得所有使用者 (支援搜尋 name / phone_number)
+      summary: Get all users (support search by name / phone_number)
       tags:
       - Users
       parameters:
       - name: name
         in: query
-        description: 使用者名稱關鍵字
+        description: Keyword to search user name
         schema:
           type: string
       - name: phone_number
         in: query
-        description: 使用者電話號碼
+        description: User phone number
         schema:
           type: string
       responses:
         '200':
-          description: 成功 - 同時搜尋 name + phone_number
+          description: Success - Search by name and phone_number
           content:
             application/json:
               schema:
@@ -869,19 +971,19 @@ paths:
                         cash_balance:
                           type: number
     post:
-      summary: 新增用戶
+      summary: Create user
       tags:
       - Users
       parameters: []
       responses:
         '200':
-          description: 新增成功
+          description: Create success
         '422':
           description: |-
-            發生錯誤，可能包含：
-            - 手機未填
-            - 手機長度不正確
-            - 手機已存在
+            Validation failed, possible reasons:
+            - Missing phone number
+            - Invalid phone number length
+            - Phone number already exists
       requestBody:
         content:
           application/json:
@@ -899,7 +1001,7 @@ paths:
               - phone_number
   "/api/users/{id}":
     get:
-      summary: 取得單一使用者
+      summary: Get user by id
       tags:
       - Users
       parameters:
@@ -910,10 +1012,8 @@ paths:
         schema:
           type: integer
       responses:
-        '404':
-          description: 使用者不存在
         '200':
-          description: 成功
+          description: Success
           content:
             application/json:
               schema:
@@ -933,9 +1033,11 @@ paths:
                         nullable: true
                       cash_balance:
                         type: number
+        '404':
+          description: User not found
   "/api/users/{id}/add_balance":
     post:
-      summary: 使用者儲值 add_balance
+      summary: Add balance to user
       tags:
       - Users
       parameters:
@@ -947,11 +1049,11 @@ paths:
           type: integer
       responses:
         '200':
-          description: 成功
+          description: Success
         '404':
-          description: 找不到 User
+          description: User not found
         '400':
-          description: 儲值金額錯誤
+          description: Invalid amount
       requestBody:
         content:
           application/json:

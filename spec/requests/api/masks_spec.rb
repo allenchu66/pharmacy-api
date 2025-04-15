@@ -2,16 +2,16 @@ require 'swagger_helper'
 
 RSpec.describe 'api/masks', type: :request do
   path '/api/masks' do
-    get('取得所有口罩 (支援搜尋與篩選)') do
+    get 'Get all masks (support search & filters)' do
       tags 'Masks'
       produces 'application/json'
 
-      parameter name: :keyword, in: :query, type: :string, description: '口罩名稱關鍵字'
-      parameter name: :stock_gt, in: :query, type: :integer, description: '庫存大於'
-      parameter name: :stock_lt, in: :query, type: :integer, description: '庫存小於'
-      parameter name: :price_min, in: :query, type: :number, description: '價格大於等於'
-      parameter name: :price_max, in: :query, type: :number, description: '價格小於等於'
-      parameter name: :sort, in: :query, type: :string, description: '排序方式(price_asc、price_desc、name_asc、name_desc)'
+      parameter name: :keyword, in: :query, type: :string, description: 'Keyword search by mask name'
+      parameter name: :stock_gt, in: :query, type: :integer, description: 'Stock greater than'
+      parameter name: :stock_lt, in: :query, type: :integer, description: 'Stock less than'
+      parameter name: :price_min, in: :query, type: :number, description: 'Minimum price'
+      parameter name: :price_max, in: :query, type: :number, description: 'Maximum price'
+      parameter name: :sort, in: :query, type: :string, description: 'Sort by price_asc, price_desc, name_asc, or name_desc'
 
       let(:keyword) { '' }
       let(:stock_gt) { nil }
@@ -20,7 +20,7 @@ RSpec.describe 'api/masks', type: :request do
       let(:price_max) { nil }
       let(:sort) { nil }
 
-      response(200, '成功') do
+      response(200, 'Success') do
         schema type: :object, properties: {
           status: { type: :string },
           data: {
@@ -44,65 +44,65 @@ RSpec.describe 'api/masks', type: :request do
           }
         }
 
-        context '無參數' do
+        context 'without any parameters' do
           run_test!
         end
 
-        context '搜尋 keyword' do
+        context 'search by keyword' do
           let(:keyword) { 'Smile' }
 
           run_test!
         end
 
-        context '篩選 stock_gt' do
+        context 'filter by stock_gt' do
           let(:stock_gt) { 10 }
 
           run_test!
         end
 
-        context '篩選 stock_lt' do
+        context 'filter by stock_lt' do
           let(:stock_lt) { 5 }
 
           run_test!
         end
 
-        context '篩選 price_min' do
+        context 'filter by price_min' do
           let(:price_min) { 10 }
 
           run_test!
         end
 
-        context '篩選 price_max' do
+        context 'filter by price_max' do
           let(:price_max) { 50 }
 
           run_test!
         end
 
-        context '排序 price_asc' do
+        context 'sort by price ascending' do
           let(:sort) { 'price_asc' }
 
           run_test!
         end
 
-        context '排序 price_desc' do
+        context 'sort by price descending' do
           let(:sort) { 'price_desc' }
 
           run_test!
         end
 
-        context '排序 name_asc' do
+        context 'sort by name ascending' do
           let(:sort) { 'name_asc' }
 
           run_test!
         end
 
-        context '排序 name_desc' do
+        context 'sort by name descending' do
           let(:sort) { 'name_desc' }
 
           run_test!
         end
 
-        context '複合條件搜尋' do
+        context 'search with multiple conditions' do
           let(:keyword) { 'Mask' }
           let(:stock_gt) { 5 }
           let(:stock_lt) { 20 }

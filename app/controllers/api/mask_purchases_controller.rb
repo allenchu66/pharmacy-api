@@ -57,7 +57,6 @@ class Api::MaskPurchasesController < ApplicationController
             mask = Mask.create!(
               pharmacy: pharmacy,
               mask_type: mask_type,
-              name: mask_type.name,
               unit_price: unit_price,
               stock: quantity
             )

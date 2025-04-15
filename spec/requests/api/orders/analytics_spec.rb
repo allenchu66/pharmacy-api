@@ -2,18 +2,18 @@ require 'swagger_helper'
 
 RSpec.describe 'api/orders/analytics', type: :request do
   path '/api/orders/analytics/top_users' do
-    get 'Top Users 排行榜' do
+    get 'Top Users Ranking' do
       tags 'Orders Analytics'
       produces 'application/json'
-      parameter name: :start_date, in: :query, type: :string, required: true, description: '起始日期 yyyy-mm-dd'
-      parameter name: :end_date, in: :query, type: :string, required: true, description: '結束日期 yyyy-mm-dd'
-      parameter name: :limit, in: :query, type: :integer, required: false, description: '前幾名（預設5）'
+      parameter name: :start_date, in: :query, type: :string, required: true, description: 'Start date (yyyy-mm-dd)'
+      parameter name: :end_date, in: :query, type: :string, required: true, description: 'End date (yyyy-mm-dd)'
+      parameter name: :limit, in: :query, type: :integer, required: false, description: 'Top N users (default is 5)'
 
       let(:start_date) { '2025-04-01' }
       let(:end_date) { '2025-04-12' }
       let(:limit) { 5 }
 
-      response '200', '成功' do
+      response '200', 'Success' do
         schema type: :object,
                properties: {
                  status: { type: :string },
@@ -65,16 +65,16 @@ RSpec.describe 'api/orders/analytics', type: :request do
   end
 
   path '/api/orders/analytics/statistics' do
-    get '訂單統計' do
+    get 'Order Statistics Summary' do
       tags 'Orders Analytics'
       produces 'application/json'
-      parameter name: :start_date, in: :query, type: :string, required: true, description: '起始日期 yyyy-mm-dd'
-      parameter name: :end_date, in: :query, type: :string, required: true, description: '結束日期 yyyy-mm-dd'
+      parameter name: :start_date, in: :query, type: :string, required: true, description: 'Start date (yyyy-mm-dd)'
+      parameter name: :end_date, in: :query, type: :string, required: true, description: 'End date (yyyy-mm-dd)'
 
       let(:start_date) { '2025-04-01' }
       let(:end_date) { '2025-04-12' }
 
-      response '200', '成功' do
+      response '200', 'Success' do
         schema type: :object,
                properties: {
                  status: { type: :string },

@@ -27,9 +27,19 @@ RSpec.describe 'api/pharmacies', type: :request do
           }
         }
 
+        let!(:pharmacy_1) { Pharmacy.create!(name: 'DFW Wellness', cash_balance: 1000) }
+        let!(:pharmacy_2) { Pharmacy.create!(name: 'Carepoint', cash_balance: 1000) }
+
         before do
-          Pharmacy.create!(name: 'DFW Wellness', cash_balance: 1000)
-          Pharmacy.create!(name: 'Carepoint', cash_balance: 1000)
+          [pharmacy_1, pharmacy_2].each do |pharmacy|
+            PharmacyOpeningHour.create!(
+              pharmacy: pharmacy,
+              day_of_week: 2,
+              open_time: '08:00',
+              close_time: '18:00',
+              overnight: false
+            )
+          end
         end
 
         context 'without parameters' do
@@ -136,11 +146,13 @@ RSpec.describe 'api/pharmacies', type: :request do
           }
         }
 
-   
         before do
           pharmacy = Pharmacy.create!(name: 'Carepoint',cash_balance: 1000)
-          Mask.create(name: 'Mask A', price: 10, stock: 100, pharmacy_id: pharmacy.id)
-          Mask.create(name: 'Mask B', price: 15, stock: 50, pharmacy_id: pharmacy.id)
+          mask_type_a = MaskType.create!(name: 'Mask A')
+          mask_type_b = MaskType.create!(name: 'Mask B')
+
+          Mask.create!(price: 10, stock: 100, pharmacy: pharmacy, mask_type: mask_type_a)
+          Mask.create!(price: 15, stock: 50, pharmacy: pharmacy, mask_type: mask_type_b)
           @pharmacy_id = pharmacy.id
         end
         let(:pharmacy_id) { @pharmacy_id }
@@ -469,4 +481,58 @@ RSpec.describe 'api/pharmacies', type: :request do
       end
     end
   end
+
+  path '/api/pharmacies/filter_by_mask_conditions' do
+    get 'Filter pharmacies by mask conditions' do
+      tags 'Pharmacies'
+      produces 'application/json'
+  
+      parameter name: :stock_gt, in: :query, type: :integer, required: false, description: 'Required if no other filters are provided'
+      parameter name: :stock_lt, in: :query, type: :integer, required: false, description: 'Required if no other filters are provided'
+      parameter name: :mask_price_min, in: :query, type: :number, required: false, description: 'Required if no other filters are provided'
+      parameter name: :mask_price_max, in: :query, type: :number, required: false, description: 'Required if no other filters are provided'
+  
+      # 200 成功 (有帶參數)
+    response '200', 'Success with condition' do
+      let(:stock_gt) { 1 }
+
+      let!(:mask_type1) { create(:mask_type) }
+      let!(:pharmacy1) { create(:pharmacy, name: 'A', cash_balance: 100) }
+      let!(:mask1) { create(:mask, pharmacy: pharmacy1, mask_type: mask_type1, price: 10, stock: 10) }
+
+      schema type: :object, properties: {
+        status: { type: :string },
+        data: {
+          type: :array,
+          items: {
+            type: :object,
+            properties: {
+              id: { type: :integer },
+              name: { type: :string },
+              mask_count: { type: :integer }
+            }
+          }
+        }
+      }
+
+      run_test! do |response|
+        json = JSON.parse(response.body)
+        expect(response.status).to eq(200)
+      end
+    end
+
+    # 400 沒有帶參數
+    response '400', 'Missing filter parameters' do
+      run_test! do |response|
+        json = JSON.parse(response.body)
+        expect(response.status).to eq(400)
+        expect(json['message']).to eq("At least one filter parameter is required")
+      end
+    end
+  end
+end
+
+  
+  
+  
 end
