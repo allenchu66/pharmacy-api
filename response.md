@@ -13,7 +13,8 @@
   - Implemented at `/api/pharmacies/:pharmacy_id/masks?sort=name_desc`  
   - Test : [http://35.229.247.36:3000/api/pharmacies/1/masks?sort=name_desc](http://35.229.247.36:3000/api/pharmacies/1/masks?sort=name_desc)
 - [x] List all pharmacies with more or less than x mask products within a price range.
-  - Implemented at `/api/pharmacies?stock_gt=10&price_min=5&price_max=20`
+  - Implemented at `/api/pharmacies/filter_by_mask_conditions?mask_price_min=5&mask_price_max=20&stock_gt=2&stock_lt=6`
+  - Test : [http://35.229.247.36:3000/api/pharmacies/filter_by_mask_conditions?mask_price_min=5&mask_price_max=20&stock_gt=2&stock_lt=6](http://35.229.247.36:3000/api/pharmacies/filter_by_mask_conditions?mask_price_min=5&mask_price_max=20&stock_gt=2&stock_lt=6)
 - [x] The top x users by total transaction amount of masks within a date range.
   - Implemented at `/api/orders/analytics/top_users?start_date=YYYY-MM-DD&end_date=YYYY-MM-DD&limit=x`
 - [x] The total number of masks and dollar value of transactions within a date range.

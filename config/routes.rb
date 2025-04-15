@@ -19,6 +19,9 @@ Rails.application.routes.draw do
       member do
         put :opening_hours  # 對應 /api/pharmacies/:id/opening_hours
       end
+      collection do
+        get :filter_by_mask_conditions
+      end
     end
 
     # 全部 Mask（支援條件搜尋）

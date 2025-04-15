@@ -80,6 +80,28 @@ class Api::PharmaciesController < ApplicationController
     render_error(e.message, :unprocessable_entity)
   end
 
+  def filter_by_mask_conditions
+    price_min = params[:mask_price_min].to_f
+    price_max = params[:mask_price_max].to_f
+    mask_count_gt = params[:stock_gt].to_i
+    mask_count_lt = params[:stock_lt].to_i
+  
+    pharmacies = Pharmacy.joins(:masks)
+    .where("masks.price >= ?", price_min)
+    .where("masks.price <= ?", price_max)
+    .group("pharmacies.id")
+
+    pharmacies = pharmacies.having("COUNT(masks.id) > ?", mask_count_gt) if params[:stock_gt].present?
+    pharmacies = pharmacies.having("COUNT(masks.id) < ?", mask_count_lt) if params[:stock_lt].present?
+    pharmacies = pharmacies.select("pharmacies.*, COUNT(masks.id) as mask_count")
+  
+    result = pharmacies.map do |pharmacy|
+      pharmacy.as_json.merge(mask_count: pharmacy.mask_count)
+    end
+  
+    render_success(result)
+  end
+
   private
 
   def pharmacy_params
