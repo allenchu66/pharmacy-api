@@ -394,4 +394,79 @@ RSpec.describe 'api/pharmacies', type: :request do
       end
     end
   end
+
+  path '/api/pharmacies/{id}/opening_hours' do
+    put 'Update pharmacy opening hours' do
+      tags 'Pharmacies'
+      consumes 'application/json'
+      produces 'application/json'
+
+      parameter name: :id, in: :path, type: :integer, description: 'Pharmacy ID'
+      parameter name: :opening_hours, in: :body, schema: {
+        type: :object,
+        properties: {
+          opening_hours: {
+            type: :object,
+            example: {
+              "Mon": [{ "open": "09:00", "close": "18:00" }],
+              "Tue": [{ "open": "09:00", "close": "18:00" }],
+              "Wed": [{ "open": "09:00", "close": "18:00" }],
+              "Thu": [{ "open": "09:00", "close": "18:00" }],
+              "Fri": [{ "open": "09:00", "close": "18:00" }],
+              "Sat": [{ "open": "10:00", "close": "14:00" }],
+              "Sun": []
+            }
+          }
+        },
+        required: ['opening_hours']
+      }
+
+      response '200', 'Opening hours updated' do
+        let!(:pharmacy) { create(:pharmacy) }
+        let(:id) { pharmacy.id }
+        let(:opening_hours) do
+          {
+            opening_hours: {
+              "Mon" => [{ "open" => "09:00", "close" => "18:00" }],
+              "Tue" => [],
+              "Wed" => [{ "open" => "09:00", "close" => "18:00" }],
+              "Thu" => [],
+              "Fri" => [],
+              "Sat" => [],
+              "Sun" => []
+            }
+          }
+        end
+
+        run_test!
+      end
+
+      response '404', 'Pharmacy not found' do
+        let(:id) { 99999 } # 不存在的 pharmacy ID
+        let(:opening_hours) do
+          {
+            opening_hours: {
+              "Mon" => [{ "open" => "09:00", "close" => "18:00" }]
+            }
+          }
+        end
+
+        run_test!
+      end
+
+      response '422', 'Invalid input' do
+        let!(:pharmacy) { create(:pharmacy) }
+        let(:id) { pharmacy.id }
+        let(:opening_hours) do
+          {
+            opening_hours: {
+              "Mnn" => [{ "open" => "09:00", "close" => "18:00" }] # 錯誤 weekday
+            }
+          }
+        end
+
+        run_test!
+      end
+    end
+  end
 end

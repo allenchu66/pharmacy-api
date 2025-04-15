@@ -16,6 +16,9 @@ Rails.application.routes.draw do
       resources :mask_purchases, only: [:create]
       #藥局儲值資金
       resource :add_funds, only: [:create], controller: 'pharmacies/add_funds'
+      member do
+        put :opening_hours  # 對應 /api/pharmacies/:id/opening_hours
+      end
     end
 
     # 全部 Mask（支援條件搜尋）

@@ -2,7 +2,7 @@ class Api::PharmaciesController < ApplicationController
   include Response
 
    # POST /api/pharmacies
-   def create
+  def create
     ActiveRecord::Base.transaction do
       pharmacy = Pharmacy.create!(pharmacy_params)
   
@@ -61,6 +61,25 @@ class Api::PharmaciesController < ApplicationController
     render_error("Pharmacy not found", :not_found)
   end
 
+  # PUT /api/pharmacies/:pharmacy_id/opening_hours
+  def opening_hours
+    pharmacy = Pharmacy.find(params[:id])
+    
+    ActiveRecord::Base.transaction do
+      # remove old data
+      pharmacy.pharmacy_opening_hours.destroy_all
+      create_opening_hours!(pharmacy, params[:opening_hours])
+    end
+
+    render_success(message: 'Opening hours updated successfully')
+  rescue ActiveRecord::RecordNotFound
+    render_error('Pharmacy not found', :not_found)
+  rescue ActiveRecord::RecordInvalid => e
+    render_error(e.message, :unprocessable_entity)  
+  rescue => e
+    render_error(e.message, :unprocessable_entity)
+  end
+
   private
 
   def pharmacy_params
@@ -70,7 +89,8 @@ class Api::PharmaciesController < ApplicationController
   def create_opening_hours!(pharmacy, opening_hours)
     opening_hours.each do |day, times|
       day_of_week = TimeParser::DAY_MAP[day]
-  
+      raise ActiveRecord::RecordInvalid.new(PharmacyOpeningHour.new), "Invalid day: #{day}" if day_of_week.nil?
+
       times.each do |time|
         overnight = time['close'] < time['open']
   
@@ -78,10 +98,11 @@ class Api::PharmaciesController < ApplicationController
           pharmacy: pharmacy,
           day_of_week: day_of_week,
           open_time: time['open'],
-          open_time: time['close'],
+          close_time: time['close'],
           overnight: overnight
         )
       end
     end
   end 
+
 end
