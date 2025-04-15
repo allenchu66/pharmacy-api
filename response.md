@@ -32,7 +32,7 @@
 [API Document](http://35.229.247.36:3000/api-docs/index.html)
 > Please describe how to use the API in the API documentation. You can edit by any format (e.g., Markdown or OpenAPI) or free tools (e.g., [hackMD](https://hackmd.io/), [postman](https://www.postman.com/), [google docs](https://docs.google.com/document/u/0/), or  [swagger](https://swagger.io/specification/)).
 
-Import [this](#api-document) json file to Postman.
+Import [allen_postman_collection.json](./public/allen_postman_collection.json) json file to Postman.
 
 ### A.3. Import Data Commands
 Please run these two script commands to migrate the data into the database.
@@ -46,8 +46,9 @@ $ rake import_data:users[PATH_TO_FILE]
 >  If you completed the bonus requirements, please fill in your task below.
 ### B.1. Test Coverage Report
 
-I wrote down the 20 unit tests for the APIs I built. Please check the test coverage report at [here](#test-coverage-report).
-
+I wrote 69 unit tests for the APIs I built. You can check the test coverage report at `coverage/index.html` after running the tests.
+[online report](http://35.229.247.36:3000/coverage)
+[file path](/public/coverage/index.html)
 You can run the test script by using the command below:
 
 ```bash

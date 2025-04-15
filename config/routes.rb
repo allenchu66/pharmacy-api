@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   mount Rswag::Api::Engine => '/swagger'
   mount Rswag::Ui::Engine => '/api-docs'
 
+  if Rails.env.development?
+    get '/coverage', to: redirect('/coverage/index.html')
+  end
+  
   namespace :api do
     # Pharmacies
     resources :pharmacies, only: [:index, :show, :create] do

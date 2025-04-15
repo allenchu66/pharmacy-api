@@ -1,0 +1,2648 @@
+{
+	"info": {
+		"_postman_id": "b1ee56ae-25ce-4c5a-89be-ec47653799b8",
+		"name": "API V1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44114597",
+		"_collection_link": "https://allenchiu-8810354.postman.co/workspace/Allen-Chiu's-Workspace~5fe799f2-eb6c-4797-8dcc-2ea8deda1b9d/collection/44114597-b1ee56ae-25ce-4c5a-89be-ec47653799b8?action=share&source=collection_link&creator=44114597"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "mask_types",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "Get specific MaskType",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/mask_types/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"mask_types",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<integer>",
+													"description": "(Required) MaskType ID"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/mask_types/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"mask_types",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"status\": \"<string>\",\n  \"data\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"created_at\": \"<string>\",\n    \"updated_at\": \"<string>\"\n  }\n}"
+										},
+										{
+											"name": "MaskType not found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/mask_types/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"mask_types",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Get all MaskTypes (support search by id / keyword)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/mask_types?id=<integer>&keyword=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"mask_types"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "<integer>",
+											"description": "Filter by MaskType ID"
+										},
+										{
+											"key": "keyword",
+											"value": "<string>",
+											"description": "Fuzzy search by name"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/mask_types?id=<integer>&keyword=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"mask_types"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "<integer>",
+													"description": "Filter by MaskType ID"
+												},
+												{
+													"key": "keyword",
+													"value": "<string>",
+													"description": "Fuzzy search by name"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"status\": \"<string>\",\n  \"data\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"created_at\": \"<string>\",\n      \"updated_at\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"created_at\": \"<string>\",\n      \"updated_at\": \"<string>\"\n    }\n  ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Create MaskType",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"color\": \"<string>\",\n  \"size\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/mask_types",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"mask_types"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"color\": \"<string>\",\n  \"size\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/mask_types",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"mask_types"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Validation failed",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"color\": \"<string>\",\n  \"size\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/mask_types",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"mask_types"
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "masks",
+					"item": [
+						{
+							"name": "Get all masks (support search & filters)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/masks?keyword=<string>&stock_gt=<integer>&stock_lt=<integer>&price_min=<number>&price_max=<number>&sort=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"masks"
+									],
+									"query": [
+										{
+											"key": "keyword",
+											"value": "<string>",
+											"description": "Keyword search by mask name"
+										},
+										{
+											"key": "stock_gt",
+											"value": "<integer>",
+											"description": "Stock greater than"
+										},
+										{
+											"key": "stock_lt",
+											"value": "<integer>",
+											"description": "Stock less than"
+										},
+										{
+											"key": "price_min",
+											"value": "<number>",
+											"description": "Minimum price"
+										},
+										{
+											"key": "price_max",
+											"value": "<number>",
+											"description": "Maximum price"
+										},
+										{
+											"key": "sort",
+											"value": "<string>",
+											"description": "Sort by price_asc, price_desc, name_asc, or name_desc"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/masks?keyword=<string>&stock_gt=<integer>&stock_lt=<integer>&price_min=<number>&price_max=<number>&sort=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"masks"
+											],
+											"query": [
+												{
+													"key": "keyword",
+													"value": "<string>",
+													"description": "Keyword search by mask name"
+												},
+												{
+													"key": "stock_gt",
+													"value": "<integer>",
+													"description": "Stock greater than"
+												},
+												{
+													"key": "stock_lt",
+													"value": "<integer>",
+													"description": "Stock less than"
+												},
+												{
+													"key": "price_min",
+													"value": "<number>",
+													"description": "Minimum price"
+												},
+												{
+													"key": "price_max",
+													"value": "<number>",
+													"description": "Maximum price"
+												},
+												{
+													"key": "sort",
+													"value": "<string>",
+													"description": "Sort by price_asc, price_desc, name_asc, or name_desc"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"status\": \"<string>\",\n  \"data\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"price\": \"<number>\",\n      \"stock\": \"<integer>\",\n      \"pharmacy\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\"\n      }\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"price\": \"<number>\",\n      \"stock\": \"<integer>\",\n      \"pharmacy\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\"\n      }\n    }\n  ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "orders",
+					"item": [
+						{
+							"name": "analytics",
+							"item": [
+								{
+									"name": "top_users",
+									"item": [
+										{
+											"name": "Top Users Ranking",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/orders/analytics/top_users?start_date=<string>&end_date=<string>&limit=<integer>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"orders",
+														"analytics",
+														"top_users"
+													],
+													"query": [
+														{
+															"key": "start_date",
+															"value": "<string>",
+															"description": "(Required) Start date (yyyy-mm-dd)"
+														},
+														{
+															"key": "end_date",
+															"value": "<string>",
+															"description": "(Required) End date (yyyy-mm-dd)"
+														},
+														{
+															"key": "limit",
+															"value": "<integer>",
+															"description": "Top N users (default is 5)"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Success",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "application/json"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/api/orders/analytics/top_users?start_date=<string>&end_date=<string>&limit=<integer>",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"orders",
+																"analytics",
+																"top_users"
+															],
+															"query": [
+																{
+																	"key": "start_date",
+																	"value": "<string>",
+																	"description": "(Required) Start date (yyyy-mm-dd)"
+																},
+																{
+																	"key": "end_date",
+																	"value": "<string>",
+																	"description": "(Required) End date (yyyy-mm-dd)"
+																},
+																{
+																	"key": "limit",
+																	"value": "<integer>",
+																	"description": "Top N users (default is 5)"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{\n  \"status\": \"<string>\",\n  \"data\": {\n    \"data\": [\n      {\n        \"user_id\": \"<integer>\",\n        \"user_name\": \"<string>\",\n        \"total_amount\": \"<number>\",\n        \"total_quantity\": \"<integer>\",\n        \"orders\": [\n          {\n            \"pharmacy_name\": \"<string>\",\n            \"total_price\": \"<number>\",\n            \"created_at\": \"<string>\",\n            \"items\": [\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              },\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              }\n            ]\n          },\n          {\n            \"pharmacy_name\": \"<string>\",\n            \"total_price\": \"<number>\",\n            \"created_at\": \"<string>\",\n            \"items\": [\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              },\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              }\n            ]\n          }\n        ]\n      },\n      {\n        \"user_id\": \"<integer>\",\n        \"user_name\": \"<string>\",\n        \"total_amount\": \"<number>\",\n        \"total_quantity\": \"<integer>\",\n        \"orders\": [\n          {\n            \"pharmacy_name\": \"<string>\",\n            \"total_price\": \"<number>\",\n            \"created_at\": \"<string>\",\n            \"items\": [\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              },\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              }\n            ]\n          },\n          {\n            \"pharmacy_name\": \"<string>\",\n            \"total_price\": \"<number>\",\n            \"created_at\": \"<string>\",\n            \"items\": [\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              },\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "statistics",
+									"item": [
+										{
+											"name": "Order Statistics Summary",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/orders/analytics/statistics?start_date=<string>&end_date=<string>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"orders",
+														"analytics",
+														"statistics"
+													],
+													"query": [
+														{
+															"key": "start_date",
+															"value": "<string>",
+															"description": "(Required) Start date (yyyy-mm-dd)"
+														},
+														{
+															"key": "end_date",
+															"value": "<string>",
+															"description": "(Required) End date (yyyy-mm-dd)"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Success",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "application/json"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/api/orders/analytics/statistics?start_date=<string>&end_date=<string>",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"orders",
+																"analytics",
+																"statistics"
+															],
+															"query": [
+																{
+																	"key": "start_date",
+																	"value": "<string>",
+																	"description": "(Required) Start date (yyyy-mm-dd)"
+																},
+																{
+																	"key": "end_date",
+																	"value": "<string>",
+																	"description": "(Required) End date (yyyy-mm-dd)"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{\n  \"status\": \"<string>\",\n  \"data\": {\n    \"total_quantity\": \"<integer>\",\n    \"total_amount\": \"<number>\",\n    \"mask_summary\": [\n      {\n        \"mask_id\": \"<integer>\",\n        \"mask_name\": \"<string>\",\n        \"total_quantity\": \"<integer>\",\n        \"total_amount\": \"<number>\"\n      },\n      {\n        \"mask_id\": \"<integer>\",\n        \"mask_name\": \"<string>\",\n        \"total_quantity\": \"<integer>\",\n        \"total_amount\": \"<number>\"\n      }\n    ],\n    \"pharmacy_summary\": [\n      {\n        \"pharmacy_id\": \"<integer>\",\n        \"pharmacy_name\": \"<string>\",\n        \"total_quantity\": \"<integer>\",\n        \"total_amount\": \"<number>\"\n      },\n      {\n        \"pharmacy_id\": \"<integer>\",\n        \"pharmacy_name\": \"<string>\",\n        \"total_quantity\": \"<integer>\",\n        \"total_amount\": \"<number>\"\n      }\n    ]\n  }\n}"
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "Get a specific order",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/orders/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"orders",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<integer>",
+													"description": "(Required) Order ID"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/orders/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"orders",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"status\": \"<string>\",\n  \"data\": {\n    \"id\": \"<integer>\",\n    \"user_name\": \"<string>\",\n    \"pharmacy_name\": \"<string>\",\n    \"total_price\": \"<number>\",\n    \"created_at\": \"<string>\",\n    \"items\": [\n      {\n        \"mask_name\": \"<string>\",\n        \"mask_type\": {\n          \"id\": \"<integer>\",\n          \"name\": \"<string>\"\n        },\n        \"price\": \"<number>\",\n        \"quantity\": \"<integer>\"\n      },\n      {\n        \"mask_name\": \"<string>\",\n        \"mask_type\": {\n          \"id\": \"<integer>\",\n          \"name\": \"<string>\"\n        },\n        \"price\": \"<number>\",\n        \"quantity\": \"<integer>\"\n      }\n    ]\n  }\n}"
+										},
+										{
+											"name": "Order not found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/orders/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"orders",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"status\": \"<string>\",\n  \"message\": \"<string>\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Get all orders (support filters & keyword search)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/orders?keyword=<string>&user_id=<integer>&pharmacy_id=<integer>&price_min=<number>&price_max=<number>&start_date=<string>&end_date=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "keyword",
+											"value": "<string>",
+											"description": "Keyword search by user or pharmacy name"
+										},
+										{
+											"key": "user_id",
+											"value": "<integer>",
+											"description": "Filter by user ID"
+										},
+										{
+											"key": "pharmacy_id",
+											"value": "<integer>",
+											"description": "Filter by pharmacy ID"
+										},
+										{
+											"key": "price_min",
+											"value": "<number>",
+											"description": "Minimum total price"
+										},
+										{
+											"key": "price_max",
+											"value": "<number>",
+											"description": "Maximum total price"
+										},
+										{
+											"key": "start_date",
+											"value": "<string>",
+											"description": "Start date (yyyy-mm-dd)"
+										},
+										{
+											"key": "end_date",
+											"value": "<string>",
+											"description": "End date (yyyy-mm-dd)"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/orders?keyword=<string>&user_id=<integer>&pharmacy_id=<integer>&price_min=<number>&price_max=<number>&start_date=<string>&end_date=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"orders"
+											],
+											"query": [
+												{
+													"key": "keyword",
+													"value": "<string>",
+													"description": "Keyword search by user or pharmacy name"
+												},
+												{
+													"key": "user_id",
+													"value": "<integer>",
+													"description": "Filter by user ID"
+												},
+												{
+													"key": "pharmacy_id",
+													"value": "<integer>",
+													"description": "Filter by pharmacy ID"
+												},
+												{
+													"key": "price_min",
+													"value": "<number>",
+													"description": "Minimum total price"
+												},
+												{
+													"key": "price_max",
+													"value": "<number>",
+													"description": "Maximum total price"
+												},
+												{
+													"key": "start_date",
+													"value": "<string>",
+													"description": "Start date (yyyy-mm-dd)"
+												},
+												{
+													"key": "end_date",
+													"value": "<string>",
+													"description": "End date (yyyy-mm-dd)"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"status\": \"<string>\",\n  \"data\": [\n    {\n      \"id\": \"<integer>\",\n      \"user_id\": \"<integer>\",\n      \"user_name\": \"<string>\",\n      \"pharmacy_id\": \"<integer>\",\n      \"pharmacy_name\": \"<string>\",\n      \"total_price\": \"<number>\",\n      \"created_at\": \"<string>\",\n      \"items\": [\n        {\n          \"mask_type\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\"\n          },\n          \"price\": \"<number>\",\n          \"quantity\": \"<integer>\"\n        },\n        {\n          \"mask_type\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\"\n          },\n          \"price\": \"<number>\",\n          \"quantity\": \"<integer>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<integer>\",\n      \"user_id\": \"<integer>\",\n      \"user_name\": \"<string>\",\n      \"pharmacy_id\": \"<integer>\",\n      \"pharmacy_name\": \"<string>\",\n      \"total_price\": \"<number>\",\n      \"created_at\": \"<string>\",\n      \"items\": [\n        {\n          \"mask_type\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\"\n          },\n          \"price\": \"<number>\",\n          \"quantity\": \"<integer>\"\n        },\n        {\n          \"mask_type\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\"\n          },\n          \"price\": \"<number>\",\n          \"quantity\": \"<integer>\"\n        }\n      ]\n    }\n  ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Create a new order (support multiple masks)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"user_id\": \"<integer>\",\n  \"items\": [\n    {\n      \"mask_id\": \"<integer>\",\n      \"quantity\": \"<integer>\"\n    },\n    {\n      \"mask_id\": \"<integer>\",\n      \"quantity\": \"<integer>\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/orders",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"orders"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"user_id\": \"<integer>\",\n  \"items\": [\n    {\n      \"mask_id\": \"<integer>\",\n      \"quantity\": \"<integer>\"\n    },\n    {\n      \"mask_id\": \"<integer>\",\n      \"quantity\": \"<integer>\"\n    }\n  ]\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/orders",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"orders"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Validation failed",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"user_id\": \"<integer>\",\n  \"items\": [\n    {\n      \"mask_id\": \"<integer>\",\n      \"quantity\": \"<integer>\"\n    },\n    {\n      \"mask_id\": \"<integer>\",\n      \"quantity\": \"<integer>\"\n    }\n  ]\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/orders",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"orders"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "pharmacies",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "opening_hours",
+									"item": [
+										{
+											"name": "Update pharmacy opening hours",
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"opening_hours\": {}\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/pharmacies/:id/opening_hours",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"pharmacies",
+														":id",
+														"opening_hours"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<integer>",
+															"description": "(Required) Pharmacy ID"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Opening hours updated",
+													"originalRequest": {
+														"method": "PUT",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"opening_hours\": {}\n}",
+															"options": {
+																"raw": {
+																	"headerFamily": "json",
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/pharmacies/:id/opening_hours",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"pharmacies",
+																":id",
+																"opening_hours"
+															],
+															"variable": [
+																{
+																	"key": "id"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": [],
+													"body": ""
+												},
+												{
+													"name": "Pharmacy not found",
+													"originalRequest": {
+														"method": "PUT",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"opening_hours\": {}\n}",
+															"options": {
+																"raw": {
+																	"headerFamily": "json",
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/pharmacies/:id/opening_hours",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"pharmacies",
+																":id",
+																"opening_hours"
+															],
+															"variable": [
+																{
+																	"key": "id"
+																}
+															]
+														}
+													},
+													"status": "Not Found",
+													"code": 404,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": [],
+													"body": ""
+												},
+												{
+													"name": "Invalid input",
+													"originalRequest": {
+														"method": "PUT",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"opening_hours\": {}\n}",
+															"options": {
+																"raw": {
+																	"headerFamily": "json",
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/pharmacies/:id/opening_hours",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"pharmacies",
+																":id",
+																"opening_hours"
+															],
+															"variable": [
+																{
+																	"key": "id"
+																}
+															]
+														}
+													},
+													"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+													"code": 422,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Get pharmacy details",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/pharmacies/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"pharmacies",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<integer>",
+													"description": "(Required) Pharmacy ID"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/pharmacies/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"pharmacies",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"status\": \"<string>\",\n  \"data\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"cash_balance\": \"<number>\",\n    \"opening_hours_text\": \"<string>\"\n  }\n}"
+										},
+										{
+											"name": "Not found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/pharmacies/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"pharmacies",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"status\": \"<string>\",\n  \"data\": \"<null>\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "{pharmacy_id}",
+							"item": [
+								{
+									"name": "masks",
+									"item": [
+										{
+											"name": "Get all masks of a pharmacy",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/pharmacies/:pharmacy_id/masks",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"pharmacies",
+														":pharmacy_id",
+														"masks"
+													],
+													"variable": [
+														{
+															"key": "pharmacy_id",
+															"value": "<integer>",
+															"description": "(Required) Pharmacy ID"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Success",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "application/json"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/api/pharmacies/:pharmacy_id/masks",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"pharmacies",
+																":pharmacy_id",
+																"masks"
+															],
+															"variable": [
+																{
+																	"key": "pharmacy_id"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{\n  \"status\": \"<string>\",\n  \"data\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"price\": \"<number>\",\n      \"stock\": \"<integer>\",\n      \"pharmacy_id\": \"<integer>\",\n      \"created_at\": \"<string>\",\n      \"updated_at\": \"<string>\",\n      \"mask_type\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"color\": \"<string>\"\n      }\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"price\": \"<number>\",\n      \"stock\": \"<integer>\",\n      \"pharmacy_id\": \"<integer>\",\n      \"created_at\": \"<string>\",\n      \"updated_at\": \"<string>\",\n      \"mask_type\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"color\": \"<string>\"\n      }\n    }\n  ]\n}"
+												},
+												{
+													"name": "Not found",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "application/json"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/api/pharmacies/:pharmacy_id/masks",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"pharmacies",
+																":pharmacy_id",
+																"masks"
+															],
+															"variable": [
+																{
+																	"key": "pharmacy_id"
+																}
+															]
+														}
+													},
+													"status": "Not Found",
+													"code": 404,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{\n  \"status\": \"<string>\",\n  \"data\": \"<null>\"\n}"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "mask_purchases",
+									"item": [
+										{
+											"name": "Pharmacy purchase multiple masks",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"purchases\": [\n    {\n      \"mask_type_id\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unit_price\": \"<float>\"\n    },\n    {\n      \"mask_type_id\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unit_price\": \"<float>\"\n    }\n  ]\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/pharmacies/:pharmacy_id/mask_purchases",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"pharmacies",
+														":pharmacy_id",
+														"mask_purchases"
+													],
+													"variable": [
+														{
+															"key": "pharmacy_id",
+															"value": "<integer>",
+															"description": "(Required) Pharmacy ID"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Success",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															},
+															{
+																"key": "Accept",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"purchases\": [\n    {\n      \"mask_type_id\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unit_price\": \"<float>\"\n    },\n    {\n      \"mask_type_id\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unit_price\": \"<float>\"\n    }\n  ]\n}",
+															"options": {
+																"raw": {
+																	"headerFamily": "json",
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/pharmacies/:pharmacy_id/mask_purchases",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"pharmacies",
+																":pharmacy_id",
+																"mask_purchases"
+															],
+															"variable": [
+																{
+																	"key": "pharmacy_id"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{\n  \"status\": \"<string>\",\n  \"data\": {\n    \"message\": \"<string>\",\n    \"total_price\": \"<number>\",\n    \"pharmacy\": {},\n    \"masks\": \"<array>\"\n  }\n}"
+												},
+												{
+													"name": "Invalid Request",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															},
+															{
+																"key": "Accept",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"purchases\": [\n    {\n      \"mask_type_id\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unit_price\": \"<float>\"\n    },\n    {\n      \"mask_type_id\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unit_price\": \"<float>\"\n    }\n  ]\n}",
+															"options": {
+																"raw": {
+																	"headerFamily": "json",
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/pharmacies/:pharmacy_id/mask_purchases",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"pharmacies",
+																":pharmacy_id",
+																"mask_purchases"
+															],
+															"variable": [
+																{
+																	"key": "pharmacy_id"
+																}
+															]
+														}
+													},
+													"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+													"code": 422,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{\n  \"status\": \"<string>\",\n  \"message\": \"<string>\"\n}"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "add_funds",
+									"item": [
+										{
+											"name": "Add funds to pharmacy",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"amount\": \"<integer>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/pharmacies/:pharmacy_id/add_funds",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"pharmacies",
+														":pharmacy_id",
+														"add_funds"
+													],
+													"variable": [
+														{
+															"key": "pharmacy_id",
+															"value": "<integer>",
+															"description": "(Required) Pharmacy ID"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Success",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															},
+															{
+																"key": "Accept",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"amount\": \"<integer>\"\n}",
+															"options": {
+																"raw": {
+																	"headerFamily": "json",
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/pharmacies/:pharmacy_id/add_funds",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"pharmacies",
+																":pharmacy_id",
+																"add_funds"
+															],
+															"variable": [
+																{
+																	"key": "pharmacy_id"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json"
+														}
+													],
+													"cookie": [],
+													"body": "{\n  \"status\": \"<string>\",\n  \"data\": {\n    \"message\": \"<string>\",\n    \"cash_balance\": \"<number>\"\n  }\n}"
+												},
+												{
+													"name": "Pharmacy not found",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"amount\": \"<integer>\"\n}",
+															"options": {
+																"raw": {
+																	"headerFamily": "json",
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/pharmacies/:pharmacy_id/add_funds",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"pharmacies",
+																":pharmacy_id",
+																"add_funds"
+															],
+															"variable": [
+																{
+																	"key": "pharmacy_id"
+																}
+															]
+														}
+													},
+													"status": "Not Found",
+													"code": 404,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": [],
+													"body": ""
+												},
+												{
+													"name": "Invalid amount",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"amount\": \"<integer>\"\n}",
+															"options": {
+																"raw": {
+																	"headerFamily": "json",
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/pharmacies/:pharmacy_id/add_funds",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"pharmacies",
+																":pharmacy_id",
+																"add_funds"
+															],
+															"variable": [
+																{
+																	"key": "pharmacy_id"
+																}
+															]
+														}
+													},
+													"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+													"code": 422,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "filter_by_mask_conditions",
+							"item": [
+								{
+									"name": "Filter pharmacies by mask conditions",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/pharmacies/filter_by_mask_conditions?stock_gt=<integer>&stock_lt=<integer>&mask_price_min=<number>&mask_price_max=<number>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"pharmacies",
+												"filter_by_mask_conditions"
+											],
+											"query": [
+												{
+													"key": "stock_gt",
+													"value": "<integer>",
+													"description": "Required if no other filters are provided"
+												},
+												{
+													"key": "stock_lt",
+													"value": "<integer>",
+													"description": "Required if no other filters are provided"
+												},
+												{
+													"key": "mask_price_min",
+													"value": "<number>",
+													"description": "Required if no other filters are provided"
+												},
+												{
+													"key": "mask_price_max",
+													"value": "<number>",
+													"description": "Required if no other filters are provided"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success with condition",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/pharmacies/filter_by_mask_conditions?stock_gt=<integer>&stock_lt=<integer>&mask_price_min=<number>&mask_price_max=<number>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"pharmacies",
+														"filter_by_mask_conditions"
+													],
+													"query": [
+														{
+															"key": "stock_gt",
+															"value": "<integer>",
+															"description": "Required if no other filters are provided"
+														},
+														{
+															"key": "stock_lt",
+															"value": "<integer>",
+															"description": "Required if no other filters are provided"
+														},
+														{
+															"key": "mask_price_min",
+															"value": "<number>",
+															"description": "Required if no other filters are provided"
+														},
+														{
+															"key": "mask_price_max",
+															"value": "<number>",
+															"description": "Required if no other filters are provided"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"status\": \"<string>\",\n  \"data\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"mask_count\": \"<integer>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"mask_count\": \"<integer>\"\n    }\n  ]\n}"
+										},
+										{
+											"name": "Missing filter parameters",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/pharmacies/filter_by_mask_conditions?stock_gt=<integer>&stock_lt=<integer>&mask_price_min=<number>&mask_price_max=<number>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"pharmacies",
+														"filter_by_mask_conditions"
+													],
+													"query": [
+														{
+															"key": "stock_gt",
+															"value": "<integer>",
+															"description": "Required if no other filters are provided"
+														},
+														{
+															"key": "stock_lt",
+															"value": "<integer>",
+															"description": "Required if no other filters are provided"
+														},
+														{
+															"key": "mask_price_min",
+															"value": "<number>",
+															"description": "Required if no other filters are provided"
+														},
+														{
+															"key": "mask_price_max",
+															"value": "<number>",
+															"description": "Required if no other filters are provided"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Get all pharmacies (supports keyword / day_of_week / time filter)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/pharmacies?keyword=<string>&day_of_week=<integer>&time=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pharmacies"
+									],
+									"query": [
+										{
+											"key": "keyword",
+											"value": "<string>",
+											"description": "Fuzzy search pharmacy name (case-insensitive)"
+										},
+										{
+											"key": "day_of_week",
+											"value": "<integer>",
+											"description": "Filter by opening day (0=Sun, 1=Mon, ..., 6=Sat)"
+										},
+										{
+											"key": "time",
+											"value": "<string>",
+											"description": "Filter by time (format: HH:mm, e.g. 14:30)"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/pharmacies?keyword=<string>&day_of_week=<integer>&time=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"pharmacies"
+											],
+											"query": [
+												{
+													"key": "keyword",
+													"value": "<string>",
+													"description": "Fuzzy search pharmacy name (case-insensitive)"
+												},
+												{
+													"key": "day_of_week",
+													"value": "<integer>",
+													"description": "Filter by opening day (0=Sun, 1=Mon, ..., 6=Sat)"
+												},
+												{
+													"key": "time",
+													"value": "<string>",
+													"description": "Filter by time (format: HH:mm, e.g. 14:30)"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"status\": \"<string>\",\n  \"data\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"opening_hours_text\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"opening_hours_text\": \"<string>\"\n    }\n  ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Create a new pharmacy",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"<string>\",\n  \"cash_balance\": \"<number>\",\n  \"opening_hours\": {\n    \"voluptate_d7_\": [\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      },\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      }\n    ]\n  }\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/pharmacies",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pharmacies"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Created successfully",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"cash_balance\": \"<number>\",\n  \"opening_hours\": {\n    \"voluptate_d7_\": [\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      },\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      }\n    ]\n  }\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/pharmacies",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"pharmacies"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"status\": \"<string>\",\n  \"data\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"cash_balance\": \"<number>\"\n  }\n}"
+								},
+								{
+									"name": "Validation failed",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"cash_balance\": \"<number>\",\n  \"opening_hours\": {\n    \"voluptate_d7_\": [\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      },\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      }\n    ]\n  }\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/pharmacies",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"pharmacies"
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"status\": \"<string>\",\n  \"message\": \"<string>\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "add_balance",
+									"item": [
+										{
+											"name": "Add balance to user",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"amount\": \"<number>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/users/:id/add_balance",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"users",
+														":id",
+														"add_balance"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<integer>",
+															"description": "(Required) User ID"
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Success",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"amount\": \"<number>\"\n}",
+															"options": {
+																"raw": {
+																	"headerFamily": "json",
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/users/:id/add_balance",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"users",
+																":id",
+																"add_balance"
+															],
+															"variable": [
+																{
+																	"key": "id"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": [],
+													"body": ""
+												},
+												{
+													"name": "Invalid amount",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"amount\": \"<number>\"\n}",
+															"options": {
+																"raw": {
+																	"headerFamily": "json",
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/users/:id/add_balance",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"users",
+																":id",
+																"add_balance"
+															],
+															"variable": [
+																{
+																	"key": "id"
+																}
+															]
+														}
+													},
+													"status": "Bad Request",
+													"code": 400,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": [],
+													"body": ""
+												},
+												{
+													"name": "User not found",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"amount\": \"<number>\"\n}",
+															"options": {
+																"raw": {
+																	"headerFamily": "json",
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/users/:id/add_balance",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"users",
+																":id",
+																"add_balance"
+															],
+															"variable": [
+																{
+																	"key": "id"
+																}
+															]
+														}
+													},
+													"status": "Not Found",
+													"code": 404,
+													"_postman_previewlanguage": "text",
+													"header": [],
+													"cookie": [],
+													"body": ""
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Get user by id",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/users/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"users",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<integer>",
+													"description": "(Required) User ID"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"status\": \"<string>\",\n  \"data\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"phone_number\": \"<string>\",\n    \"cash_balance\": \"<number>\"\n  }\n}"
+										},
+										{
+											"name": "User not found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Get all users (support search by name / phone_number)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/users?name=<string>&phone_number=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"users"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "<string>",
+											"description": "Keyword to search user name"
+										},
+										{
+											"key": "phone_number",
+											"value": "<string>",
+											"description": "User phone number"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success - Search by name and phone_number",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/users?name=<string>&phone_number=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"users"
+											],
+											"query": [
+												{
+													"key": "name",
+													"value": "<string>",
+													"description": "Keyword to search user name"
+												},
+												{
+													"key": "phone_number",
+													"value": "<string>",
+													"description": "User phone number"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"status\": \"<string>\",\n  \"data\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"cash_balance\": \"<number>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"cash_balance\": \"<number>\"\n    }\n  ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Create user",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"cash_balance\": \"<number>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Create success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"cash_balance\": \"<number>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"users"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Validation failed, possible reasons:\n- Missing phone number\n- Invalid phone number length\n- Phone number already exists",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"cash_balance\": \"<number>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"users"
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://35.229.247.36:3000"
+		}
+	]
+}
