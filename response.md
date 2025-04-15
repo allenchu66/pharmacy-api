@@ -1,21 +1,27 @@
-# Response
-> The Current content is an **example template**; please edit it to fit your style and content.
 ## A. Required Information
 ### A.1. Requirement Completion Rate
 - [x] List all pharmacies open at a specific time and on a day of the week if requested.
-  - Implemented at xxx API.
+  - Implemented at `/api/pharmacies?day_of_week={0-6}&time=HH:mm`
+  - Test : [http://35.229.247.36:3000/api/pharmacies?day_of_week=1&time=14:00](http://35.229.247.36:3000/api/pharmacies?day_of_week=1&time=14:00)
 - [x] List all masks sold by a given pharmacy, sorted by mask name or price.
-  - Implemented at xxx API.
+  - Implemented at `/api/pharmacies/:pharmacy_id/masks?sort=price_asc`
+  - Test : [http://35.229.247.36:3000/api/pharmacies/1/masks?sort=price_asc](http://35.229.247.36:3000/api/pharmacies/1/masks?sort=price_asc)
+  - Implemented at `/api/pharmacies/:pharmacy_id/masks?sort=price_desc`  
+  - Test : [http://35.229.247.36:3000/api/pharmacies/1/masks?sort=price_desc](http://35.229.247.36:3000/api/pharmacies/1/masks?sort=price_desc)
+  - Implemented at `/api/pharmacies/:pharmacy_id/masks?sort=name_asc`  
+  - Test : [http://35.229.247.36:3000/api/pharmacies/1/masks?sort=name_asc](http://35.229.247.36:3000/api/pharmacies/1/masks?sort=name_asc)
+  - Implemented at `/api/pharmacies/:pharmacy_id/masks?sort=name_desc`  
+  - Test : [http://35.229.247.36:3000/api/pharmacies/1/masks?sort=name_desc](http://35.229.247.36:3000/api/pharmacies/1/masks?sort=name_desc)
 - [x] List all pharmacies with more or less than x mask products within a price range.
-  - Implemented at xxx API.
+  - Implemented at `/api/pharmacies?stock_gt=10&price_min=5&price_max=20`
 - [x] The top x users by total transaction amount of masks within a date range.
-  - Implemented at xxx API.
+  - Implemented at `/api/orders/analytics/top_users?start_date=YYYY-MM-DD&end_date=YYYY-MM-DD&limit=x`
 - [x] The total number of masks and dollar value of transactions within a date range.
-  - Implemented at xxx API.
+  - Implemented at `/api/orders/analytics/summary?start_date=YYYY-MM-DD&end_date=YYYY-MM-DD`
 - [x] Search for pharmacies or masks by name, ranked by relevance to the search term.
-  - Implemented at xxx API.
+  - Implemented at `/api/search?keyword=xxx`
 - [x] Process a user purchases a mask from a pharmacy, and handle all relevant data changes in an atomic transaction.
-  - Implemented at xxx API.
+  - Implemented at `/api/orders`
 ### A.2. API Document
 > Please describe how to use the API in the API documentation. You can edit by any format (e.g., Markdown or OpenAPI) or free tools (e.g., [hackMD](https://hackmd.io/), [postman](https://www.postman.com/), [google docs](https://docs.google.com/document/u/0/), or  [swagger](https://swagger.io/specification/)).
 

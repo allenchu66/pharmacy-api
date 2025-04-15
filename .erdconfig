@@ -1,0 +1,7 @@
+attributes: primary_keys, foreign_keys, timestamps, content
+notation: bachman
+filetype: png
+filename: public/erd
+inheritance: true
+indirect: true
+polymorphism: true

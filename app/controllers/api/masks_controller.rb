@@ -7,6 +7,35 @@ class Api::MasksController < ApplicationController
     return render_error("Pharmacy not found", :not_found) if pharmacy.nil?
 
     masks = pharmacy.masks.includes(:mask_type)
+    # filter
+    masks = masks.where("stock > ?", params[:stock_gt].to_i) if params[:stock_gt].present?
+    masks = masks.where("stock < ?", params[:stock_lt].to_i) if params[:stock_lt].present?
+    masks = masks.where("price >= ?", params[:price_min].to_f) if params[:price_min].present?
+    masks = masks.where("price <= ?", params[:price_max].to_f) if params[:price_max].present?
+
+     # search
+    if params[:keyword].present?
+      keyword = "%#{params[:keyword]}%"
+      masks = masks.joins(:mask_type).where(
+        "masks.name ILIKE :keyword OR mask_types.name ILIKE :keyword",
+        keyword: keyword
+      )
+    end
+
+     # sort
+    if params[:sort].present?
+      case params[:sort]
+      when 'name_asc'
+        masks = masks.joins(:mask_type).order('mask_types.name ASC')
+      when 'name_desc'
+        masks = masks.joins(:mask_type).order('mask_types.name DESC')
+      when 'price_asc'
+        masks = masks.order(price: :asc)
+      when 'price_desc'
+        masks = masks.order(price: :desc)
+      end
+    end
+     
     render_success(
       masks.as_json(
         only: [:id, :name, :price, :stock, :pharmacy_id, :created_at, :updated_at],
@@ -30,14 +59,10 @@ class Api::MasksController < ApplicationController
     masks = masks.where("price <= ?", params[:price_max].to_f) if params[:price_max].present?
 
     # search
-    masks = masks.where("name ILIKE ?", "%#{params[:keyword]}%") if params[:keyword]
+    masks = masks.where("masks.name ILIKE ?", "%#{params[:keyword]}%") if params[:keyword].present?
 
     # sort
-    if params[:sort] == 'name_asc'
-      masks = masks.order(name: :asc)
-    elsif params[:sort] == 'name_desc'
-      masks = masks.order(name: :desc)
-    elsif params[:sort] == 'price_asc'
+    if params[:sort] == 'price_asc'
       masks = masks.order(price: :asc)
     elsif params[:sort] == 'price_desc'
       masks = masks.order(price: :desc)
@@ -45,7 +70,10 @@ class Api::MasksController < ApplicationController
     
 
     result = masks.map do |mask|
-      mask.as_json.merge(pharmacy: { id: mask.pharmacy.id, name: mask.pharmacy.name })
+      mask.as_json.merge(
+        pharmacy: { id: mask.pharmacy.id, name: mask.pharmacy.name },
+        mask_type: { id: mask.mask_type.id, name: mask.mask_type.name}
+      )
     end
 
     render_success(result)
