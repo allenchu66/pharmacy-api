@@ -3,11 +3,19 @@ class Api::PharmaciesController < ApplicationController
 
    # POST /api/pharmacies
    def create
-    pharmacy = Pharmacy.create!(pharmacy_params)
-    render_success(pharmacy,:created)
-    rescue ActiveRecord::RecordInvalid => e
-      render_error(e.record.errors.full_messages.join(", "), :unprocessable_entity)
+    ActiveRecord::Base.transaction do
+      pharmacy = Pharmacy.create!(pharmacy_params)
+  
+      # 如果有傳 opening_hours
+      if params[:opening_hours].present?
+        create_opening_hours!(pharmacy, params[:opening_hours])
+      end
+  
+      render_success(pharmacy, :created)
     end
+  rescue ActiveRecord::RecordInvalid => e
+    render_error(e.record.errors.full_messages.join(", "), :unprocessable_entity)
+  end
 
   # GET /api/pharmacies
   # 支援 keyword / day_of_week / time
@@ -58,4 +66,22 @@ class Api::PharmaciesController < ApplicationController
   def pharmacy_params
     params.require(:pharmacy).permit(:name, :cash_balance)
   end
+
+  def create_opening_hours!(pharmacy, opening_hours)
+    opening_hours.each do |day, times|
+      day_of_week = TimeParser::DAY_MAP[day]
+  
+      times.each do |time|
+        overnight = time['close'] < time['open']
+  
+        PharmacyOpeningHour.create!(
+          pharmacy: pharmacy,
+          day_of_week: day_of_week,
+          open_time: time['open'],
+          open_time: time['close'],
+          overnight: overnight
+        )
+      end
+    end
+  end 
 end

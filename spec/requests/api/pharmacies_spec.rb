@@ -28,8 +28,8 @@ RSpec.describe 'api/pharmacies', type: :request do
         }
 
         before do
-          Pharmacy.create(name: 'DFW Wellness')
-          Pharmacy.create(name: 'Carepoint')
+          Pharmacy.create!(name: 'DFW Wellness', cash_balance: 1000)
+          Pharmacy.create!(name: 'Carepoint', cash_balance: 1000)
         end
 
         context 'without parameters' do
@@ -170,10 +170,39 @@ RSpec.describe 'api/pharmacies', type: :request do
         type: :object,
         properties: {
           name: { type: :string },
-          cash_balance: { type: :number }
+          cash_balance: { type: :number },
+          opening_hours: {
+            type: :object,
+            additionalProperties: {
+              type: :array,
+              items: {
+                type: :object,
+                properties: {
+                  open: { type: :string, example: '09:00' },
+                  close: { type: :string, example: '18:00' }
+                }
+              }
+            }
+          }
         },
-        required: %w[name cash_balance]
+        required: %w[name cash_balance opening_hours]
       }
+
+      let(:pharmacy) do
+        {
+          name: 'Tainan Pharmacy',
+          cash_balance: 10000.0,
+          opening_hours: {
+            'Mon' => [{ open: '09:00', close: '18:00' }],
+            'Tue' => [],
+            'Wed' => [{ open: '09:00', close: '18:00' }],
+            'Thu' => [],
+            'Fri' => [{ open: '09:00', close: '18:00' }],
+            'Sat' => [{ open: '10:00', close: '14:00' }],
+            'Sun' => []
+          }
+        }
+      end
 
       response '201', 'Created successfully' do
         schema type: :object, properties: {
@@ -187,8 +216,6 @@ RSpec.describe 'api/pharmacies', type: :request do
             }
           }
         }
-
-        let(:pharmacy) { { name: 'Tainan Pharmacy', cash_balance: 10000.0 } }
         run_test!
       end
 
@@ -198,7 +225,7 @@ RSpec.describe 'api/pharmacies', type: :request do
           message: { type: :string }
         }
 
-        let(:pharmacy) { { name: '', cash_balance: -100 } }
+        let(:pharmacy) { { name: '', cash_balance: -100 , opening_hours: {} } }
         run_test!
       end
     end

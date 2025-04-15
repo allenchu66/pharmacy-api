@@ -587,9 +587,23 @@ paths:
                   type: string
                 cash_balance:
                   type: number
+                opening_hours:
+                  type: object
+                  additionalProperties:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        open:
+                          type: string
+                          example: '09:00'
+                        close:
+                          type: string
+                          example: '18:00'
               required:
               - name
               - cash_balance
+              - opening_hours
   "/api/pharmacies/{id}":
     get:
       summary: Get pharmacy details
