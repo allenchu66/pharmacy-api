@@ -115,12 +115,22 @@ RSpec.describe 'api/pharmacies', type: :request do
             items: {
               type: :object,
               properties: {
+                id: { type: :integer },
                 name: { type: :string },
                 price: { type: :number },
                 stock: { type: :integer },
                 pharmacy_id: { type: :integer },
                 created_at: { type: :string, format: :date_time },
-                updated_at: { type: :string, format: :date_time }
+                updated_at: { type: :string, format: :date_time },
+                mask_type: {
+                    type: :object,
+                    properties: {
+                      id: { type: :integer },
+                      name: { type: :string },
+                      description: { type: :string, nullable: true },
+                      color: { type: :string, nullable: true }
+                    }
+                  }
               }
             }
           }
@@ -190,6 +200,170 @@ RSpec.describe 'api/pharmacies', type: :request do
 
         let(:pharmacy) { { name: '', cash_balance: -100 } }
         run_test!
+      end
+    end
+  end
+
+  path '/api/pharmacies/{pharmacy_id}/mask_purchases' do
+    post 'Pharmacy purchase multiple masks' do
+      tags 'Pharmacies'
+      consumes 'application/json'
+      produces 'application/json'
+
+      parameter name: :pharmacy_id, in: :path, type: :integer, description: 'Pharmacy ID'
+
+      parameter name: :body, in: :body, schema: {
+        type: :object,
+        properties: {
+          purchases: {
+            type: :array,
+            items: {
+              type: :object,
+              properties: {
+                mask_type_id: { type: :integer, description: 'MaskType ID' },
+                quantity: { type: :integer, description: 'Quantity to purchase' },
+                unit_price: { type: :number, format: :float, description: 'Unit price of the mask' }
+              },
+              required: %w[mask_type_id quantity unit_price]
+            }
+          }
+        },
+        required: ['purchases']
+      }
+
+      let(:pharmacy) { create(:pharmacy) }
+      let(:pharmacy_id) { pharmacy.id }
+
+      response '200', 'Success' do
+        schema type: :object,
+               properties: {
+                 status: { type: :string },
+                 data: {
+                   type: :object,
+                   properties: {
+                     message: { type: :string },
+                     total_price: { type: :number },
+                     pharmacy: { type: :object },
+                     masks: { type: :array }
+                   }
+                 }
+               }
+        let(:body) do
+        {
+          purchases: [
+            { mask_type_id: create(:mask_type).id, quantity: 10, unit_price: 5 },
+            { mask_type_id: create(:mask_type).id, quantity: 5, unit_price: 8 }
+          ]
+        }
+        end              
+
+        run_test!
+      end
+
+      response '422', 'Invalid Request' do
+        schema type: :object,
+               properties: {
+                 status: { type: :string },
+                 message: { type: :string }
+               }
+      
+        context 'when mask_type not found' do
+          let(:body) do
+            {
+              purchases: [
+                { mask_type_id: 9999, quantity: 10, unit_price: 5 }
+              ]
+            }
+          end
+      
+          run_test!
+        end
+      
+        context 'when invalid quantity or unit_price' do
+          let(:body) do
+            {
+              purchases: [
+                { mask_type_id: create(:mask_type).id, quantity: 0, unit_price: -1 }
+              ]
+            }
+          end
+      
+          run_test!
+        end
+      
+        context 'when not enough cash balance' do
+          let(:body) do
+            {
+              purchases: [
+                { mask_type_id: create(:mask_type).id, quantity: 1000, unit_price: 999 }
+              ]
+            }
+          end
+      
+          run_test!
+        end
+      end
+      
+    end
+  end
+
+  path '/api/pharmacies/{pharmacy_id}/add_funds' do
+    post 'Add funds to pharmacy' do
+      tags 'Pharmacies'
+      consumes 'application/json'
+      produces 'application/json'
+
+      parameter name: :pharmacy_id, in: :path, type: :integer, description: 'Pharmacy ID'
+      parameter name: :body, in: :body, schema: {
+        type: :object,
+        properties: {
+          amount: { type: :integer }
+        },
+        required: ['amount']
+      }
+
+      let!(:pharmacy) { create(:pharmacy, cash_balance: 1000) }
+      let(:pharmacy_id) { pharmacy.id }
+      let(:body) { { amount: 500 } }
+
+      response '200', 'Success' do
+        let(:body) { { amount: 500 } }
+
+        schema type: :object, properties: {
+          status: { type: :string },
+          data: {
+            type: :object,
+            properties: {
+              message: { type: :string },
+              cash_balance: { type: :number }
+            }
+          }
+        }
+
+        run_test! do |response|
+          json = JSON.parse(response.body)
+          expect(json['data']['cash_balance']).to eq(1500.0)
+        end
+      end
+
+      response '422', 'Invalid amount' do
+        let(:body) { { amount: 0 } }
+
+        run_test! do |response|
+          json = JSON.parse(response.body)
+          expect(json['status']).to eq('fail')
+        end
+      end
+
+      response '404', 'Pharmacy not found' do
+        let(:pharmacy_id) { -1 }
+        let(:body) { { amount: 500 } }
+
+        run_test! do |response|
+          json = JSON.parse(response.body)
+          expect(json['status']).to eq('fail')
+          expect(json['data']).to be_nil
+        end
       end
     end
   end

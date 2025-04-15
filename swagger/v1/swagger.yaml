@@ -4,77 +4,6 @@ info:
   title: API V1
   version: v1
 paths:
-  "/api/pharmacies/{pharmacy_id}/mask_purchases":
-    post:
-      summary: Pharmacy purchase multiple masks
-      tags:
-      - MaskPurchases
-      parameters:
-      - name: pharmacy_id
-        in: path
-        description: Pharmacy ID
-        required: true
-        schema:
-          type: integer
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  data:
-                    type: object
-                    properties:
-                      message:
-                        type: string
-                      total_price:
-                        type: number
-                      pharmacy:
-                        type: object
-                      masks:
-                        type: array
-        '422':
-          description: Invalid Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  message:
-                    type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                purchases:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      mask_type_id:
-                        type: integer
-                        description: MaskType ID
-                      quantity:
-                        type: integer
-                        description: Quantity to purchase
-                      unit_price:
-                        type: number
-                        format: float
-                        description: Unit price of the mask
-                    required:
-                    - mask_type_id
-                    - quantity
-                    - unit_price
-              required:
-              - purchases
   "/api/mask_types":
     get:
       summary: 取得所有 MaskTypes (支援 id / keyword 搜尋)
@@ -568,49 +497,6 @@ paths:
                     type: string
                   message:
                     type: string
-  "/api/pharmacies/{pharmacy_id}/add_funds":
-    post:
-      summary: Add funds to pharmacy
-      tags:
-      - Pharmacies
-      parameters:
-      - name: pharmacy_id
-        in: path
-        description: Pharmacy ID
-        required: true
-        schema:
-          type: integer
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  data:
-                    type: object
-                    properties:
-                      message:
-                        type: string
-                      cash_balance:
-                        type: number
-        '422':
-          description: Invalid amount
-        '404':
-          description: Pharmacy not found
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                amount:
-                  type: integer
-              required:
-              - amount
   "/api/pharmacies":
     get:
       summary: Get all pharmacies (supports keyword / day_of_week / time filter)
@@ -775,6 +661,8 @@ paths:
                     items:
                       type: object
                       properties:
+                        id:
+                          type: integer
                         name:
                           type: string
                         price:
@@ -789,6 +677,19 @@ paths:
                         updated_at:
                           type: string
                           format: date_time
+                        mask_type:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            description:
+                              type: string
+                              nullable: true
+                            color:
+                              type: string
+                              nullable: true
         '404':
           description: Not found
           content:
@@ -800,6 +701,120 @@ paths:
                     type: string
                   data:
                     type: 'null'
+  "/api/pharmacies/{pharmacy_id}/mask_purchases":
+    post:
+      summary: Pharmacy purchase multiple masks
+      tags:
+      - Pharmacies
+      parameters:
+      - name: pharmacy_id
+        in: path
+        description: Pharmacy ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                      total_price:
+                        type: number
+                      pharmacy:
+                        type: object
+                      masks:
+                        type: array
+        '422':
+          description: Invalid Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                purchases:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      mask_type_id:
+                        type: integer
+                        description: MaskType ID
+                      quantity:
+                        type: integer
+                        description: Quantity to purchase
+                      unit_price:
+                        type: number
+                        format: float
+                        description: Unit price of the mask
+                    required:
+                    - mask_type_id
+                    - quantity
+                    - unit_price
+              required:
+              - purchases
+  "/api/pharmacies/{pharmacy_id}/add_funds":
+    post:
+      summary: Add funds to pharmacy
+      tags:
+      - Pharmacies
+      parameters:
+      - name: pharmacy_id
+        in: path
+        description: Pharmacy ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                      cash_balance:
+                        type: number
+        '422':
+          description: Invalid amount
+        '404':
+          description: Pharmacy not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: integer
+              required:
+              - amount
   "/api/users":
     get:
       summary: 取得所有使用者 (支援搜尋 name / phone_number)

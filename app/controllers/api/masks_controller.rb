@@ -6,8 +6,17 @@ class Api::MasksController < ApplicationController
     pharmacy = Pharmacy.find_by(id: params[:pharmacy_id])
     return render_error("Pharmacy not found", :not_found) if pharmacy.nil?
 
-    masks = pharmacy.masks
-    render_success(masks.as_json(only: [:id, :name, :price, :stock, :pharmacy_id, :created_at, :updated_at]))
+    masks = pharmacy.masks.includes(:mask_type)
+    render_success(
+      masks.as_json(
+        only: [:id, :name, :price, :stock, :pharmacy_id, :created_at, :updated_at],
+        include: {
+          mask_type: {
+            only: [:id, :name, :color, :category, :description]
+          }
+        }
+      )
+    )
   end
 
   # GET /api/masks
