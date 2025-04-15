@@ -32,8 +32,8 @@ class Api::Orders::AnalyticsController < ApplicationController
               created_at: order.created_at,
               items: order.order_items.map do |item|
                 {
-                  mask_id: item.mask.id,
-                  mask_name: item.mask.name,
+                  mask_id: item.mask.mask_type.id,
+                  mask_name: item.mask.mask_type.name,
                   price: item.price.to_f,
                   quantity: item.quantity
                 }
@@ -57,11 +57,11 @@ class Api::Orders::AnalyticsController < ApplicationController
                 .select('SUM(order_items.quantity) AS total_quantity, SUM(order_items.price * order_items.quantity) AS total_amount')
                 .take
   
-      mask_summary = OrderItem
-                       .joins(:order, :mask)
+      mask_type_summary= OrderItem
+                       .joins(:order,mask: :mask_type)
                        .where(orders: { created_at: start_date..end_date })
-                       .select('masks.id, masks.name, SUM(order_items.quantity) AS total_quantity, SUM(order_items.price * order_items.quantity) AS total_amount')
-                       .group('masks.id, masks.name')
+                       .select('mask_types.id AS mask_type_id, mask_types.name AS mask_type_name, SUM(order_items.quantity) AS total_quantity, SUM(order_items.price * order_items.quantity) AS total_amount')
+                       .group('mask_types.id, mask_types.name')
                        .order('total_quantity DESC')
   
       pharmacy_summary = OrderItem
@@ -74,9 +74,9 @@ class Api::Orders::AnalyticsController < ApplicationController
       render_success(data: {
         total_quantity: stats.total_quantity.to_i,
         total_amount: stats.total_amount.to_f,
-        mask_summary: mask_summary.map { |m| {
-          mask_id: m.id,
-          mask_name: m.name,
+        mask_summary:mask_type_summary.map { |m| {
+          mask_id: m.mask_type_id,
+          mask_name: m.mask_type_name,
           total_quantity: m.total_quantity.to_i,
           total_amount: m.total_amount.to_f
         }},

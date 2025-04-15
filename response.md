@@ -16,13 +16,17 @@
   - Implemented at `/api/pharmacies/filter_by_mask_conditions?mask_price_min=5&mask_price_max=20&stock_gt=2&stock_lt=6`
   - Test : [http://35.229.247.36:3000/api/pharmacies/filter_by_mask_conditions?mask_price_min=5&mask_price_max=20&stock_gt=2&stock_lt=6](http://35.229.247.36:3000/api/pharmacies/filter_by_mask_conditions?mask_price_min=5&mask_price_max=20&stock_gt=2&stock_lt=6)
 - [x] The top x users by total transaction amount of masks within a date range.
-  - Implemented at `/api/orders/analytics/top_users?start_date=YYYY-MM-DD&end_date=YYYY-MM-DD&limit=x`
+  - Implemented at `/api/orders/analytics/top_users?start_date=YYYY-MM-DD&end_date=YYYY-MM-DD&limit=x
+  - Test : [http://35.229.247.36:3000/api/orders/analytics/top_users?start_date=2021-01-01&end_date=2021-01-31&limit=3](http://35.229.247.36:3000/api/orders/analytics/top_users?start_date=2021-01-01&end_date=2021-01-31&limit=3)
 - [x] The total number of masks and dollar value of transactions within a date range.
-  - Implemented at `/api/orders/analytics/summary?start_date=YYYY-MM-DD&end_date=YYYY-MM-DD`
+  - Implemented at `/api/orders/analytics/statistics?start_date=YYYY-MM-DD&end_date=YYYY-MM-DD`
+  - Test : [http://35.229.247.36:3000/api/orders/analytics/statistics?start_date=2021-01-01&end_date=2021-01-31](http://35.229.247.36:3000/api/orders/analytics/statistics?start_date=2021-01-01&end_date=2021-01-31)
 - [x] Search for pharmacies or masks by name, ranked by relevance to the search term.
   - Implemented at `/api/search?keyword=xxx`
+  - Test : []()
 - [x] Process a user purchases a mask from a pharmacy, and handle all relevant data changes in an atomic transaction.
   - Implemented at `/api/orders`
+  - Test : []()
 ### A.2. API Document
 > Please describe how to use the API in the API documentation. You can edit by any format (e.g., Markdown or OpenAPI) or free tools (e.g., [hackMD](https://hackmd.io/), [postman](https://www.postman.com/), [google docs](https://docs.google.com/document/u/0/), or  [swagger](https://swagger.io/specification/)).
 
