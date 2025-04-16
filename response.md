@@ -47,7 +47,7 @@ $ rake import_data:users[PATH_TO_FILE]
 ### B.1. Test Coverage Report
 
 I wrote 69 unit tests for the APIs I built. You can check the test coverage report at `coverage/index.html` after running the tests.
-[online report](http://35.229.247.36:3000/coverage)
+[online report](http://35.229.247.36:3000/coverage),
 [file path](/public/coverage/index.html)
 You can run the test script by using the command below:
 
@@ -56,23 +56,19 @@ bundle exec rspec spec
 ```
 
 ### B.2. Dockerized
-Please check my Dockerfile / docker-compose.yml at [here](#dockerized).
+Please check my [Dockerfile](Dockerfile) / [docker-compose.yml](docker-compose.yml)
 
 On the local machine, please follow the commands below to build it.
 
 ```bash
-$ docker build --build-arg ENV=development -p 80:3000 -t my-project:1.0.0 .  
-$ docker-compose up -d
-
-# go inside the container, run the migrate data command.
-$ docker exec -it my-project bash
-$ rake import_data:pharmacies[PATH_TO_FILE] 
-$ rake import_data:user[PATH_TO_FILE]
+$ docker-compose build --no-cache 
+$ make setup
+$ make start
 ```
 
 ### B.3. Demo Site Url
 
-The demo site is ready on [my GCP demo sitehttp://35.229.247.36:3000/api-docs/index.html](http://35.229.247.36:3000/api-docs/index.html); you can try any APIs on this demo site.
+The demo site is ready on [my GCP demo site](http://35.229.247.36:3000/api-docs/index.html); you can try any APIs on this demo site.
 
 ## C. Other Information
 
