@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "b1ee56ae-25ce-4c5a-89be-ec47653799b8",
+		"_postman_id": "b5315738-5a41-4550-bf77-740bf8e7a0a1",
 		"name": "API V1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "44114597",
-		"_collection_link": "https://allenchiu-8810354.postman.co/workspace/Allen-Chiu's-Workspace~5fe799f2-eb6c-4797-8dcc-2ea8deda1b9d/collection/44114597-b1ee56ae-25ce-4c5a-89be-ec47653799b8?action=share&source=collection_link&creator=44114597"
+		"_collection_link": "https://allenchiu-8810354.postman.co/workspace/Allen-Chiu's-Workspace~5fe799f2-eb6c-4797-8dcc-2ea8deda1b9d/collection/44114597-b5315738-5a41-4550-bf77-740bf8e7a0a1?action=share&source=collection_link&creator=44114597"
 	},
 	"item": [
 		{
@@ -537,7 +537,7 @@
 														}
 													],
 													"cookie": [],
-													"body": "{\n  \"status\": \"<string>\",\n  \"data\": {\n    \"data\": [\n      {\n        \"user_id\": \"<integer>\",\n        \"user_name\": \"<string>\",\n        \"total_amount\": \"<number>\",\n        \"total_quantity\": \"<integer>\",\n        \"orders\": [\n          {\n            \"pharmacy_name\": \"<string>\",\n            \"total_price\": \"<number>\",\n            \"created_at\": \"<string>\",\n            \"items\": [\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              },\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              }\n            ]\n          },\n          {\n            \"pharmacy_name\": \"<string>\",\n            \"total_price\": \"<number>\",\n            \"created_at\": \"<string>\",\n            \"items\": [\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              },\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              }\n            ]\n          }\n        ]\n      },\n      {\n        \"user_id\": \"<integer>\",\n        \"user_name\": \"<string>\",\n        \"total_amount\": \"<number>\",\n        \"total_quantity\": \"<integer>\",\n        \"orders\": [\n          {\n            \"pharmacy_name\": \"<string>\",\n            \"total_price\": \"<number>\",\n            \"created_at\": \"<string>\",\n            \"items\": [\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              },\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              }\n            ]\n          },\n          {\n            \"pharmacy_name\": \"<string>\",\n            \"total_price\": \"<number>\",\n            \"created_at\": \"<string>\",\n            \"items\": [\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              },\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}"
+													"body": "{\n  \"status\": \"<string>\",\n  \"data\": {\n    \"data\": [\n      {\n        \"user_id\": \"<integer>\",\n        \"user_name\": \"<string>\",\n        \"total_amount\": \"<number>\",\n        \"total_quantity\": \"<integer>\",\n        \"orders\": [\n          {\n            \"pharmacy_id\": \"<number>\",\n            \"pharmacy_name\": \"<string>\",\n            \"total_price\": \"<number>\",\n            \"created_at\": \"<string>\",\n            \"items\": [\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              },\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              }\n            ]\n          },\n          {\n            \"pharmacy_id\": \"<number>\",\n            \"pharmacy_name\": \"<string>\",\n            \"total_price\": \"<number>\",\n            \"created_at\": \"<string>\",\n            \"items\": [\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              },\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              }\n            ]\n          }\n        ]\n      },\n      {\n        \"user_id\": \"<integer>\",\n        \"user_name\": \"<string>\",\n        \"total_amount\": \"<number>\",\n        \"total_quantity\": \"<integer>\",\n        \"orders\": [\n          {\n            \"pharmacy_id\": \"<number>\",\n            \"pharmacy_name\": \"<string>\",\n            \"total_price\": \"<number>\",\n            \"created_at\": \"<string>\",\n            \"items\": [\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              },\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              }\n            ]\n          },\n          {\n            \"pharmacy_id\": \"<number>\",\n            \"pharmacy_name\": \"<string>\",\n            \"total_price\": \"<number>\",\n            \"created_at\": \"<string>\",\n            \"items\": [\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              },\n              {\n                \"mask_id\": \"<integer>\",\n                \"mask_name\": \"<string>\",\n                \"price\": \"<number>\",\n                \"quantity\": \"<integer>\"\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}"
 												}
 											]
 										}
@@ -1369,7 +1369,7 @@
 														}
 													],
 													"cookie": [],
-													"body": "{\n  \"status\": \"<string>\",\n  \"data\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"price\": \"<number>\",\n      \"stock\": \"<integer>\",\n      \"pharmacy_id\": \"<integer>\",\n      \"created_at\": \"<string>\",\n      \"updated_at\": \"<string>\",\n      \"mask_type\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"color\": \"<string>\"\n      }\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"price\": \"<number>\",\n      \"stock\": \"<integer>\",\n      \"pharmacy_id\": \"<integer>\",\n      \"created_at\": \"<string>\",\n      \"updated_at\": \"<string>\",\n      \"mask_type\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"color\": \"<string>\"\n      }\n    }\n  ]\n}"
+													"body": "{\n  \"status\": \"<string>\",\n  \"data\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"price\": \"<number>\",\n      \"stock\": \"<integer>\",\n      \"pharmacy_id\": \"<integer>\",\n      \"created_at\": \"<string>\",\n      \"updated_at\": \"<string>\",\n      \"unit_price\": \"<number>\",\n      \"mask_type\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"color\": \"<string>\"\n      }\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"price\": \"<number>\",\n      \"stock\": \"<integer>\",\n      \"pharmacy_id\": \"<integer>\",\n      \"created_at\": \"<string>\",\n      \"updated_at\": \"<string>\",\n      \"unit_price\": \"<number>\",\n      \"mask_type\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"color\": \"<string>\"\n      }\n    }\n  ]\n}"
 												},
 												{
 													"name": "Not found",
@@ -1434,7 +1434,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n  \"purchases\": [\n    {\n      \"mask_type_id\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unit_price\": \"<float>\"\n    },\n    {\n      \"mask_type_id\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unit_price\": \"<float>\"\n    }\n  ]\n}",
+													"raw": "{\n  \"purchases\": [\n    {\n      \"mask_type_id\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unit_price\": \"<float>\",\n      \"price\": \"<float>\"\n    },\n    {\n      \"mask_type_id\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unit_price\": \"<float>\",\n      \"price\": \"<float>\"\n    }\n  ]\n}",
 													"options": {
 														"raw": {
 															"headerFamily": "json",
@@ -1479,7 +1479,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n  \"purchases\": [\n    {\n      \"mask_type_id\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unit_price\": \"<float>\"\n    },\n    {\n      \"mask_type_id\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unit_price\": \"<float>\"\n    }\n  ]\n}",
+															"raw": "{\n  \"purchases\": [\n    {\n      \"mask_type_id\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unit_price\": \"<float>\",\n      \"price\": \"<float>\"\n    },\n    {\n      \"mask_type_id\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unit_price\": \"<float>\",\n      \"price\": \"<float>\"\n    }\n  ]\n}",
 															"options": {
 																"raw": {
 																	"headerFamily": "json",
@@ -1533,7 +1533,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n  \"purchases\": [\n    {\n      \"mask_type_id\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unit_price\": \"<float>\"\n    },\n    {\n      \"mask_type_id\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unit_price\": \"<float>\"\n    }\n  ]\n}",
+															"raw": "{\n  \"purchases\": [\n    {\n      \"mask_type_id\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unit_price\": \"<float>\",\n      \"price\": \"<float>\"\n    },\n    {\n      \"mask_type_id\": \"<integer>\",\n      \"quantity\": \"<integer>\",\n      \"unit_price\": \"<float>\",\n      \"price\": \"<float>\"\n    }\n  ]\n}",
 															"options": {
 																"raw": {
 																	"headerFamily": "json",
@@ -1787,7 +1787,7 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/api/pharmacies/filter_by_mask_conditions?stock_gt=<integer>&stock_lt=<integer>&mask_price_min=<number>&mask_price_max=<number>",
+											"raw": "{{baseUrl}}/api/pharmacies/filter_by_mask_conditions?mask_count_gt=<integer>&mask_count_lt=<integer>&mask_price_min=<number>&mask_price_max=<number>",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -1798,24 +1798,24 @@
 											],
 											"query": [
 												{
-													"key": "stock_gt",
+													"key": "mask_count_gt",
 													"value": "<integer>",
-													"description": "Required if no other filters are provided"
+													"description": "Optional. Return pharmacies with more than this number of mask products (e.g., 5)"
 												},
 												{
-													"key": "stock_lt",
+													"key": "mask_count_lt",
 													"value": "<integer>",
-													"description": "Required if no other filters are provided"
+													"description": "Optional. Return pharmacies with fewer than this number of mask products (e.g., 10)"
 												},
 												{
 													"key": "mask_price_min",
 													"value": "<number>",
-													"description": "Required if no other filters are provided"
+													"description": "(Required) Required. Minimum mask price to filter mask products (e.g., 10.0)"
 												},
 												{
 													"key": "mask_price_max",
 													"value": "<number>",
-													"description": "Required if no other filters are provided"
+													"description": "(Required) Required. Maximum mask price to filter mask products (e.g., 50.0)"
 												}
 											]
 										}
@@ -1832,7 +1832,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/api/pharmacies/filter_by_mask_conditions?stock_gt=<integer>&stock_lt=<integer>&mask_price_min=<number>&mask_price_max=<number>",
+													"raw": "{{baseUrl}}/api/pharmacies/filter_by_mask_conditions?mask_count_gt=<integer>&mask_count_lt=<integer>&mask_price_min=<number>&mask_price_max=<number>",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -1843,24 +1843,24 @@
 													],
 													"query": [
 														{
-															"key": "stock_gt",
+															"key": "mask_count_gt",
 															"value": "<integer>",
-															"description": "Required if no other filters are provided"
+															"description": "Optional. Return pharmacies with more than this number of mask products (e.g., 5)"
 														},
 														{
-															"key": "stock_lt",
+															"key": "mask_count_lt",
 															"value": "<integer>",
-															"description": "Required if no other filters are provided"
+															"description": "Optional. Return pharmacies with fewer than this number of mask products (e.g., 10)"
 														},
 														{
 															"key": "mask_price_min",
 															"value": "<number>",
-															"description": "Required if no other filters are provided"
+															"description": "(Required) Required. Minimum mask price to filter mask products (e.g., 10.0)"
 														},
 														{
 															"key": "mask_price_max",
 															"value": "<number>",
-															"description": "Required if no other filters are provided"
+															"description": "(Required) Required. Maximum mask price to filter mask products (e.g., 50.0)"
 														}
 													]
 												}
@@ -1878,12 +1878,12 @@
 											"body": "{\n  \"status\": \"<string>\",\n  \"data\": [\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"mask_count\": \"<integer>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"mask_count\": \"<integer>\"\n    }\n  ]\n}"
 										},
 										{
-											"name": "Missing filter parameters",
+											"name": "Missing price range parameters",
 											"originalRequest": {
 												"method": "GET",
 												"header": [],
 												"url": {
-													"raw": "{{baseUrl}}/api/pharmacies/filter_by_mask_conditions?stock_gt=<integer>&stock_lt=<integer>&mask_price_min=<number>&mask_price_max=<number>",
+													"raw": "{{baseUrl}}/api/pharmacies/filter_by_mask_conditions?mask_count_gt=<integer>&mask_count_lt=<integer>&mask_price_min=<number>&mask_price_max=<number>",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -1894,24 +1894,24 @@
 													],
 													"query": [
 														{
-															"key": "stock_gt",
+															"key": "mask_count_gt",
 															"value": "<integer>",
-															"description": "Required if no other filters are provided"
+															"description": "Optional. Return pharmacies with more than this number of mask products (e.g., 5)"
 														},
 														{
-															"key": "stock_lt",
+															"key": "mask_count_lt",
 															"value": "<integer>",
-															"description": "Required if no other filters are provided"
+															"description": "Optional. Return pharmacies with fewer than this number of mask products (e.g., 10)"
 														},
 														{
 															"key": "mask_price_min",
 															"value": "<number>",
-															"description": "Required if no other filters are provided"
+															"description": "(Required) Required. Minimum mask price to filter mask products (e.g., 10.0)"
 														},
 														{
 															"key": "mask_price_max",
 															"value": "<number>",
-															"description": "Required if no other filters are provided"
+															"description": "(Required) Required. Maximum mask price to filter mask products (e.g., 50.0)"
 														}
 													]
 												}
@@ -2034,7 +2034,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"name\": \"<string>\",\n  \"cash_balance\": \"<number>\",\n  \"opening_hours\": {\n    \"voluptate_d7_\": [\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      },\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      }\n    ]\n  }\n}",
+									"raw": "{\n  \"name\": \"<string>\",\n  \"cash_balance\": \"<number>\",\n  \"opening_hours\": {\n    \"mollit_9c0\": [\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      },\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      }\n    ],\n    \"mollitd\": [\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      },\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      }\n    ],\n    \"infb_\": [\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      },\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      }\n    ]\n  }\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -2070,7 +2070,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"name\": \"<string>\",\n  \"cash_balance\": \"<number>\",\n  \"opening_hours\": {\n    \"voluptate_d7_\": [\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      },\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      }\n    ]\n  }\n}",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"cash_balance\": \"<number>\",\n  \"opening_hours\": {\n    \"mollit_9c0\": [\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      },\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      }\n    ],\n    \"mollitd\": [\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      },\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      }\n    ],\n    \"infb_\": [\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      },\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      }\n    ]\n  }\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -2117,7 +2117,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"name\": \"<string>\",\n  \"cash_balance\": \"<number>\",\n  \"opening_hours\": {\n    \"voluptate_d7_\": [\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      },\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      }\n    ]\n  }\n}",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"cash_balance\": \"<number>\",\n  \"opening_hours\": {\n    \"mollit_9c0\": [\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      },\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      }\n    ],\n    \"mollitd\": [\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      },\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      }\n    ],\n    \"infb_\": [\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      },\n      {\n        \"open\": \"<string>\",\n        \"close\": \"<string>\"\n      }\n    ]\n  }\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
