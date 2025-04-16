@@ -194,6 +194,15 @@ RSpec.describe 'api/pharmacies', type: :request do
                   close: { type: :string, example: '18:00' }
                 }
               }
+            },
+            example: {
+              'Mon' => [{ open: '09:00', close: '18:00' }],
+              'Tue' => [{ open: '09:00', close: '18:00' }],
+              'Wed' => [{ open: '09:00', close: '18:00' }],
+              'Thu' => [{ open: '09:00', close: '18:00' }],
+              'Fri' => [{ open: '09:00', close: '18:00' }],
+              'Sat' => [{ open: '10:00', close: '14:00' }],
+              'Sun' => [{ open: '10:00', close: '14:00' }]
             }
           }
         },
@@ -261,9 +270,10 @@ RSpec.describe 'api/pharmacies', type: :request do
               properties: {
                 mask_type_id: { type: :integer, description: 'MaskType ID' },
                 quantity: { type: :integer, description: 'Quantity to purchase' },
-                unit_price: { type: :number, format: :float, description: 'Unit price of the mask' }
+                unit_price: { type: :number, format: :float, description: 'Unit price of the mask' },
+                price: { type: :number, format: :float, description: 'Price of the mask' },
               },
-              required: %w[mask_type_id quantity unit_price]
+              required: %w[mask_type_id quantity unit_price price]
             }
           }
         },
@@ -290,8 +300,8 @@ RSpec.describe 'api/pharmacies', type: :request do
         let(:body) do
         {
           purchases: [
-            { mask_type_id: create(:mask_type).id, quantity: 10, unit_price: 5 },
-            { mask_type_id: create(:mask_type).id, quantity: 5, unit_price: 8 }
+            { mask_type_id: create(:mask_type).id, quantity: 10, unit_price: 5, price: 6 },
+            { mask_type_id: create(:mask_type).id, quantity: 5, unit_price: 8, price: 9 }
           ]
         }
         end              
@@ -310,7 +320,7 @@ RSpec.describe 'api/pharmacies', type: :request do
           let(:body) do
             {
               purchases: [
-                { mask_type_id: 9999, quantity: 10, unit_price: 5 }
+                { mask_type_id: 9999, quantity: 10, unit_price: 5, price: 6 }
               ]
             }
           end

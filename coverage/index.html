@@ -13,7 +13,7 @@
       <img src="./assets/0.13.1/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2025-04-16T17:07:48+08:00">2025-04-16T17:07:48+08:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2025-04-16T18:24:13+08:00">2025-04-16T18:24:13+08:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -42,9 +42,9 @@
   </div>
 
   <div class="t-line-summary">
-    <b>697</b> relevant lines,
+    <b>704</b> relevant lines,
     <span class="green"><b>0</b> lines covered</span> and
-    <span class="red"><b>697</b> lines missed. </span>
+    <span class="red"><b>704</b> lines missed. </span>
     (<span class="red">
   0.0%
 </span>
@@ -94,10 +94,10 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#767bede104f1f0b2b3368ec84d2494b8b8d1a9a4" class="src_link" title="app/controllers/api/mask_purchases_controller.rb">app/controllers/api/mask_purchases_controller.rb</a></td>
             <td class="red strong cell--number t-file__coverage">0.00 %</td>
-            <td class="cell--number">90</td>
-            <td class="cell--number">66</td>
+            <td class="cell--number">97</td>
+            <td class="cell--number">73</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">66</td>
+            <td class="cell--number">73</td>
             <td class="cell--number">0.00</td>
             
           </tr>
@@ -365,9 +365,9 @@
   </div>
 
   <div class="t-line-summary">
-    <b>549</b> relevant lines,
+    <b>556</b> relevant lines,
     <span class="green"><b>0</b> lines covered</span> and
-    <span class="red"><b>549</b> lines missed. </span>
+    <span class="red"><b>556</b> lines missed. </span>
     (<span class="red">
   0.0%
 </span>
@@ -395,10 +395,10 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#767bede104f1f0b2b3368ec84d2494b8b8d1a9a4" class="src_link" title="app/controllers/api/mask_purchases_controller.rb">app/controllers/api/mask_purchases_controller.rb</a></td>
             <td class="red strong cell--number t-file__coverage">0.00 %</td>
-            <td class="cell--number">90</td>
-            <td class="cell--number">66</td>
+            <td class="cell--number">97</td>
+            <td class="cell--number">73</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">66</td>
+            <td class="cell--number">73</td>
             <td class="cell--number">0.00</td>
             
           </tr>
@@ -1176,9 +1176,9 @@
     
 
     <div class="t-line-summary">
-      <b>66</b> relevant lines.
+      <b>73</b> relevant lines.
       <span class="green"><b>0</b> lines covered</span> and
-      <span class="red"><b>66</b> lines missed.</span>
+      <span class="red"><b>73</b> lines missed.</span>
     </div>
 
     
@@ -1359,22 +1359,22 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="18">
+          <li class="missed" data-hits="0" data-linenumber="18">
+            
+
+            
+
+            <code class="ruby">        price = purchase[:price].to_f</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="19">
             
 
             
 
             <code class="ruby">  </code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="19">
-            
-
-            
-
-            <code class="ruby">        raise ArgumentError, &quot;Quantity must be greater than 0&quot; if quantity &lt;= 0</code>
           </li>
         </div>
       
@@ -1384,17 +1384,17 @@
 
             
 
-            <code class="ruby">        raise ArgumentError, &quot;Unit price must be &gt;= 0&quot; if unit_price &lt; 0</code>
+            <code class="ruby">        raise ArgumentError, &quot;Quantity must be greater than 0&quot; if quantity &lt;= 0</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="21">
+          <li class="missed" data-hits="0" data-linenumber="21">
             
 
             
 
-            <code class="ruby">  </code>
+            <code class="ruby">        raise ArgumentError, &quot;Unit price must be &gt;= 0&quot; if unit_price &lt; 0</code>
           </li>
         </div>
       
@@ -1404,27 +1404,27 @@
 
             
 
-            <code class="ruby">        mask_type = MaskType.find_by(id: mask_type_id)</code>
+            <code class="ruby">        raise ArgumentError, &quot;price must be &gt;= 0&quot; if price &lt; 0</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="23">
-            
-
-            
-
-            <code class="ruby">        raise ArgumentError, &quot;MaskType ID #{mask_type_id} not found&quot; if mask_type.nil?</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="24">
+          <li class="never" data-hits="" data-linenumber="23">
             
 
             
 
             <code class="ruby">  </code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="24">
+            
+
+            
+
+            <code class="ruby">        mask_type = MaskType.find_by(id: mask_type_id)</code>
           </li>
         </div>
       
@@ -1434,72 +1434,12 @@
 
             
 
-            <code class="ruby">        {</code>
+            <code class="ruby">        raise ArgumentError, &quot;MaskType ID #{mask_type_id} not found&quot; if mask_type.nil?</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="26">
-            
-
-            
-
-            <code class="ruby">          mask_type: mask_type,</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="27">
-            
-
-            
-
-            <code class="ruby">          quantity: quantity,</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="28">
-            
-
-            
-
-            <code class="ruby">          unit_price: unit_price,</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="29">
-            
-
-            
-
-            <code class="ruby">          total_price: quantity * unit_price</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="30">
-            
-
-            
-
-            <code class="ruby">        }</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="31">
-            
-
-            
-
-            <code class="ruby">      end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="32">
+          <li class="never" data-hits="" data-linenumber="26">
             
 
             
@@ -1509,12 +1449,72 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="33">
+          <li class="missed" data-hits="0" data-linenumber="27">
             
 
             
 
-            <code class="ruby">      # Calculate total price</code>
+            <code class="ruby">        {</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="28">
+            
+
+            
+
+            <code class="ruby">          mask_type: mask_type,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="29">
+            
+
+            
+
+            <code class="ruby">          quantity: quantity,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="30">
+            
+
+            
+
+            <code class="ruby">          unit_price: unit_price,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="31">
+            
+
+            
+
+            <code class="ruby">          price: price,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="32">
+            
+
+            
+
+            <code class="ruby">          total_price: quantity * unit_price</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="33">
+            
+
+            
+
+            <code class="ruby">        }</code>
           </li>
         </div>
       
@@ -1524,7 +1524,7 @@
 
             
 
-            <code class="ruby">      total_price = parsed_purchases.sum { |item| item[:total_price] }</code>
+            <code class="ruby">      end</code>
           </li>
         </div>
       
@@ -1539,12 +1539,12 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="36">
+          <li class="never" data-hits="" data-linenumber="36">
             
 
             
 
-            <code class="ruby">      if pharmacy.cash_balance &lt; total_price</code>
+            <code class="ruby">      # Calculate total price</code>
           </li>
         </div>
       
@@ -1554,27 +1554,27 @@
 
             
 
-            <code class="ruby">        return render_error(&quot;Cash balance not enough&quot;, :unprocessable_entity)</code>
+            <code class="ruby">      total_price = parsed_purchases.sum { |item| item[:total_price] }</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="38">
-            
-
-            
-
-            <code class="ruby">      end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="39">
+          <li class="never" data-hits="" data-linenumber="38">
             
 
             
 
             <code class="ruby">  </code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="39">
+            
+
+            
+
+            <code class="ruby">      if pharmacy.cash_balance &lt; total_price</code>
           </li>
         </div>
       
@@ -1584,362 +1584,12 @@
 
             
 
-            <code class="ruby">      ActiveRecord::Base.transaction do</code>
+            <code class="ruby">        return render_error(&quot;Cash balance not enough&quot;, :unprocessable_entity)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="41">
-            
-
-            
-
-            <code class="ruby">        # Update pharmacy balance</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="42">
-            
-
-            
-
-            <code class="ruby">        pharmacy.update!(cash_balance: pharmacy.cash_balance - total_price)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="43">
-            
-
-            
-
-            <code class="ruby">  </code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="44">
-            
-
-            
-
-            <code class="ruby">        parsed_purchases.each do |item|</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="45">
-            
-
-            
-
-            <code class="ruby">          mask_type = item[:mask_type]</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="46">
-            
-
-            
-
-            <code class="ruby">          quantity = item[:quantity]</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="47">
-            
-
-            
-
-            <code class="ruby">          unit_price = item[:unit_price]</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="48">
-            
-
-            
-
-            <code class="ruby">  </code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="49">
-            
-
-            
-
-            <code class="ruby">          # Check if the pharmacy already has this mask (by mask_type)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="50">
-            
-
-            
-
-            <code class="ruby">          mask = Mask.find_by(pharmacy_id: pharmacy.id, mask_type_id: mask_type.id)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="51">
-            
-
-            
-
-            <code class="ruby">  </code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="52">
-            
-
-            
-
-            <code class="ruby">          if mask</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="53">
-            
-
-            
-
-            <code class="ruby">            # If mask exists, increase stock</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="54">
-            
-
-            
-
-            <code class="ruby">            mask.update!(stock: mask.stock + quantity,unit_price: unit_price)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="55">
-            
-
-            
-
-            <code class="ruby">          else</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="56">
-            
-
-            
-
-            <code class="ruby">            # If not, create a new mask for this pharmacy</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="57">
-            
-
-            
-
-            <code class="ruby">            mask = Mask.create!(</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="58">
-            
-
-            
-
-            <code class="ruby">              pharmacy: pharmacy,</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="59">
-            
-
-            
-
-            <code class="ruby">              mask_type: mask_type,</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="60">
-            
-
-            
-
-            <code class="ruby">              unit_price: unit_price,</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="61">
-            
-
-            
-
-            <code class="ruby">              stock: quantity</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="62">
-            
-
-            
-
-            <code class="ruby">            )</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="63">
-            
-
-            
-
-            <code class="ruby">          end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="64">
-            
-
-            
-
-            <code class="ruby">  </code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="65">
-            
-
-            
-
-            <code class="ruby">          # Create a mask purchase record</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="66">
-            
-
-            
-
-            <code class="ruby">          MaskPurchase.create!(</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="67">
-            
-
-            
-
-            <code class="ruby">            pharmacy: pharmacy,</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="68">
-            
-
-            
-
-            <code class="ruby">            mask: mask,</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="69">
-            
-
-            
-
-            <code class="ruby">            quantity: quantity,</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="70">
-            
-
-            
-
-            <code class="ruby">            unit_price: unit_price,</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="71">
-            
-
-            
-
-            <code class="ruby">            total_price: quantity * unit_price</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="72">
-            
-
-            
-
-            <code class="ruby">          )</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="73">
-            
-
-            
-
-            <code class="ruby">  </code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="74">
-            
-
-            
-
-            <code class="ruby">          result_masks &lt;&lt; mask</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="75">
-            
-
-            
-
-            <code class="ruby">        end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="76">
+          <li class="missed" data-hits="0" data-linenumber="41">
             
 
             
@@ -1949,7 +1599,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="77">
+          <li class="never" data-hits="" data-linenumber="42">
             
 
             
@@ -1959,12 +1609,362 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="78">
+          <li class="missed" data-hits="0" data-linenumber="43">
             
 
             
 
-            <code class="ruby">      render_success(</code>
+            <code class="ruby">      ActiveRecord::Base.transaction do</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="44">
+            
+
+            
+
+            <code class="ruby">        # Update pharmacy balance</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="45">
+            
+
+            
+
+            <code class="ruby">        pharmacy.update!(cash_balance: pharmacy.cash_balance - total_price)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="46">
+            
+
+            
+
+            <code class="ruby">  </code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="47">
+            
+
+            
+
+            <code class="ruby">        parsed_purchases.each do |item|</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="48">
+            
+
+            
+
+            <code class="ruby">          mask_type = item[:mask_type]</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="49">
+            
+
+            
+
+            <code class="ruby">          quantity = item[:quantity]</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="50">
+            
+
+            
+
+            <code class="ruby">          unit_price = item[:unit_price]</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="51">
+            
+
+            
+
+            <code class="ruby">          price = item[:price]</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="52">
+            
+
+            
+
+            <code class="ruby">  </code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="53">
+            
+
+            
+
+            <code class="ruby">          # Check if the pharmacy already has this mask (by mask_type)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="54">
+            
+
+            
+
+            <code class="ruby">          mask = Mask.find_by(pharmacy_id: pharmacy.id, mask_type_id: mask_type.id)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="55">
+            
+
+            
+
+            <code class="ruby">  </code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="56">
+            
+
+            
+
+            <code class="ruby">          if mask</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="57">
+            
+
+            
+
+            <code class="ruby">            # If mask exists, increase stock</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="58">
+            
+
+            
+
+            <code class="ruby">            mask.update!(stock: mask.stock + quantity,unit_price: unit_price,price: price)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="59">
+            
+
+            
+
+            <code class="ruby">          else</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="60">
+            
+
+            
+
+            <code class="ruby">            # If not, create a new mask for this pharmacy</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="61">
+            
+
+            
+
+            <code class="ruby">            mask = Mask.create!(</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="62">
+            
+
+            
+
+            <code class="ruby">              pharmacy: pharmacy,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="63">
+            
+
+            
+
+            <code class="ruby">              mask_type: mask_type,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="64">
+            
+
+            
+
+            <code class="ruby">              price: price,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="65">
+            
+
+            
+
+            <code class="ruby">              unit_price: unit_price,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="66">
+            
+
+            
+
+            <code class="ruby">              stock: quantity</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="67">
+            
+
+            
+
+            <code class="ruby">            )</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="68">
+            
+
+            
+
+            <code class="ruby">          end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="69">
+            
+
+            
+
+            <code class="ruby">  </code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="70">
+            
+
+            
+
+            <code class="ruby">          # Create a mask purchase record</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="71">
+            
+
+            
+
+            <code class="ruby">          MaskPurchase.create!(</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="72">
+            
+
+            
+
+            <code class="ruby">            pharmacy: pharmacy,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="73">
+            
+
+            
+
+            <code class="ruby">            mask: mask,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="74">
+            
+
+            
+
+            <code class="ruby">            quantity: quantity,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="75">
+            
+
+            
+
+            <code class="ruby">            unit_price: unit_price,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="76">
+            
+
+            
+
+            <code class="ruby">            total_price: quantity * unit_price</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="77">
+            
+
+            
+
+            <code class="ruby">          )</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="78">
+            
+
+            
+
+            <code class="ruby">  </code>
           </li>
         </div>
       
@@ -1974,7 +1974,7 @@
 
             
 
-            <code class="ruby">        message: &quot;Purchase successfully&quot;,</code>
+            <code class="ruby">          result_masks &lt;&lt; mask</code>
           </li>
         </div>
       
@@ -1984,7 +1984,7 @@
 
             
 
-            <code class="ruby">        total_price: total_price,</code>
+            <code class="ruby">        end</code>
           </li>
         </div>
       
@@ -1994,17 +1994,17 @@
 
             
 
-            <code class="ruby">        pharmacy: pharmacy,</code>
+            <code class="ruby">      end</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="82">
+          <li class="never" data-hits="" data-linenumber="82">
             
 
             
 
-            <code class="ruby">        masks: result_masks</code>
+            <code class="ruby">  </code>
           </li>
         </div>
       
@@ -2014,7 +2014,7 @@
 
             
 
-            <code class="ruby">      )</code>
+            <code class="ruby">      render_success(</code>
           </li>
         </div>
       
@@ -2024,7 +2024,7 @@
 
             
 
-            <code class="ruby">    rescue ArgumentError =&gt; e</code>
+            <code class="ruby">        message: &quot;Purchase successfully&quot;,</code>
           </li>
         </div>
       
@@ -2034,7 +2034,7 @@
 
             
 
-            <code class="ruby">      render_error(e.message, :unprocessable_entity)</code>
+            <code class="ruby">        total_price: total_price,</code>
           </li>
         </div>
       
@@ -2044,7 +2044,7 @@
 
             
 
-            <code class="ruby">    rescue ActiveRecord::RecordNotFound =&gt; e</code>
+            <code class="ruby">        pharmacy: pharmacy,</code>
           </li>
         </div>
       
@@ -2054,7 +2054,7 @@
 
             
 
-            <code class="ruby">      render_error(e.message, :not_found)</code>
+            <code class="ruby">        masks: result_masks.map do |mask|</code>
           </li>
         </div>
       
@@ -2064,7 +2064,7 @@
 
             
 
-            <code class="ruby">    end</code>
+            <code class="ruby">          mask.as_json(only: [:id, :mask_type_id, :pharmacy_id, :unit_price, :price, :stock, :created_at, :updated_at])</code>
           </li>
         </div>
       
@@ -2074,12 +2074,82 @@
 
             
 
+            <code class="ruby">        end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="90">
+            
+
+            
+
+            <code class="ruby">      )</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="91">
+            
+
+            
+
+            <code class="ruby">    rescue ArgumentError =&gt; e</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="92">
+            
+
+            
+
+            <code class="ruby">      render_error(e.message, :unprocessable_entity)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="93">
+            
+
+            
+
+            <code class="ruby">    rescue ActiveRecord::RecordNotFound =&gt; e</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="94">
+            
+
+            
+
+            <code class="ruby">      render_error(e.message, :not_found)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="95">
+            
+
+            
+
+            <code class="ruby">    end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="96">
+            
+
+            
+
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="90">
+          <li class="never" data-hits="" data-linenumber="97">
             
 
             

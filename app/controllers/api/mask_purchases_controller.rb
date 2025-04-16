@@ -15,9 +15,11 @@ class Api::MaskPurchasesController < ApplicationController
         mask_type_id = purchase[:mask_type_id]
         quantity = purchase[:quantity].to_i
         unit_price = purchase[:unit_price].to_f
+        price = purchase[:price].to_f
   
         raise ArgumentError, "Quantity must be greater than 0" if quantity <= 0
         raise ArgumentError, "Unit price must be >= 0" if unit_price < 0
+        raise ArgumentError, "price must be >= 0" if price < 0
   
         mask_type = MaskType.find_by(id: mask_type_id)
         raise ArgumentError, "MaskType ID #{mask_type_id} not found" if mask_type.nil?
@@ -26,6 +28,7 @@ class Api::MaskPurchasesController < ApplicationController
           mask_type: mask_type,
           quantity: quantity,
           unit_price: unit_price,
+          price: price,
           total_price: quantity * unit_price
         }
       end
@@ -45,18 +48,20 @@ class Api::MaskPurchasesController < ApplicationController
           mask_type = item[:mask_type]
           quantity = item[:quantity]
           unit_price = item[:unit_price]
+          price = item[:price]
   
           # Check if the pharmacy already has this mask (by mask_type)
           mask = Mask.find_by(pharmacy_id: pharmacy.id, mask_type_id: mask_type.id)
   
           if mask
             # If mask exists, increase stock
-            mask.update!(stock: mask.stock + quantity,unit_price: unit_price)
+            mask.update!(stock: mask.stock + quantity,unit_price: unit_price,price: price)
           else
             # If not, create a new mask for this pharmacy
             mask = Mask.create!(
               pharmacy: pharmacy,
               mask_type: mask_type,
+              price: price,
               unit_price: unit_price,
               stock: quantity
             )
@@ -79,7 +84,9 @@ class Api::MaskPurchasesController < ApplicationController
         message: "Purchase successfully",
         total_price: total_price,
         pharmacy: pharmacy,
-        masks: result_masks
+        masks: result_masks.map do |mask|
+          mask.as_json(only: [:id, :mask_type_id, :pharmacy_id, :unit_price, :price, :stock, :created_at, :updated_at])
+        end
       )
     rescue ArgumentError => e
       render_error(e.message, :unprocessable_entity)
