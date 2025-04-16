@@ -34,6 +34,7 @@ RSpec.describe 'api/orders/analytics', type: :request do
                              items: {
                                type: :object,
                                properties: {
+                                  pharmacy_id: { type: :number },
                                  pharmacy_name: { type: :string },
                                  total_price: { type: :number },
                                  created_at: { type: :string, format: :date_time },

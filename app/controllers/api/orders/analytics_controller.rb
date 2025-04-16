@@ -3,13 +3,14 @@ class Api::Orders::AnalyticsController < ApplicationController
   
     # GET /api/orders/analytics/top_users
     def top_users
-      start_date = params[:start_date]
-      end_date = params[:end_date]
+      start_time = Date.parse(params[:start_date]).beginning_of_day
+      end_time = Date.parse(params[:end_date]).end_of_day
+
       limit = params[:limit] || 5
   
       users = User
                 .joins(orders: :order_items)
-                .where(orders: { created_at: start_date..end_date })
+                .where(orders: { created_at: start_time..end_time })
                 .select('users.id, users.name, SUM(order_items.price * order_items.quantity) AS total_amount, SUM(order_items.quantity) AS total_quantity')
                 .group('users.id')
                 .order('total_amount DESC')
@@ -18,7 +19,7 @@ class Api::Orders::AnalyticsController < ApplicationController
       data = users.map do |user|
         orders = user.orders
                      .includes(:pharmacy, order_items: :mask)
-                     .where(created_at: start_date..end_date)
+                     .where(created_at: start_time..end_time)
   
         {
           user_id: user.id,
@@ -27,6 +28,7 @@ class Api::Orders::AnalyticsController < ApplicationController
           total_quantity: user.total_quantity.to_i,
           orders: orders.map do |order|
             {
+              pharmacy_id: order.pharmacy_id,
               pharmacy_name: order.pharmacy.name,
               total_price: order.total_price.to_f,
               created_at: order.created_at,
@@ -48,25 +50,25 @@ class Api::Orders::AnalyticsController < ApplicationController
   
     # GET /api/orders/analytics/statistics
     def statistics
-      start_date = params[:start_date]
-      end_date = params[:end_date]
+      start_time = Date.parse(params[:start_date]).beginning_of_day
+      end_time = Date.parse(params[:end_date]).end_of_day
   
       stats = OrderItem
                 .joins(:order)
-                .where(orders: { created_at: start_date..end_date })
+                .where(orders: { created_at: start_time..end_time })
                 .select('SUM(order_items.quantity) AS total_quantity, SUM(order_items.price * order_items.quantity) AS total_amount')
                 .take
   
       mask_type_summary= OrderItem
                        .joins(:order,mask: :mask_type)
-                       .where(orders: { created_at: start_date..end_date })
+                       .where(orders: { created_at: start_time..end_time})
                        .select('mask_types.id AS mask_type_id, mask_types.name AS mask_type_name, SUM(order_items.quantity) AS total_quantity, SUM(order_items.price * order_items.quantity) AS total_amount')
                        .group('mask_types.id, mask_types.name')
                        .order('total_quantity DESC')
   
       pharmacy_summary = OrderItem
                            .joins(order: :pharmacy)
-                           .where(orders: { created_at: start_date..end_date })
+                           .where(orders: { created_at: start_time..end_time })
                            .select('pharmacies.id, pharmacies.name, SUM(order_items.quantity) AS total_quantity, SUM(order_items.price * order_items.quantity) AS total_amount')
                            .group('pharmacies.id, pharmacies.name')
                            .order('total_quantity DESC')

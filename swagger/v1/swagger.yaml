@@ -231,6 +231,8 @@ paths:
                               items:
                                 type: object
                                 properties:
+                                  pharmacy_id:
+                                    type: number
                                   pharmacy_name:
                                     type: string
                                   total_price:

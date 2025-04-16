@@ -16,7 +16,7 @@
   - Implemented at `/api/pharmacies/filter_by_mask_conditions?mask_price_min=5&mask_price_max=20&stock_gt=2&stock_lt=6`
   - Test : [http://35.229.247.36:3000/api/pharmacies/filter_by_mask_conditions?mask_price_min=5&mask_price_max=20&stock_gt=2&stock_lt=6](http://35.229.247.36:3000/api/pharmacies/filter_by_mask_conditions?mask_price_min=5&mask_price_max=20&stock_gt=2&stock_lt=6)
 - [x] The top x users by total transaction amount of masks within a date range.
-  - Implemented at `/api/orders/analytics/top_users?start_date=YYYY-MM-DD&end_date=YYYY-MM-DD&limit=x
+  - Implemented at `/api/orders/analytics/top_users?start_date=YYYY-MM-DD&end_date=YYYY-MM-DD&limit=x`
   - Test : [http://35.229.247.36:3000/api/orders/analytics/top_users?start_date=2021-01-01&end_date=2021-01-31&limit=3](http://35.229.247.36:3000/api/orders/analytics/top_users?start_date=2021-01-01&end_date=2021-01-31&limit=3)
 - [x] The total number of masks and dollar value of transactions within a date range.
   - Implemented at `/api/orders/analytics/statistics?start_date=YYYY-MM-DD&end_date=YYYY-MM-DD`
@@ -29,10 +29,11 @@
 - [x] Process a user purchases a mask from a pharmacy, and handle all relevant data changes in an atomic transaction.
   - Implemented at `/api/orders`
 ### A.2. API Document
-[API Document](http://35.229.247.36:3000/api-docs/index.html)
-> Please describe how to use the API in the API documentation. You can edit by any format (e.g., Markdown or OpenAPI) or free tools (e.g., [hackMD](https://hackmd.io/), [postman](https://www.postman.com/), [google docs](https://docs.google.com/document/u/0/), or  [swagger](https://swagger.io/specification/)).
+📄 **API Documentation:**  
+[http://35.229.247.36:3000/api-docs/index.html](http://35.229.247.36:3000/api-docs/index.html)
 
-Import [allen_postman_collection.json](./public/allen_postman_collection.json) json file to Postman.
+📥 **Postman Collection:**  
+Import [`allen_postman_collection.json`](./public/allen_postman_collection.json) into Postman to explore and test the APIs.
 
 ### A.3. Import Data Commands
 Please run these two script commands to migrate the data into the database.
@@ -46,10 +47,14 @@ $ rake import_data:users[PATH_TO_FILE]
 >  If you completed the bonus requirements, please fill in your task below.
 ### B.1. Test Coverage Report
 
-I wrote 69 unit tests for the APIs I built. You can check the test coverage report at `coverage/index.html` after running the tests.
-[online report](http://35.229.247.36:3000/coverage),
-[file path](/public/coverage/index.html)
-You can run the test script by using the command below:
+I wrote **69 unit tests** for the APIs I built. 
+
+You can check the test coverage report:
+
+- 📁 **Local file path:** `/public/coverage/index.html`
+- 🌐 **Online report:** [http://35.229.247.36:3000/coverage](http://35.229.247.36:3000/coverage)
+
+To run the test suite and generate the coverage report, use the following command:
 
 ```bash
 bundle exec rspec spec
