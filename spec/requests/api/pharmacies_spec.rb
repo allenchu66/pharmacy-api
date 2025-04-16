@@ -498,14 +498,20 @@ RSpec.describe 'api/pharmacies', type: :request do
       tags 'Pharmacies'
       produces 'application/json'
   
-      parameter name: :stock_gt, in: :query, type: :integer, required: false, description: 'Required if no other filters are provided'
-      parameter name: :stock_lt, in: :query, type: :integer, required: false, description: 'Required if no other filters are provided'
-      parameter name: :mask_price_min, in: :query, type: :number, required: false, description: 'Required if no other filters are provided'
-      parameter name: :mask_price_max, in: :query, type: :number, required: false, description: 'Required if no other filters are provided'
+      parameter name: :mask_count_gt, in: :query, type: :integer, required: false,description: 'Optional. Return pharmacies with more than this number of mask products (e.g., 5)'
+
+      parameter name: :mask_count_lt, in: :query, type: :integer, required: false,description: 'Optional. Return pharmacies with fewer than this number of mask products (e.g., 10)'
+
+      parameter name: :mask_price_min, in: :query, type: :number, required: true,description: 'Required. Minimum mask price to filter mask products (e.g., 10.0)'
+
+      parameter name: :mask_price_max, in: :query, type: :number, required: true,description: 'Required. Maximum mask price to filter mask products (e.g., 50.0)'
+
   
       # 200 成功 (有帶參數)
     response '200', 'Success with condition' do
-      let(:stock_gt) { 1 }
+      let(:mask_price_min) { 5.0 }
+      let(:mask_price_max) { 15.0 }
+      let(:mask_count_gt) { 0 }
 
       let!(:mask_type1) { create(:mask_type) }
       let!(:pharmacy1) { create(:pharmacy, name: 'A', cash_balance: 100) }
@@ -529,15 +535,18 @@ RSpec.describe 'api/pharmacies', type: :request do
       run_test! do |response|
         json = JSON.parse(response.body)
         expect(response.status).to eq(200)
+        expect(json['data'].length).to be >= 1
       end
     end
 
     # 400 沒有帶參數
-    response '400', 'Missing filter parameters' do
+    response '400', 'Missing price range parameters' do
+      let(:mask_price_min) { nil }
+      let(:mask_price_max) { nil }
       run_test! do |response|
         json = JSON.parse(response.body)
         expect(response.status).to eq(400)
-        expect(json['message']).to eq("At least one filter parameter is required")
+        expect(json['message']).to eq("Price range is required")
       end
     end
   end

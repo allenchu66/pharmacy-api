@@ -715,6 +715,9 @@ paths:
                         updated_at:
                           type: string
                           format: date_time
+                        unit_price:
+                          type: number
+                          nullable: true
                         mask_type:
                           type: object
                           properties:
@@ -913,28 +916,30 @@ paths:
       tags:
       - Pharmacies
       parameters:
-      - name: stock_gt
+      - name: mask_count_gt
         in: query
         required: false
-        description: Required if no other filters are provided
+        description: Optional. Return pharmacies with more than this number of mask
+          products (e.g., 5)
         schema:
           type: integer
-      - name: stock_lt
+      - name: mask_count_lt
         in: query
         required: false
-        description: Required if no other filters are provided
+        description: Optional. Return pharmacies with fewer than this number of mask
+          products (e.g., 10)
         schema:
           type: integer
       - name: mask_price_min
         in: query
-        required: false
-        description: Required if no other filters are provided
+        required: true
+        description: Required. Minimum mask price to filter mask products (e.g., 10.0)
         schema:
           type: number
       - name: mask_price_max
         in: query
-        required: false
-        description: Required if no other filters are provided
+        required: true
+        description: Required. Maximum mask price to filter mask products (e.g., 50.0)
         schema:
           type: number
       responses:
@@ -959,7 +964,7 @@ paths:
                         mask_count:
                           type: integer
         '400':
-          description: Missing filter parameters
+          description: Missing price range parameters
   "/api/users":
     get:
       summary: Get all users (support search by name / phone_number)

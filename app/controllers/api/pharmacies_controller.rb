@@ -87,35 +87,37 @@ class Api::PharmaciesController < ApplicationController
   end
 
   def filter_by_mask_conditions
-    if params[:stock_gt].blank? && params[:stock_lt].blank? &&
-      params[:mask_price_min].blank? && params[:mask_price_max].blank?
-     return render_error("At least one filter parameter is required", :bad_request)
+    if params[:mask_price_min].blank? || params[:mask_price_max].blank?
+      return render_error("Price range is required", :bad_request)
     end
+
     price_min = params[:mask_price_min].to_f
     price_max = params[:mask_price_max].to_f
-    mask_count_gt = params[:stock_gt].to_i
-    mask_count_lt = params[:stock_lt].to_i
+    mask_count_gt = params[:mask_count_gt].to_i
+    mask_count_lt = params[:mask_count_lt].to_i
   
     pharmacies = Pharmacy.joins(:masks)
-    .where("masks.price >= ?", price_min)
-    .where("masks.price <= ?", price_max)
-    .group("pharmacies.id")
+                          .where("masks.price >= ?", price_min)
+                          .where("masks.price <= ?", price_max)
+                          .group("pharmacies.id")
+                          .select("pharmacies.*, COUNT(masks.id) as mask_count")
 
     having_conditions = []  
     having_values = []
 
-    if params[:stock_gt].present?
+    if params[:mask_count_gt].present?
       having_conditions << "COUNT(masks.id) > ?"
       having_values << mask_count_gt
     end
 
-    if params[:stock_lt].present?
+    if params[:mask_count_lt].present?
       having_conditions << "COUNT(masks.id) < ?"
       having_values << mask_count_lt
     end
 
-    pharmacies = pharmacies.having(having_conditions.join(" AND "), *having_values) if having_conditions.any?
-    pharmacies = pharmacies.select("pharmacies.*, COUNT(masks.id) as mask_count")
+    if having_conditions.any?
+      pharmacies = pharmacies.having(having_conditions.join(" AND "), *having_values)
+    end
   
     result = pharmacies.map do |pharmacy|
       pharmacy.as_json.merge(mask_count: pharmacy.mask_count)
