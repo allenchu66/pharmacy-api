@@ -58,13 +58,27 @@ bundle exec rspec spec
 ### B.2. Dockerized
 Please check my [Dockerfile](Dockerfile) / [docker-compose.yml](docker-compose.yml)
 
-On the local machine, please follow the commands below to build it.
+To run the project locally using Docker, follow the steps below:
 
-```bash
-$ docker-compose build --no-cache 
-$ make setup
-$ make start
-```
+#### 🛠️ Environment Setup
+
+1. Copy the example database configuration file:
+   ```bash
+   cp config/database.yml.example config/database.yml
+   ```
+
+2. Create a `.env` file in the project root and add the following environment variables:
+   ```env
+   DB_USERNAME=phantom
+   DB_PASSWORD=phantom1234
+   DB_HOST=db
+   ```
+3. 🚀 Build & Start   
+   ```bash
+   $ docker-compose build --no-cache 
+   $ make setup
+   $ make start
+   ```
 
 ### B.3. Demo Site Url
 
