@@ -38,7 +38,7 @@ class Api::MasksController < ApplicationController
      
     render_success(
       masks.as_json(
-        only: [:id, :name, :price, :stock, :pharmacy_id, :created_at, :updated_at],
+        only: [:id, :name, :price, :unit_price ,:stock, :pharmacy_id, :created_at, :updated_at],
         include: {
           mask_type: {
             only: [:id, :name, :color, :category, :description]

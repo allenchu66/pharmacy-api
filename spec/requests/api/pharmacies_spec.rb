@@ -132,6 +132,7 @@ RSpec.describe 'api/pharmacies', type: :request do
                 pharmacy_id: { type: :integer },
                 created_at: { type: :string, format: :date_time },
                 updated_at: { type: :string, format: :date_time },
+                unit_price: { type: :number, nullable: true },
                 mask_type: {
                     type: :object,
                     properties: {
