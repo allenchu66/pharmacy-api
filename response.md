@@ -13,8 +13,8 @@
   - Implemented at `/api/pharmacies/:pharmacy_id/masks?sort=name_desc`  
   - Test : [http://35.229.247.36:3000/api/pharmacies/1/masks?sort=name_desc](http://35.229.247.36:3000/api/pharmacies/1/masks?sort=name_desc)
 - [x] List all pharmacies with more or less than x mask products within a price range.
-  - Implemented at `/api/pharmacies/filter_by_mask_conditions?mask_price_min=5&mask_price_max=20&stock_gt=2&stock_lt=6`
-  - Test : [http://35.229.247.36:3000/api/pharmacies/filter_by_mask_conditions?mask_price_min=5&mask_price_max=20&stock_gt=2&stock_lt=6](http://35.229.247.36:3000/api/pharmacies/filter_by_mask_conditions?mask_price_min=5&mask_price_max=20&stock_gt=2&stock_lt=6)
+  - Implemented at `/api/pharmacies/filter_by_mask_conditions?mask_price_min=5&mask_price_max=20&mask_count_gt=2&mask_count_lt=6`
+  - Test : [http://35.229.247.36:3000/api/pharmacies/filter_by_mask_conditions?mask_price_min=5&mask_price_max=20mask_count_gt=2&mask_count_lt=6](http://35.229.247.36:3000/api/pharmacies/filter_by_mask_conditions?mask_price_min=5&mask_price_max=20&mask_count_gt=2&mask_count_lt=6)
 - [x] The top x users by total transaction amount of masks within a date range.
   - Implemented at `/api/orders/analytics/top_users?start_date=YYYY-MM-DD&end_date=YYYY-MM-DD&limit=x`
   - Test : [http://35.229.247.36:3000/api/orders/analytics/top_users?start_date=2021-01-01&end_date=2021-01-31&limit=3](http://35.229.247.36:3000/api/orders/analytics/top_users?start_date=2021-01-01&end_date=2021-01-31&limit=3)
