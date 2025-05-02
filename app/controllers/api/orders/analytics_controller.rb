@@ -11,16 +11,18 @@ class Api::Orders::AnalyticsController < ApplicationController
       users = User
                 .joins(orders: :order_items)
                 .where(orders: { created_at: start_time..end_time })
-                .select('users.id, users.name, SUM(order_items.price * order_items.quantity) AS total_amount, SUM(order_items.quantity) AS total_quantity')
+                .select('users.id, users.name,SUM(orders.total_price) AS total_amount, SUM(order_items.quantity) AS total_quantity')
                 .group('users.id')
                 .order('total_amount DESC')
                 .limit(limit)
+
+      preloaded_orders = Order
+                .includes(:pharmacy, order_items: { mask: :mask_type })
+                .where(user_id: users.map(&:id), created_at: start_time..end_time)
+                .group_by(&:user_id)          
   
       data = users.map do |user|
-        orders = user.orders
-                     .includes(:pharmacy, order_items: :mask)
-                     .where(created_at: start_time..end_time)
-  
+        orders = preloaded_orders[user.id] || []
         {
           user_id: user.id,
           user_name: user.name,

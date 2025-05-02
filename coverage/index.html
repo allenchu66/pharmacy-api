@@ -13,7 +13,7 @@
       <img src="./assets/0.13.1/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2025-05-02T15:47:17+08:00">2025-05-02T15:47:17+08:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2025-05-02T16:12:34+08:00">2025-05-02T16:12:34+08:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -22,14 +22,14 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="yellow">
-  82.82%
+  82.86%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         2.37
+         2.36
        </span>
     </span> hits/line
     )
@@ -42,11 +42,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>390</b> relevant lines,
-    <span class="green"><b>323</b> lines covered</span> and
+    <b>391</b> relevant lines,
+    <span class="green"><b>324</b> lines covered</span> and
     <span class="red"><b>67</b> lines missed. </span>
     (<span class="yellow">
-  82.82%
+  82.86%
 </span>
 )
   </div>
@@ -126,12 +126,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#7fb6a27899a6c3380efd64a5c986118a41422f5d" class="src_link" title="app/controllers/api/orders/analytics_controller.rb">app/controllers/api/orders/analytics_controller.rb</a></td>
-            <td class="red strong cell--number t-file__coverage">72.73 %</td>
-            <td class="cell--number">93</td>
-            <td class="cell--number">22</td>
-            <td class="cell--number">16</td>
+            <td class="red strong cell--number t-file__coverage">73.91 %</td>
+            <td class="cell--number">95</td>
+            <td class="cell--number">23</td>
+            <td class="cell--number">17</td>
             <td class="cell--number">6</td>
-            <td class="cell--number">0.73</td>
+            <td class="cell--number">0.74</td>
             
           </tr>
         
@@ -345,7 +345,7 @@
     <span class="group_name">Controllers</span>
     (<span class="covered_percent">
       <span class="green">
-  90.63%
+  90.66%
 </span>
 
      </span>
@@ -365,11 +365,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>288</b> relevant lines,
-    <span class="green"><b>261</b> lines covered</span> and
+    <b>289</b> relevant lines,
+    <span class="green"><b>262</b> lines covered</span> and
     <span class="red"><b>27</b> lines missed. </span>
     (<span class="green">
-  90.63%
+  90.66%
 </span>
 )
   </div>
@@ -427,12 +427,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#7fb6a27899a6c3380efd64a5c986118a41422f5d" class="src_link" title="app/controllers/api/orders/analytics_controller.rb">app/controllers/api/orders/analytics_controller.rb</a></td>
-            <td class="red strong cell--number t-file__coverage">72.73 %</td>
-            <td class="cell--number">93</td>
-            <td class="cell--number">22</td>
-            <td class="cell--number">16</td>
+            <td class="red strong cell--number t-file__coverage">73.91 %</td>
+            <td class="cell--number">95</td>
+            <td class="cell--number">23</td>
+            <td class="cell--number">17</td>
             <td class="cell--number">6</td>
-            <td class="cell--number">0.73</td>
+            <td class="cell--number">0.74</td>
             
           </tr>
         
@@ -3904,7 +3904,7 @@
     <h3>app/controllers/api/orders/analytics_controller.rb</h3>
     <h4>
       <span class="red">
-  72.73%
+  73.91%
 </span>
 
       lines covered
@@ -3913,8 +3913,8 @@
     
 
     <div class="t-line-summary">
-      <b>22</b> relevant lines.
-      <span class="green"><b>16</b> lines covered</span> and
+      <b>23</b> relevant lines.
+      <span class="green"><b>17</b> lines covered</span> and
       <span class="red"><b>6</b> lines missed.</span>
     </div>
 
@@ -4075,7 +4075,7 @@
 
             
 
-            <code class="ruby">                .select(&#39;users.id, users.name, SUM(order_items.price * order_items.quantity) AS total_amount, SUM(order_items.quantity) AS total_quantity&#39;)</code>
+            <code class="ruby">                .select(&#39;users.id, users.name,SUM(orders.total_price) AS total_amount, SUM(order_items.quantity) AS total_quantity&#39;)</code>
           </li>
         </div>
       
@@ -4115,7 +4115,7 @@
 
             
 
-            <code class="ruby">  </code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -4127,17 +4127,17 @@
 
             
 
-            <code class="ruby">      data = users.map do |user|</code>
+            <code class="ruby">      preloaded_orders = Order</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="20">
+          <li class="never" data-hits="" data-linenumber="20">
             
 
             
 
-            <code class="ruby">        orders = user.orders</code>
+            <code class="ruby">                .includes(:pharmacy, order_items: { mask: :mask_type })</code>
           </li>
         </div>
       
@@ -4147,7 +4147,7 @@
 
             
 
-            <code class="ruby">                     .includes(:pharmacy, order_items: :mask)</code>
+            <code class="ruby">                .where(user_id: users.map(&amp;:id), created_at: start_time..end_time)</code>
           </li>
         </div>
       
@@ -4157,7 +4157,7 @@
 
             
 
-            <code class="ruby">                     .where(created_at: start_time..end_time)</code>
+            <code class="ruby">                .group_by(&amp;:user_id)          </code>
           </li>
         </div>
       
@@ -4172,12 +4172,14 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="24">
+          <li class="covered" data-hits="1" data-linenumber="24">
+            
+              <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">        {</code>
+            <code class="ruby">      data = users.map do |user|</code>
           </li>
         </div>
       
@@ -4187,7 +4189,7 @@
 
             
 
-            <code class="ruby">          user_id: user.id,</code>
+            <code class="ruby">        orders = preloaded_orders[user.id] || []</code>
           </li>
         </div>
       
@@ -4197,17 +4199,17 @@
 
             
 
-            <code class="ruby">          user_name: user.name,</code>
+            <code class="ruby">        {</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="27">
+          <li class="missed" data-hits="0" data-linenumber="27">
             
 
             
 
-            <code class="ruby">          total_amount: user.total_amount.to_f,</code>
+            <code class="ruby">          user_id: user.id,</code>
           </li>
         </div>
       
@@ -4217,7 +4219,7 @@
 
             
 
-            <code class="ruby">          total_quantity: user.total_quantity.to_i,</code>
+            <code class="ruby">          user_name: user.name,</code>
           </li>
         </div>
       
@@ -4227,7 +4229,7 @@
 
             
 
-            <code class="ruby">          orders: orders.map do |order|</code>
+            <code class="ruby">          total_amount: user.total_amount.to_f,</code>
           </li>
         </div>
       
@@ -4237,17 +4239,17 @@
 
             
 
-            <code class="ruby">            {</code>
+            <code class="ruby">          total_quantity: user.total_quantity.to_i,</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="31">
+          <li class="never" data-hits="" data-linenumber="31">
             
 
             
 
-            <code class="ruby">              pharmacy_id: order.pharmacy_id,</code>
+            <code class="ruby">          orders: orders.map do |order|</code>
           </li>
         </div>
       
@@ -4257,17 +4259,17 @@
 
             
 
-            <code class="ruby">              pharmacy_name: order.pharmacy.name,</code>
+            <code class="ruby">            {</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="33">
+          <li class="missed" data-hits="0" data-linenumber="33">
             
 
             
 
-            <code class="ruby">              total_price: order.total_price.to_f,</code>
+            <code class="ruby">              pharmacy_id: order.pharmacy_id,</code>
           </li>
         </div>
       
@@ -4277,7 +4279,7 @@
 
             
 
-            <code class="ruby">              created_at: order.created_at,</code>
+            <code class="ruby">              pharmacy_name: order.pharmacy.name,</code>
           </li>
         </div>
       
@@ -4287,7 +4289,7 @@
 
             
 
-            <code class="ruby">              items: order.order_items.map do |item|</code>
+            <code class="ruby">              total_price: order.total_price.to_f,</code>
           </li>
         </div>
       
@@ -4297,17 +4299,17 @@
 
             
 
-            <code class="ruby">                {</code>
+            <code class="ruby">              created_at: order.created_at,</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="37">
+          <li class="never" data-hits="" data-linenumber="37">
             
 
             
 
-            <code class="ruby">                  mask_id: item.mask.mask_type.id,</code>
+            <code class="ruby">              items: order.order_items.map do |item|</code>
           </li>
         </div>
       
@@ -4317,17 +4319,17 @@
 
             
 
-            <code class="ruby">                  mask_name: item.mask.mask_type.name,</code>
+            <code class="ruby">                {</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="39">
+          <li class="missed" data-hits="0" data-linenumber="39">
             
 
             
 
-            <code class="ruby">                  price: item.price.to_f,</code>
+            <code class="ruby">                  mask_id: item.mask.mask_type.id,</code>
           </li>
         </div>
       
@@ -4337,7 +4339,7 @@
 
             
 
-            <code class="ruby">                  quantity: item.quantity</code>
+            <code class="ruby">                  mask_name: item.mask.mask_type.name,</code>
           </li>
         </div>
       
@@ -4347,7 +4349,7 @@
 
             
 
-            <code class="ruby">                }</code>
+            <code class="ruby">                  price: item.price.to_f,</code>
           </li>
         </div>
       
@@ -4357,7 +4359,7 @@
 
             
 
-            <code class="ruby">              end</code>
+            <code class="ruby">                  quantity: item.quantity</code>
           </li>
         </div>
       
@@ -4367,7 +4369,7 @@
 
             
 
-            <code class="ruby">            }</code>
+            <code class="ruby">                }</code>
           </li>
         </div>
       
@@ -4377,7 +4379,7 @@
 
             
 
-            <code class="ruby">          end</code>
+            <code class="ruby">              end</code>
           </li>
         </div>
       
@@ -4387,7 +4389,7 @@
 
             
 
-            <code class="ruby">        }</code>
+            <code class="ruby">            }</code>
           </li>
         </div>
       
@@ -4397,7 +4399,7 @@
 
             
 
-            <code class="ruby">      end</code>
+            <code class="ruby">          end</code>
           </li>
         </div>
       
@@ -4407,12 +4409,32 @@
 
             
 
+            <code class="ruby">        }</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="48">
+            
+
+            
+
+            <code class="ruby">      end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="49">
+            
+
+            
+
             <code class="ruby">  </code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="48">
+          <li class="covered" data-hits="1" data-linenumber="50">
             
               <span class="hits">1</span>
             
@@ -4424,7 +4446,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="49">
+          <li class="never" data-hits="" data-linenumber="51">
             
 
             
@@ -4434,7 +4456,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="50">
+          <li class="never" data-hits="" data-linenumber="52">
             
 
             
@@ -4444,36 +4466,12 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="51">
+          <li class="never" data-hits="" data-linenumber="53">
             
 
             
 
             <code class="ruby">    # GET /api/orders/analytics/statistics</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="52">
-            
-              <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">    def statistics</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="53">
-            
-              <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">      start_time = Date.parse(params[:start_date]).beginning_of_day</code>
           </li>
         </div>
       
@@ -4485,17 +4483,19 @@
 
             
 
-            <code class="ruby">      end_time = Date.parse(params[:end_date]).end_of_day</code>
+            <code class="ruby">    def statistics</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="55">
+          <li class="covered" data-hits="1" data-linenumber="55">
+            
+              <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  </code>
+            <code class="ruby">      start_time = Date.parse(params[:start_date]).beginning_of_day</code>
           </li>
         </div>
       
@@ -4507,7 +4507,7 @@
 
             
 
-            <code class="ruby">      stats = OrderItem</code>
+            <code class="ruby">      end_time = Date.parse(params[:end_date]).end_of_day</code>
           </li>
         </div>
       
@@ -4517,17 +4517,19 @@
 
             
 
-            <code class="ruby">                .joins(:order)</code>
+            <code class="ruby">  </code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="58">
+          <li class="covered" data-hits="1" data-linenumber="58">
+            
+              <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">                .where(orders: { created_at: start_time..end_time })</code>
+            <code class="ruby">      stats = OrderItem</code>
           </li>
         </div>
       
@@ -4537,7 +4539,7 @@
 
             
 
-            <code class="ruby">                .select(&#39;SUM(order_items.quantity) AS total_quantity, SUM(order_items.price * order_items.quantity) AS total_amount&#39;)</code>
+            <code class="ruby">                .joins(:order)</code>
           </li>
         </div>
       
@@ -4547,7 +4549,7 @@
 
             
 
-            <code class="ruby">                .take</code>
+            <code class="ruby">                .where(orders: { created_at: start_time..end_time })</code>
           </li>
         </div>
       
@@ -4557,12 +4559,32 @@
 
             
 
+            <code class="ruby">                .select(&#39;SUM(order_items.quantity) AS total_quantity, SUM(order_items.price * order_items.quantity) AS total_amount&#39;)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="62">
+            
+
+            
+
+            <code class="ruby">                .take</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="63">
+            
+
+            
+
             <code class="ruby">  </code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="62">
+          <li class="covered" data-hits="1" data-linenumber="64">
             
               <span class="hits">1</span>
             
@@ -4574,7 +4596,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="63">
+          <li class="never" data-hits="" data-linenumber="65">
             
 
             
@@ -4584,7 +4606,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="64">
+          <li class="never" data-hits="" data-linenumber="66">
             
 
             
@@ -4594,7 +4616,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="65">
+          <li class="never" data-hits="" data-linenumber="67">
             
 
             
@@ -4604,7 +4626,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="66">
+          <li class="never" data-hits="" data-linenumber="68">
             
 
             
@@ -4614,7 +4636,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="67">
+          <li class="never" data-hits="" data-linenumber="69">
             
 
             
@@ -4624,7 +4646,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="68">
+          <li class="never" data-hits="" data-linenumber="70">
             
 
             
@@ -4634,7 +4656,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="69">
+          <li class="covered" data-hits="1" data-linenumber="71">
             
               <span class="hits">1</span>
             
@@ -4646,7 +4668,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="70">
+          <li class="never" data-hits="" data-linenumber="72">
             
 
             
@@ -4656,7 +4678,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="71">
+          <li class="never" data-hits="" data-linenumber="73">
             
 
             
@@ -4666,7 +4688,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="72">
+          <li class="never" data-hits="" data-linenumber="74">
             
 
             
@@ -4676,7 +4698,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="73">
+          <li class="never" data-hits="" data-linenumber="75">
             
 
             
@@ -4686,7 +4708,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="74">
+          <li class="never" data-hits="" data-linenumber="76">
             
 
             
@@ -4696,7 +4718,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="75">
+          <li class="never" data-hits="" data-linenumber="77">
             
 
             
@@ -4706,7 +4728,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="76">
+          <li class="covered" data-hits="1" data-linenumber="78">
             
               <span class="hits">1</span>
             
@@ -4718,7 +4740,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="77">
+          <li class="never" data-hits="" data-linenumber="79">
             
 
             
@@ -4728,7 +4750,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="78">
+          <li class="never" data-hits="" data-linenumber="80">
             
 
             
@@ -4738,7 +4760,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="79">
+          <li class="never" data-hits="" data-linenumber="81">
             
 
             
@@ -4748,7 +4770,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="80">
+          <li class="missed" data-hits="0" data-linenumber="82">
             
 
             
@@ -4758,7 +4780,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="81">
+          <li class="never" data-hits="" data-linenumber="83">
             
 
             
@@ -4768,7 +4790,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="82">
+          <li class="never" data-hits="" data-linenumber="84">
             
 
             
@@ -4778,7 +4800,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="83">
+          <li class="never" data-hits="" data-linenumber="85">
             
 
             
@@ -4788,7 +4810,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="84">
+          <li class="never" data-hits="" data-linenumber="86">
             
 
             
@@ -4798,7 +4820,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="85">
+          <li class="never" data-hits="" data-linenumber="87">
             
 
             
@@ -4808,7 +4830,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="86">
+          <li class="missed" data-hits="0" data-linenumber="88">
             
 
             
@@ -4818,7 +4840,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="87">
+          <li class="never" data-hits="" data-linenumber="89">
             
 
             
@@ -4828,7 +4850,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="88">
+          <li class="never" data-hits="" data-linenumber="90">
             
 
             
@@ -4838,7 +4860,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="89">
+          <li class="never" data-hits="" data-linenumber="91">
             
 
             
@@ -4848,7 +4870,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="90">
+          <li class="never" data-hits="" data-linenumber="92">
             
 
             
@@ -4858,7 +4880,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="91">
+          <li class="never" data-hits="" data-linenumber="93">
             
 
             
@@ -4868,7 +4890,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="92">
+          <li class="never" data-hits="" data-linenumber="94">
             
 
             
@@ -4878,7 +4900,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="93">
+          <li class="never" data-hits="" data-linenumber="95">
             
 
             
