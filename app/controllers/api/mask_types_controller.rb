@@ -7,19 +7,13 @@ class Api::MaskTypesController < ApplicationController
 
         if params[:keyword].present?
             keyword = params[:keyword]
-        
+          
             mask_types = mask_types
               .select("mask_types.*, POSITION(#{ActiveRecord::Base.connection.quote(keyword)} IN name) AS position_order")
               .where("name ILIKE ?", "%#{keyword}%")
-              .order(Arel.sql("
-                CASE 
-                  WHEN POSITION(#{ActiveRecord::Base.connection.quote(keyword)} IN name) = 0 THEN 1 
-                  ELSE 0 
-                END, 
-                position_order ASC
-              "))
-          end
-        
+              .order("position_order ASC")
+        end
+          
         render_success(mask_types)
     end
 

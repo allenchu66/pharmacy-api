@@ -34,12 +34,6 @@
           null,
           null,
           null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
           3,
           null,
           null,
@@ -1013,6 +1007,6 @@
         "branches": {}
       }
     },
-    "timestamp": 1746175401
+    "timestamp": 1746175745
   }
 }
