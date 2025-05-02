@@ -13,7 +13,7 @@ class Pharmacy < ApplicationRecord
     return "" if hours.empty?
 
     # Group by time range
-    grouped = hours.group_by { |h| "#{h.open_time}-#{h.close_time}" }
+    grouped = hours.group_by { |h| "#{format_time(h.open_time)}-#{format_time(h.close_time)}" }
 
     result = grouped.map do |time_range, group_hours|
       days = group_hours.map { |h| h.day_of_week == 0 ? 7 : h.day_of_week }.sort
@@ -32,6 +32,10 @@ class Pharmacy < ApplicationRecord
   end
 
   private
+
+  def format_time(time)
+    time.strftime('%H:%M')
+  end
 
   def day_name(index)
     %w[Sun Mon Tue Wed Thu Fri Sat][index % 7]
