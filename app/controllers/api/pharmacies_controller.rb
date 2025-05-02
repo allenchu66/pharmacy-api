@@ -26,12 +26,11 @@ class Api::PharmaciesController < ApplicationController
       keyword = params[:keyword]
       pharmacies = pharmacies
         .select("pharmacies.*, 
-          POSITION(#{ActiveRecord::Base.connection.quote(keyword)} IN name) AS position_order, 
-         CASE WHEN POSITION(#{ActiveRecord::Base.connection.quote(keyword)} IN name) = 0 THEN 1 ELSE 0 END AS case_order")
+          POSITION(#{ActiveRecord::Base.connection.quote(keyword)} IN name) AS position_order")
         .where("name ILIKE ?", "%#{keyword}%")
-        .order("case_order ASC, position_order ASC")
+        .order("position_order ASC")
     end
-
+    
     if params[:day_of_week].present?
       pharmacies = pharmacies.joins(:pharmacy_opening_hours)
       time = params[:time]
