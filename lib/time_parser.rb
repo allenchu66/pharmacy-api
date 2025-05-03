@@ -56,5 +56,10 @@ class TimeParser
       end
     end
   end
+
+  def self.build_time(str)
+    h, m = str.split(":").map(&:to_i)
+    Time.zone.local(2000, 1, 1, h, m)
+  end
 end
 

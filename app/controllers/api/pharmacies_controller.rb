@@ -49,7 +49,7 @@ class Api::PharmaciesController < ApplicationController
       end
     end
 
-    pharmacies = pharmacies.distinct
+    pharmacies = pharmacies.distinct.order(:id)
 
     render_success(pharmacies.as_json(methods: :opening_hours_text))
   end
