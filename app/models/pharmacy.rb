@@ -9,27 +9,29 @@ class Pharmacy < ApplicationRecord
   validates :cash_balance, numericality: { greater_than_or_equal_to: 0 }
 
   def opening_hours_text
-    hours = pharmacy_opening_hours.order(:day_of_week).to_a
-    return "" if hours.empty?
-
-    # Group by time range
-    grouped = hours.group_by { |h| "#{format_time(h.open_time)}-#{format_time(h.close_time)}" }
-
-    result = grouped.map do |time_range, group_hours|
-      days = group_hours.map { |h| h.day_of_week == 0 ? 7 : h.day_of_week }.sort
+    hours = pharmacy_opening_hours.order(:day_of_week, :open_time)
+    merged = PharmacyOpeningHoursMerger.call(hours)[id] || []
+    return "" if merged.empty?
+  
+    # Group by time range + overnight
+    grouped = merged.group_by { |h| "#{h[:open_time]}-#{h[:close_time]}-#{h[:overnight]}" }
+  
+    result = grouped.map do |key, group_hours|
+      days = group_hours.map { |h| h[:day_of_week] == 0 ? 7 : h[:day_of_week] }.uniq.sort
+      time_range = key.split('-')[0..1].join(' - ')
       {
         days: days,
-        text: "#{format_days(days)} #{time_range.gsub('-', ' - ')}"
+        text: "#{format_days(days)} #{time_range}"
       }
     end
-
-    # 排序：平日在前、假日(Sat, Sun)在後
-    sorted_result = result.sort_by do |r|
-      r[:days].any? { |d| d >= 6 } ? 1 : 0
-    end
-
-    sorted_result.map { |r| r[:text] }.join(" / ")
+  
+    # 排序：平日優先，週末在後
+    result.sort_by { |r| r[:days].any? { |d| d >= 6 } ? 1 : 0 }
+          .map { |r| r[:text] }
+          .join(" / ")
   end
+  
+  
 
   private
 

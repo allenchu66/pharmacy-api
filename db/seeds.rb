@@ -8,12 +8,14 @@ PharmacyOpeningHour.destroy_all
 Mask.destroy_all
 Pharmacy.destroy_all
 User.destroy_all
+MaskType.destroy_all
 
 ActiveRecord::Base.connection.execute("ALTER SEQUENCE users_id_seq RESTART WITH 1")
 ActiveRecord::Base.connection.execute("ALTER SEQUENCE pharmacies_id_seq RESTART WITH 1")
 ActiveRecord::Base.connection.execute("ALTER SEQUENCE masks_id_seq RESTART WITH 1")
 ActiveRecord::Base.connection.execute("ALTER SEQUENCE orders_id_seq RESTART WITH 1")
 ActiveRecord::Base.connection.execute("ALTER SEQUENCE order_items_id_seq RESTART WITH 1")
+ActiveRecord::Base.connection.execute("ALTER SEQUENCE mask_types_id_seq RESTART WITH 1")
 
 # Load pharmacies data
 pharmacies = JSON.parse(File.read(Rails.root.join('db', 'pharmacies.json')))
@@ -35,9 +37,34 @@ pharmacies.each do |p|
   # Opening Hours
   if p['openingHours']
     TimeParser.parse_time_string(p['openingHours']).each do |hour|
-      pharmacy.pharmacy_opening_hours.create!(hour)
+      day_of_week = hour[:day_of_week]
+
+      open_time = TimeParser.build_time(hour[:open_time])
+      close_time = TimeParser.build_time(hour[:close_time])
+      over_night_time = TimeParser.build_time("00:00")
+     
+      if close_time <= open_time
+        pharmacy.pharmacy_opening_hours.create!(
+          day_of_week: day_of_week,
+          open_time: open_time,
+          close_time: over_night_time
+        )
+    
+        pharmacy.pharmacy_opening_hours.create!(
+          day_of_week: (day_of_week + 1) % 7,
+          open_time: over_night_time,
+          close_time: close_time
+        )
+      else
+        pharmacy.pharmacy_opening_hours.create!(
+          day_of_week: day_of_week,
+          open_time: open_time,
+          close_time: close_time,
+        )
+      end
     end
   end
+  
 
   # 建立 masks (with mask_type_id)
   p['masks'].each do |m|
@@ -51,9 +78,7 @@ pharmacies.each do |p|
     end
   end
 
-mask_type_names.uniq.each do |name|
-  MaskType.find_or_create_by!(name: name)
-end
+
 
 # Load users data
 users = JSON.parse(File.read(Rails.root.join('db', 'users.json')))
@@ -93,3 +118,5 @@ users.each do |u|
     )
   end
 end
+
+

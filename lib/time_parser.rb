@@ -23,14 +23,11 @@ class TimeParser
       days = expand_days(day_part)
       open_time, close_time = time_part.split('-').map(&:strip)
   
-      overnight = close_time < open_time
-  
       days.each do |day|
         result << {
           day_of_week: day,
           open_time: open_time,
-          close_time: close_time,
-          overnight: overnight
+          close_time: close_time
         }
       end
     end
@@ -55,6 +52,11 @@ class TimeParser
         [DAY_MAP[part]]
       end
     end
+  end
+
+  def self.build_time(str)
+    h, m = str.split(":").map(&:to_i)
+    Time.zone.local(2000, 1, 1, h, m)
   end
 end
 
