@@ -23,14 +23,11 @@ class TimeParser
       days = expand_days(day_part)
       open_time, close_time = time_part.split('-').map(&:strip)
   
-      overnight = close_time < open_time
-  
       days.each do |day|
         result << {
           day_of_week: day,
           open_time: open_time,
-          close_time: close_time,
-          overnight: overnight
+          close_time: close_time
         }
       end
     end

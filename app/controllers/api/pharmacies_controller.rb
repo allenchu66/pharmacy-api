@@ -38,10 +38,8 @@ class Api::PharmaciesController < ApplicationController
       if time.present?
         parsed_time = Time.parse(time).strftime('%H:%M:%S')
         pharmacies = pharmacies.where(
-          "(pharmacy_opening_hours.day_of_week = :day AND pharmacy_opening_hours.open_time <= :time AND pharmacy_opening_hours.close_time >= :time) OR
-           (pharmacy_opening_hours.day_of_week = :yesterday AND pharmacy_opening_hours.overnight = true AND pharmacy_opening_hours.close_time >= :time)",
+          "(pharmacy_opening_hours.day_of_week = :day AND pharmacy_opening_hours.open_time <= :time AND pharmacy_opening_hours.close_time >= :time)",
           day: params[:day_of_week],
-          yesterday: (params[:day_of_week].to_i - 1) % 7,
           time:  parsed_time
         )
       else
@@ -140,14 +138,12 @@ class Api::PharmaciesController < ApplicationController
       times.each do |time|
         open_time = Time.parse(time['open']).strftime('%H:%M:%S')
         close_time = Time.parse(time['close']).strftime('%H:%M:%S')
-        overnight = time['close'] < time['open']
-  
+        
         PharmacyOpeningHour.create!(
           pharmacy: pharmacy,
           day_of_week: day_of_week,
           open_time: open_time,
-          close_time: close_time,
-          overnight: overnight
+          close_time: close_time
         )
       end
     end

@@ -36,8 +36,7 @@ RSpec.describe 'api/pharmacies', type: :request do
               pharmacy: pharmacy,
               day_of_week: 2,
               open_time: '08:00',
-              close_time: '18:00',
-              overnight: false
+              close_time: '18:00'
             )
           end
         end

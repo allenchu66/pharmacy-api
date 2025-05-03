@@ -13,7 +13,6 @@ class PharmacyOpeningHoursMerger
         c = hour.close_time.strftime('%H:%M')
 
         if c == "00:00"
-          # cross-night candidate
           nd = (hour.day_of_week + 1) % 7
           pair = sorted.each_with_index.find do |nh, j|
             nh.day_of_week == nd &&
@@ -22,24 +21,24 @@ class PharmacyOpeningHoursMerger
           end
           if pair
             _match, j = pair
-            merged << { day_of_week: hour.day_of_week,
-                        open_time:   o,
-                        close_time:  _match.close_time.strftime('%H:%M'),
-                        overnight:   true }
+            merged << {
+              day_of_week: hour.day_of_week,
+              open_time:   o,
+              close_time:  _match.close_time.strftime('%H:%M')
+            }
             skip_idx << i << j
             next
           end
         end
 
-        # otherwise keep as‐is
-        merged << { day_of_week: hour.day_of_week,
-                    open_time:   o,
-                    close_time:  c,
-                    overnight:   c < o }
+        merged << {
+          day_of_week: hour.day_of_week,
+          open_time:   o,
+          close_time:  c
+        }
       end
 
-      # — drop any lone midnight fragment that isn’t flagged overnight — 
-      merged.reject! { |e| e[:open_time] == "00:00" && !e[:overnight] }
+      merged.reject! { |e| e[:open_time] == "00:00" }
 
       merged
     end

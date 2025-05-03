@@ -47,22 +47,19 @@ pharmacies.each do |p|
         pharmacy.pharmacy_opening_hours.create!(
           day_of_week: day_of_week,
           open_time: open_time,
-          close_time: over_night_time,
-          overnight: true
+          close_time: over_night_time
         )
     
         pharmacy.pharmacy_opening_hours.create!(
           day_of_week: (day_of_week + 1) % 7,
           open_time: over_night_time,
-          close_time: close_time,
-          overnight: true
+          close_time: close_time
         )
       else
         pharmacy.pharmacy_opening_hours.create!(
           day_of_week: day_of_week,
           open_time: open_time,
           close_time: close_time,
-          overnight: false
         )
       end
     end
