@@ -139,12 +139,32 @@ class Api::PharmaciesController < ApplicationController
         open_time = Time.parse(time['open']).strftime('%H:%M:%S')
         close_time = Time.parse(time['close']).strftime('%H:%M:%S')
         
-        PharmacyOpeningHour.create!(
-          pharmacy: pharmacy,
-          day_of_week: day_of_week,
-          open_time: open_time,
-          close_time: close_time
-        )
+        if close_time > open_time
+          PharmacyOpeningHour.create!(
+            pharmacy:    pharmacy,
+            day_of_week: day_of_week,
+            open_time:   open_time,
+            close_time:  close_time
+          )
+        else
+          # 跨夜：拆成兩筆
+          # 1) 當天 open -> 24:00
+          PharmacyOpeningHour.create!(
+            pharmacy:    pharmacy,
+            day_of_week: day_of_week,
+            open_time:   open_time,
+            close_time:  '00:00'
+          )
+  
+          # 2) 隔天 00:00 -> close
+          next_day = (day_of_week + 1) % 7
+          PharmacyOpeningHour.create!(
+            pharmacy:    pharmacy,
+            day_of_week: next_day,
+            open_time:   '00:00',
+            close_time:  close_time
+          )
+        end
       end
     end
   end 
